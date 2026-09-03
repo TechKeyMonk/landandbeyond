@@ -1,8 +1,7 @@
 {
   "name": "househunt",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "Land & Beyond Real Estate Platform",
   "scripts": {
     "test": "vitest run",
     "start": "node server.js"

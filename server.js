@@ -295,6 +295,12 @@ const { getSupabase, getPgPool, getDbStatus, syncToSupabase } = require('./supab
   // Static File Serving
   if (pathname === '/') pathname = '/index.html';
   let filePath = path.join(__dirname, pathname);
+  if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+    const pubPath = path.join(__dirname, 'public', pathname);
+    if (fs.existsSync(pubPath) && fs.statSync(pubPath).isFile()) {
+      filePath = pubPath;
+    }
+  }
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
