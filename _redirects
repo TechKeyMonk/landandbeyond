@@ -6,4 +6,5 @@
 /calculator /index.html   200
 /compare    /index.html   200
 /matcher    /index.html   200
-/*          /index.html   200
+/admin      /admin.html   200
+/dashboard  /dashboard.html 200
