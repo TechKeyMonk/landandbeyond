@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Details | Land & Beyond</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; color: #0f172a; margin: 0; padding: 0; }
+    .detail-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+    .detail-card { background: #ffffff; border-radius: 24px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+    .detail-header-nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 28px; border-bottom: 1px solid #e2e8f0; background: #fff; }
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #475569; font-weight: 700; font-size: 14px; }
+    .detail-hero-img { width: 100%; height: 380px; object-fit: cover; }
+    .detail-body { padding: 32px 36px; }
+    .detail-badge-row { display: flex; gap: 10px; margin-bottom: 12px; }
+    .pill-emerald { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; padding: 4px 12px; border-radius: 9999px; font-weight: 700; font-size: 12px; }
+    .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 24px 0; background: #f8fafc; padding: 20px; border-radius: 16px; border: 1px solid #e2e8f0; }
+    .spec-item div { font-size: 12px; color: #64748b; font-weight: 600; }
+    .spec-item strong { font-size: 15px; color: #0f172a; }
+  </style>
+</head>
+<body>
+  <div class="detail-container">
+    <div class="detail-card">
+      <div class="detail-header-nav">
+        <a href="index.html" class="btn-back">← Back to Explore Properties</a>
+        <div style="display: flex; gap: 10px;">
+          <button type="button" class="btn btn-outline" onclick="window.print()" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: #fff; font-weight: 600; cursor: pointer;">📄 Print Sheet</button>
+          <a id="btnDetailBook" href="book-visit.html" class="btn btn-primary" style="padding: 8px 20px; border-radius: 8px; background: #10b981; color: #fff; text-decoration: none; font-weight: 700;">📅 Book Free Site Visit</a>
+        </div>
+      </div>
+      <img id="detailImg" class="detail-hero-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200" alt="Property Image" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200'" />
+      <div class="detail-body">
+        <div class="detail-badge-row">
+          <span id="detailBadge" class="pill-emerald">Verified Asset</span>
+          <span id="detailApproval" class="pill-emerald">DTCP / RERA Sanctioned</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h1 id="detailTitle" style="margin: 0 0 8px; font-size: 1.85rem; font-weight: 800; color: #0f172a;">Mayflower Grandeur Residences</h1>
+            <p id="detailLocBuilder" style="margin: 0; font-size: 15px; color: #64748b;">📍 Peelamedu, Coimbatore • By Mayflower Enterprises</p>
+          </div>
+          <div style="text-align: right;">
+            <div id="detailPrice" style="font-size: 1.85rem; font-weight: 800; color: #10b981;">₹ 88 Lakh onwards</div>
+            <span id="detailRate" style="font-size: 13px; color: #64748b;">₹ 6,875 / sq.ft • Smart Township</span>
+          </div>
+        </div>
+
+        <div class="specs-grid">
+          <div class="spec-item"><div>Category</div><strong id="detailCategory">Apartments</strong></div>
+          <div class="spec-item"><div>Total Area</div><strong id="detailArea">1,280 sq.ft</strong></div>
+          <div class="spec-item"><div>Configuration</div><strong id="detailBhk">3 BHK Luxury</strong></div>
+          <div class="spec-item"><div>Registration No</div><strong id="detailLegal">TN/11/Building/0192/2026</strong></div>
+        </div>
+
+        <div style="margin-top: 28px; padding-top: 24px; border-top: 1px solid #e2e8f0;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0 0 12px;">Project &amp; Locality Highlights</h3>
+          <ul style="color: #475569; font-size: 14px; line-height: 1.8; margin: 0; padding-left: 20px;">
+            <li>40ft &amp; 60ft Wide Blacktop Arterial Roads with LED Smart Grid</li>
+            <li>24/7 Solar Security &amp; AI-Guided Smart Gate Access</li>
+            <li>100% Clear Title Deeds with Bank Legal Audit (SBI, HDFC, ICICI Pre-Approved)</li>
+            <li>Direct arterial access to Avinashi Road and Coimbatore International Airport</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const propId = params.get('id');
+    const allProps = JSON.parse(localStorage.getItem('lb_properties_data') || '[]');
+    const prop = allProps.find(p => p.id === propId) || allProps[0];
+
+    if (prop) {
+      document.getElementById('detailTitle').textContent = prop.title;
+      document.getElementById('detailLocBuilder').textContent = `📍 ${prop.location} • By ${prop.builder || 'Land & Beyond Verified Builder'}`;
+      document.getElementById('detailPrice').textContent = prop.price || prop.priceLabel || '₹ 35.0 Lakhs';
+      document.getElementById('detailRate').textContent = prop.ratePerSqft || prop.metrics || 'Market Benchmarked';
+      document.getElementById('detailCategory').textContent = prop.category || 'Residential';
+      document.getElementById('detailArea').textContent = prop.area || prop.metrics || '2,400 sq.ft';
+      document.getElementById('detailBhk').textContent = prop.bhk || 'Villa Plot';
+      document.getElementById('detailLegal').textContent = prop.legalNo || prop.approvalNumber || 'DTCP Approved';
+      document.getElementById('detailBadge').textContent = prop.badge || prop.featureBadge || 'Verified Asset';
+      document.getElementById('detailApproval').textContent = prop.approvalType || 'DTCP / RERA Sanctioned';
+      if (prop.imageUrl || prop.image) document.getElementById('detailImg').src = prop.imageUrl || prop.image;
+      document.getElementById('btnDetailBook').href = `book-visit.html?property=${encodeURIComponent(prop.title)}`;
+    }
+  </script>
+</body>
+</html>

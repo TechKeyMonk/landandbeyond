@@ -1,0 +1,476 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LandAndBeyondDatabaseSchema",
+  "description": "Complete Hierarchical JSON Schema definition for Land & Beyond Real Estate & Agro Platform",
+  "type": "object",
+  "definitions": {
+    "UserRole": {
+      "type": "string",
+      "enum": ["Buyer", "Promoter", "Admin"]
+    },
+    "PropertyCategory": {
+      "type": "string",
+      "enum": ["Plots", "Villas", "Apartments", "Farmland", "Commercial"]
+    },
+    "PropertyStatus": {
+      "type": "string",
+      "enum": ["Draft", "Active", "SoldOut", "UnderReview", "Archived"]
+    },
+    "ApprovalType": {
+      "type": "string",
+      "enum": ["DTCP", "RERA", "CMDA", "PPA", "PattaVerified"]
+    },
+    "DeedAuditStatus": {
+      "type": "string",
+      "enum": ["Pending", "InReview", "VerifiedClear", "FlaggedEncumbrance"]
+    },
+    "BookingStatus": {
+      "type": "string",
+      "enum": ["Pending", "Confirmed", "Completed", "Cancelled", "Rescheduled"]
+    },
+    "FarmlandStatus": {
+      "type": "string",
+      "enum": ["Available", "Reserved", "SoldOut", "UnderAudit"]
+    },
+    "DesignType": {
+      "type": "string",
+      "enum": ["Interior", "Exterior", "3D Walkthrough", "Landscape"]
+    },
+    "ServiceStatus": {
+      "type": "string",
+      "enum": ["Initiated", "ConsultationScheduled", "InContract", "Completed", "Cancelled"]
+    },
+    "AdminRole": {
+      "type": "string",
+      "enum": ["SuperAdmin", "Moderator", "SalesAgent", "LegalAuditor"]
+    },
+    "ModerationAction": {
+      "type": "string",
+      "enum": ["Approved", "Rejected", "Flagged", "ChangesRequested"]
+    },
+    "LeadPriority": {
+      "type": "string",
+      "enum": ["Low", "Medium", "High", "Urgent"]
+    },
+    "LeadStatus": {
+      "type": "string",
+      "enum": ["New", "Contacted", "Assigned", "SiteVisitScheduled", "ClosedWon", "ClosedLost"]
+    },
+
+    "User": {
+      "type": "object",
+      "required": ["id", "fullName", "email", "phone", "role", "passwordHash", "createdAt", "updatedAt"],
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "fullName": { "type": "string", "minLength": 2, "maxLength": 150 },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string", "pattern": "^[0-9+\\-\\s()]{7,20}$" },
+        "role": { "$ref": "#/definitions/UserRole" },
+        "passwordHash": { "type": "string" },
+        "userActivity": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["activityId", "userId", "timestamp"],
+            "properties": {
+              "activityId": { "type": "string", "format": "uuid" },
+              "userId": { "type": "string", "format": "uuid" },
+              "searchQuery": { "type": "string" },
+              "filtersUsed": { "type": "object" },
+              "viewedLocality": { "type": "string" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "userFavorites": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["favoriteId", "userId", "propertyId", "savedAt"],
+            "properties": {
+              "favoriteId": { "type": "string", "format": "uuid" },
+              "userId": { "type": "string", "format": "uuid" },
+              "propertyId": { "type": "string", "format": "uuid" },
+              "savedAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "propertyComparisons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["comparisonId", "userId", "propertyIds"],
+            "properties": {
+              "comparisonId": { "type": "string", "format": "uuid" },
+              "userId": { "type": "string", "format": "uuid" },
+              "propertyIds": {
+                "type": "array",
+                "maxItems": 4,
+                "items": { "type": "string", "format": "uuid" }
+              },
+              "updatedAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "reviewsRatings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["reviewId", "userId", "propertyId", "rating"],
+            "properties": {
+              "reviewId": { "type": "string", "format": "uuid" },
+              "userId": { "type": "string", "format": "uuid" },
+              "propertyId": { "type": "string", "format": "uuid" },
+              "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "reviewText": { "type": "string" },
+              "createdAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "authSessions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["sessionId", "userId", "authToken", "expiresAt"],
+            "properties": {
+              "sessionId": { "type": "string", "format": "uuid" },
+              "userId": { "type": "string", "format": "uuid" },
+              "authToken": { "type": "string" },
+              "device": { "type": "string" },
+              "ipAddress": { "type": "string" },
+              "expiresAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+
+    "Property": {
+      "type": "object",
+      "required": ["id", "title", "promoterName", "category", "location", "status", "basePrice", "createdAt"],
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "title": { "type": "string" },
+        "promoterId": { "type": "string", "format": "uuid" },
+        "promoterName": { "type": "string" },
+        "category": { "$ref": "#/definitions/PropertyCategory" },
+        "location": {
+          "type": "object",
+          "required": ["locality", "city"],
+          "properties": {
+            "locality": { "type": "string" },
+            "city": { "type": "string" },
+            "latitude": { "type": "number" },
+            "longitude": { "type": "number" }
+          }
+        },
+        "status": { "$ref": "#/definitions/PropertyStatus" },
+        "basePrice": { "type": "number", "minimum": 0 },
+        "ratePerSqFt": { "type": "number", "minimum": 0 },
+        "propertySpecs": {
+          "type": "object",
+          "required": ["totalAreaSqFt"],
+          "properties": {
+            "propertyId": { "type": "string", "format": "uuid" },
+            "totalAreaSqFt": { "type": "number" },
+            "bhkConfig": { "type": "string" },
+            "facingDirection": { "type": "string" },
+            "parkingSlots": { "type": "integer" },
+            "roadWidthFt": { "type": "number" }
+          }
+        },
+        "legalApprovals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["approvalType", "registrationNo"],
+            "properties": {
+              "approvalType": { "$ref": "#/definitions/ApprovalType" },
+              "registrationNo": { "type": "string" },
+              "isLegalVerified": { "type": "boolean" },
+              "deedAuditStatus": { "$ref": "#/definitions/DeedAuditStatus" }
+            }
+          }
+        },
+        "pricingHistory": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["oldPrice", "newPrice", "updatedAt"],
+            "properties": {
+              "oldPrice": { "type": "number" },
+              "newPrice": { "type": "number" },
+              "pricePerSqFt": { "type": "number" },
+              "approvedBankLoans": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "updatedAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "siteVisitBookings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["bookingId", "propertyId", "userId", "preferredDate", "timeSlot", "bookingStatus"],
+            "properties": {
+              "bookingId": { "type": "string", "format": "uuid" },
+              "propertyId": { "type": "string", "format": "uuid" },
+              "userId": { "type": "string", "format": "uuid" },
+              "preferredDate": { "type": "string", "format": "date" },
+              "timeSlot": { "type": "string" },
+              "bookingStatus": { "$ref": "#/definitions/BookingStatus" }
+            }
+          }
+        },
+        "mediaAssets": {
+          "type": "object",
+          "required": ["heroImageUrl"],
+          "properties": {
+            "heroImageUrl": { "type": "string", "format": "uri" },
+            "masterLayoutUrl": { "type": "string", "format": "uri" },
+            "galleryUrls": {
+              "type": "array",
+              "items": { "type": "string", "format": "uri" }
+            },
+            "videoWalkthroughUrl": { "type": "string", "format": "uri" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+
+    "FarmlandCorridor": {
+      "type": "object",
+      "required": ["id", "corridorName", "region", "startingPrice", "fiveYearGrowthRate", "status"],
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "corridorName": { "type": "string" },
+        "region": { "type": "string" },
+        "startingPrice": { "type": "number", "minimum": 0 },
+        "fiveYearGrowthRate": { "type": "number" },
+        "status": { "$ref": "#/definitions/FarmlandStatus" },
+        "soilWaterReport": {
+          "type": "object",
+          "required": ["soilType", "groundwaterDepthFt"],
+          "properties": {
+            "soilType": { "type": "string" },
+            "groundwaterDepthFt": { "type": "number" },
+            "soilPh": { "type": "number" },
+            "telemetryReportUrl": { "type": "string", "format": "uri" }
+          }
+        },
+        "infrastructureSpecs": {
+          "type": "object",
+          "required": ["fencingType", "roadApproachWidthMeters", "electricityGrid"],
+          "properties": {
+            "fencingType": { "type": "string" },
+            "roadApproachWidthMeters": { "type": "number" },
+            "electricityGrid": { "type": "string" }
+          }
+        },
+        "agroInspections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["inspectionId", "farmlandId", "leadName", "leadPhone", "scheduledDate", "inspectionStatus"],
+            "properties": {
+              "inspectionId": { "type": "string", "format": "uuid" },
+              "farmlandId": { "type": "string", "format": "uuid" },
+              "leadName": { "type": "string" },
+              "leadPhone": { "type": "string" },
+              "scheduledDate": { "type": "string", "format": "date" },
+              "inspectionStatus": { "$ref": "#/definitions/BookingStatus" }
+            }
+          }
+        }
+      }
+    },
+
+    "Services": {
+      "type": "object",
+      "properties": {
+        "design3dConsultations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "customerName", "phone", "designType", "status"],
+            "properties": {
+              "id": { "type": "string", "format": "uuid" },
+              "customerName": { "type": "string" },
+              "phone": { "type": "string" },
+              "floorplanFileUrl": { "type": "string", "format": "uri" },
+              "designType": { "$ref": "#/definitions/DesignType" },
+              "budget": { "type": "number" },
+              "status": { "$ref": "#/definitions/ServiceStatus" }
+            }
+          }
+        },
+        "grihaPraveshBookings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "customerName", "phone", "preferredDate", "packageTier", "samagriIncluded", "status"],
+            "properties": {
+              "id": { "type": "string", "format": "uuid" },
+              "customerName": { "type": "string" },
+              "phone": { "type": "string" },
+              "preferredDate": { "type": "string", "format": "date" },
+              "muhurthamNakshatra": { "type": "string" },
+              "packageTier": { "type": "string" },
+              "samagriIncluded": { "type": "boolean" },
+              "status": { "$ref": "#/definitions/ServiceStatus" }
+            }
+          }
+        },
+        "homeLoanLeads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "customerName", "phone", "loanPrincipalAmount", "tenureYears", "preferredBank", "status"],
+            "properties": {
+              "id": { "type": "string", "format": "uuid" },
+              "customerName": { "type": "string" },
+              "phone": { "type": "string" },
+              "loanPrincipalAmount": { "type": "number" },
+              "tenureYears": { "type": "integer" },
+              "preferredBank": { "type": "string" },
+              "status": { "$ref": "#/definitions/ServiceStatus" }
+            }
+          }
+        }
+      }
+    },
+
+    "InquiriesLeads": {
+      "type": "object",
+      "properties": {
+        "siteTours": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "propertyId", "customerName", "phone", "preferredDate", "status"],
+            "properties": {
+              "id": { "type": "string", "format": "uuid" },
+              "propertyId": { "type": "string", "format": "uuid" },
+              "customerName": { "type": "string" },
+              "phone": { "type": "string" },
+              "preferredDate": { "type": "string", "format": "date" },
+              "leadSource": { "type": "string" },
+              "status": { "$ref": "#/definitions/LeadStatus" }
+            }
+          }
+        },
+        "cabPickups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "tourId", "isCabRequired", "pickupAddress", "passengerCount", "status"],
+            "properties": {
+              "id": { "type": "string", "format": "uuid" },
+              "tourId": { "type": "string", "format": "uuid" },
+              "isCabRequired": { "type": "boolean" },
+              "pickupAddress": { "type": "string" },
+              "passengerCount": { "type": "integer" },
+              "status": { "$ref": "#/definitions/BookingStatus" }
+            }
+          }
+        },
+        "brochureDownloads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "propertyId", "leadName", "leadPhone", "downloadedAt"],
+            "properties": {
+              "id": { "type": "string", "format": "uuid" },
+              "propertyId": { "type": "string", "format": "uuid" },
+              "leadName": { "type": "string" },
+              "leadPhone": { "type": "string" },
+              "leadEmail": { "type": "string", "format": "email" },
+              "downloadedAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      }
+    },
+
+    "Admin": {
+      "type": "object",
+      "required": ["id", "adminName", "email", "role"],
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "adminName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "$ref": "#/definitions/AdminRole" },
+        "listingModeration": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["moderationId", "propertyId", "adminId", "actionTaken", "timestamp"],
+            "properties": {
+              "moderationId": { "type": "string", "format": "uuid" },
+              "propertyId": { "type": "string", "format": "uuid" },
+              "adminId": { "type": "string", "format": "uuid" },
+              "actionTaken": { "$ref": "#/definitions/ModerationAction" },
+              "comments": { "type": "string" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "leadAssignments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["assignmentId", "leadId", "assignedAgentId", "priority", "status"],
+            "properties": {
+              "assignmentId": { "type": "string", "format": "uuid" },
+              "leadId": { "type": "string", "format": "uuid" },
+              "assignedAgentId": { "type": "string", "format": "uuid" },
+              "priority": { "$ref": "#/definitions/LeadPriority" },
+              "status": { "$ref": "#/definitions/LeadStatus" }
+            }
+          }
+        },
+        "systemAuditLogs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["logId", "adminId", "actionType", "targetEntity", "timestamp"],
+            "properties": {
+              "logId": { "type": "string", "format": "uuid" },
+              "adminId": { "type": "string", "format": "uuid" },
+              "actionType": { "type": "string" },
+              "targetEntity": { "type": "string" },
+              "changesPayload": { "type": "object" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "properties": {
+    "users": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/User" }
+    },
+    "properties": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/Property" }
+    },
+    "farmlandCorridors": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/FarmlandCorridor" }
+    },
+    "services": { "$ref": "#/definitions/Services" },
+    "inquiriesLeads": { "$ref": "#/definitions/InquiriesLeads" },
+    "admins": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/Admin" }
+    }
+  }
+}

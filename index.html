@@ -1,0 +1,2789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Land And Beyond | Smart Property, Plots &amp; Farmland Finder</title>
+  <meta
+    name="description"
+    content="Land And Beyond is Coimbatore's premier smart real estate platform for verified Apartments, Luxury Villas, DTCP Plots, and Agricultural Dry Land with AI-powered match scoring, upcoming projects showcase, legal approvals, and real estate news."
+  />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ========================================================================
+       COMPREHENSIVE RESPONSIVE & ACCESSIBLE BUTTON SYSTEM (MOBILE/TABLET/DESKTOP)
+       ======================================================================== -->
+  <style>
+    /* 1. Global Button Normalization & Minimum Touch Target (44px) */
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline,
+    .btn-action,
+    .btn-auth-pill,
+    .proj-tab-btn,
+    .tab-btn,
+    .modal-submit-btn,
+    .btn-table-action,
+    .card-action-row button,
+    .mega-actions-group button {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      min-height: 44px !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+      box-sizing: border-box !important;
+      font-family: var(--font-main, 'Plus Jakarta Sans', sans-serif) !important;
+      text-decoration: none !important;
+      line-height: 1.2 !important;
+    }
+
+    .btn:active,
+    .btn-primary:active,
+    .btn-secondary:active,
+    .btn-outline:active,
+    .btn-auth-pill:active,
+    .card-action-row button:active {
+      transform: scale(0.97) !important;
+    }
+
+    /* 2. Navbar & Header Responsive Actions */
+    .navbar-auth-btn,
+    .nav-login-btn,
+    .btn-auth-pill,
+    #loginBtn,
+    #btn-navbar-auth {
+      min-height: 40px !important;
+      padding: 8px 18px !important;
+      border-radius: 9999px !important;
+      font-weight: 700 !important;
+      font-size: 0.88rem !important;
+      white-space: nowrap !important;
+    }
+
+    .compare-badge-btn,
+    .locality-dropdown-btn {
+      padding: 8px 16px !important;
+      min-height: 40px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      font-size: 0.85rem !important;
+    }
+
+    /* 3. Circular Action Icon Buttons (Compare / Share / Favorite) */
+    .btn-icon-circle,
+    .card-fav-btn,
+    .card-share-btn,
+    .card-compare-btn {
+      width: 38px !important;
+      height: 38px !important;
+      min-height: 38px !important;
+      min-width: 38px !important;
+      border-radius: 50% !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(4px) !important;
+      border: 1px solid #e2e8f0 !important;
+      cursor: pointer !important;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    .btn-icon-circle:hover,
+    .card-fav-btn:hover,
+    .card-share-btn:hover,
+    .card-compare-btn:hover {
+      transform: scale(1.08) !important;
+      background: #ffffff !important;
+      border-color: #10b981 !important;
+      color: #059669 !important;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+    }
+
+    .btn-icon-circle:active,
+    .card-fav-btn:active {
+      transform: scale(0.92) !important;
+    }
+
+    /* 4. Category Filter Tabs Horizontal Scrolling on Mobile */
+    .category-tabs,
+    .project-pill-tabs,
+    .filter-pills-wrapper {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important; /* Firefox */
+      padding-bottom: 4px !important;
+    }
+
+    .category-tabs::-webkit-scrollbar,
+    .project-pill-tabs::-webkit-scrollbar,
+    .filter-pills-wrapper::-webkit-scrollbar {
+      display: none !important; /* Chrome / Safari / Edge */
+    }
+
+    .tab-btn,
+    .proj-tab-btn {
+      flex-shrink: 0 !important;
+      white-space: nowrap !important;
+      min-height: 40px !important;
+      padding: 8px 18px !important;
+      font-size: 0.88rem !important;
+      border-radius: 9999px !important;
+    }
+
+    /* 5. Property Card Full-Width CTA */
+    .property-card .btn-primary,
+    .property-card .card-action-row button,
+    .upcoming-project-card .btn-primary,
+    .fast-track-land-card .btn-primary {
+      width: 100% !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      padding: 12px 16px !important;
+      font-weight: 700 !important;
+      font-size: 0.9rem !important;
+      border-radius: 10px !important;
+      min-height: 44px !important;
+    }
+
+    /* 6. Modal Close & Cancel High-Visibility Tap Targets (Min 40px) */
+    .modal-close-btn,
+    .modal-dismiss-btn,
+    #btn-close-auth {
+      min-width: 40px !important;
+      min-height: 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      border-radius: 50% !important;
+    }
+
+    /* 7. Tablet Breakpoint (< 768px) */
+    @media (max-width: 768px) {
+      .btn-auth-pill,
+      .nav-login-btn,
+      #loginBtn,
+      #btn-navbar-auth {
+        padding: 6px 12px !important;
+        font-size: 0.82rem !important;
+        min-height: 38px !important;
+      }
+
+      .compare-badge-btn,
+      .locality-dropdown-btn {
+        padding: 6px 10px !important;
+        font-size: 0.8rem !important;
+      }
+    }
+
+    /* 8. Small Mobile Breakpoint (< 640px) Full-Width CTA Stacking */
+    @media (max-width: 640px) {
+      .hero-cta-btn,
+      .matcher-submit-btn,
+      .modal-submit-btn,
+      .section-header .btn,
+      #btn-matcher-submit {
+        width: 100% !important;
+        font-size: 0.95rem !important;
+        padding: 13px 18px !important;
+        min-height: 48px !important;
+      }
+
+      .mega-actions-group,
+      .proj-card-actions {
+        flex-direction: column !important;
+        gap: 8px !important;
+      }
+
+      .mega-sub-actions {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        width: 100% !important;
+      }
+
+      .modal-action-footer {
+        position: sticky !important;
+        bottom: 0 !important;
+        background: #ffffff !important;
+        padding: 12px 16px !important;
+        border-top: 1px solid #e2e8f0 !important;
+        z-index: 10 !important;
+      }
+    }
+  </style>
+
+</head>
+<body>
+  <!-- Top Announcement Bar -->
+  <aside class="announcement-bar" aria-label="Announcement">
+    <div class="header-container announcement-inner">
+      <div class="announcement-badge">NEW LAUNCH</div>
+      <p id="topAnnouncementText">Mega Pre-Launch: Grand Aeropolis 45–Acre Smart City on Avinashi Road — <strong>Free VIP Site Visit &amp; 0% Brokerage</strong></p>
+      <a href="#newProjects" class="announcement-link">Explore Projects &rarr;</a>
+    </div>
+  </aside>
+
+  <!-- Sticky Main Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-container nav-wrap">
+      <!-- Brand Logo (Natural Aspect Ratio) -->
+      <a href="#" class="header-logo-wrap" aria-label="Land &amp; Beyond Home" style="display: flex; align-items: center; justify-content: flex-start; height: 100%; margin-right: 24px; flex-shrink: 0; text-decoration: none; overflow: visible;">
+        <img src="/land-and-beyond-logo.png" alt="Land &amp; Beyond" class="header-brand-logo header-logo-img" onerror="this.src='land-and-beyond-logo.png'" />
+      </a>
+
+      <!-- Primary Navigation Links (Desktop 2-Tier Stacked Hierarchy & Mobile Drawer) -->
+      <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
+        <div class="mobile-drawer-header">
+          <div class="brand-text">
+            <span class="brand-large" style="color: #ffffff;">Land</span>
+            <span class="brand-small text-green">And Beyond</span>
+          </div>
+          <button class="btn-agro-compact" style="padding: 6px 14px !important; font-size: 12px !important; font-weight: 600 !important; height: 32px !important; min-height: 32px !important; max-height: 32px !important; border-radius: 8px !important; gap: 6px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; white-space: nowrap !important; line-height: 1 !important;"  type="button" class="btn-drawer-close" id="btnDrawerClose" aria-label="Close navigation drawer">&times;</button>
+        </div>
+
+        <a href="#matcher" class="nav-link">Smart Matcher</a>
+        <a href="#newProjects" class="nav-link nav-highlight">
+          <span>New Launches</span>
+          <span class="nav-hot-dot" aria-hidden="true"></span>
+        </a>
+        <a href="#showcase" class="nav-link">Properties</a>
+        <a href="#landShowcase" class="nav-link">Plots &amp; Farmland</a>
+        <a href="#services" class="nav-link">Services &amp; Loans</a>
+        <a href="#newsHub" class="nav-link">News &amp; Approvals</a>
+        <a href="#testimonials" class="nav-link" onclick="scrollToReviews(event)">Reviews</a>
+
+        <!-- Mobile Drawer Quick Actions -->
+        <div class="mobile-drawer-actions">
+          <div class="drawer-tools-row" style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <div class="city-selector-wrap" style="flex: 1; background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); color: #ffffff;">
+              <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <select id="mobileCitySelector" aria-label="Select City" style="color: #ffffff; background: transparent; border: none; outline: none; font-size: 0.85rem;" onchange="if (document.getElementById('citySelector')) { document.getElementById('citySelector').value = this.value; document.getElementById('citySelector').dispatchEvent(new Event('change')); }">
+                <option value="Coimbatore" selected style="color: #000;">Coimbatore</option>
+                <option value="Chennai" style="color: #000;">Chennai</option>
+                <option value="Bangalore" style="color: #000;">Bangalore</option>
+                <option value="Kochi" style="color: #000;">Kochi</option>
+                <option value="Hyderabad" style="color: #000;">Hyderabad</option>
+              </select>
+            </div>
+            <button type="button" class="compare-nav-pill" style="flex: 1; justify-content: center; background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); color: #ffffff;" onclick="openModal('compareModal'); document.getElementById('mainNav')?.classList.remove('open'); document.getElementById('mobileNavBackdrop')?.classList.remove('open');">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"></rect><rect x="14" y="3" width="7" height="18" rx="1"></rect></svg>
+              <span>Compare</span>
+              <span class="compare-badge" id="mobileCompareCount">0</span>
+            </button>
+          </div>
+          <button type="button" class="btn-drawer-auth btn-signin" id="btn-drawer-login" onclick="if(typeof openAuthModal==='function') openAuthModal(); document.getElementById('mainNav')?.classList.remove('open'); document.getElementById('mobileNavBackdrop')?.classList.remove('open');">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>Sign In / Login</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Header Tools (City Selector, Compare Pill, Auth Button) -->
+      <div class="nav-tools nav-actions nav-right">
+        <div class="city-selector-wrap" title="Select Location">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <select id="citySelector" aria-label="Select City">
+            <option value="Coimbatore" selected>Coimbatore</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Kochi">Kochi</option>
+            <option value="Hyderabad">Hyderabad</option>
+          </select>
+        </div>
+
+        <!-- Quick Comparison Trigger Pill -->
+        <button type="button" class="compare-nav-pill" id="compareNavPill" title="View Property Comparison" onclick="openCompareDrawer()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"></rect><rect x="14" y="3" width="7" height="18" rx="1"></rect></svg>
+          <span>Compare</span>
+          <span class="compare-badge" id="compareNavCount">0</span>
+        </button>
+
+        <button id="btn-navbar-auth" type="button" class="btn-auth-pill login-btn btn-signin" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 20px; border: 1px solid #e2e8f0; background: #ffffff; color: #0f172a; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" title="Sign In / Login">
+          <span style="font-size: 14px;">👤</span>
+          <span id="authBtnText">Sign In / Login</span>
+        </button>
+
+        <!-- Database Status Indicator Dot (Strictly dot, no text) -->
+        <span class="db-status-dot" id="dbStatusDot" style="display: inline-block; width: 10px; height: 10px; min-width: 10px; min-height: 10px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); vertical-align: middle; transition: all 0.3s ease;"></span>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Backdrop Overlay -->
+  <div class="mobile-nav-backdrop" id="mobileNavBackdrop" aria-hidden="true"></div>
+
+  <main>
+    <!-- ================================================================ -->
+    <!-- DYNAMIC HERO SECTION WITH MULTI-PROPERTY AUTO-FADE BACKGROUND   -->
+    <!-- ================================================================ -->
+    <section class="hero-section" id="hero">
+      <!-- Dynamic Background Slider Container -->
+      <div class="hero-bg-slider" id="heroBgSlider" aria-hidden="true">
+        <!-- Slide 1: Modern Luxury Villa -->
+        <div
+          class="hero-slide active"
+          style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=85');"
+          data-label="Luxury Gated Villas &amp; Homes"
+        ></div>
+        <!-- Slide 2: Open DTCP Residential Plots & Farmland -->
+        <div
+          class="hero-slide"
+          style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2000&q=85');"
+          data-label="DTCP Sanctioned Plots &amp; Agro Farmland"
+        ></div>
+        <!-- Slide 3: Skyline Luxury Apartments & Flats -->
+        <div
+          class="hero-slide"
+          style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=2000&q=85');"
+          data-label="High-Rise Skyline Apartments &amp; Flats"
+        ></div>
+        <!-- Slide 4: Architectural Independent Home -->
+        <div
+          class="hero-slide"
+          style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=85');"
+          data-label="Premium Independent Architect Villas"
+        ></div>
+
+        <!-- High-Contrast Multi-Stop Gradient Overlay -->
+        <div class="hero-bg-overlay"></div>
+      </div>
+
+      <div class="container hero-container">
+        <!-- Hero Copy -->
+        <div class="hero-content">
+          <!-- Live Category Ticker Badge -->
+          <div class="hero-top-badges-row">
+            <div class="hero-pill-badge">
+              <span class="pulse-dot"></span> AI-Guided Real Estate Intelligence
+            </div>
+            <div class="hero-category-ticker" id="heroCategoryTicker" title="Auto-transitioning property showcase">
+              <span class="ticker-dot"></span>
+              <span class="ticker-text" id="heroSlideLabel">Showcasing: Luxury Gated Villas &amp; Homes</span>
+            </div>
+          </div>
+
+          <h1 class="hero-title">
+            Find the Right Property.<br />
+            <span class="gradient-text">At the Right Price.</span>
+          </h1>
+          <p class="hero-description">
+            Discover verified apartments, luxury villas, DTCP-approved residential plots, and high-yielding agricultural dry land in Coimbatore with data-backed livability scores and ROI analytics.
+          </p>
+
+          <!-- Quick Value Metrics Strip -->
+          <div class="hero-stats-grid">
+            <div class="stat-box">
+              <span class="stat-number">1,500+</span>
+              <span class="stat-label">Verified Listings</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Clear Title Deeds</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">₹0</span>
+              <span class="stat-label">Direct Land Brokerage</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">4.9/5</span>
+              <span class="stat-label">Buyer Rating</span>
+            </div>
+          </div>
+
+          <!-- Hero Slide Controls -->
+          <div class="hero-slider-nav">
+            <div class="hero-slider-pills" id="heroSlidePills">
+              <button class="slide-pill active" data-slide-index="0" title="Luxury Villas">Villas</button>
+              <button class="slide-pill" data-slide-index="1" title="Plots & Farmland">Plots &amp; Land</button>
+              <button class="slide-pill" data-slide-index="2" title="Modern Flats">Apartments</button>
+              <button class="slide-pill" data-slide-index="3" title="Architect Homes">Homes</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smart Matcher Panel -->
+        <div class="matcher-panel" id="matcher">
+          <div class="matcher-header">
+            <div class="matcher-header-left">
+              <div class="matcher-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <div>
+                <h2>Smart Property Matcher</h2>
+                <p>Calculate your fit percentage &amp; instant recommendation</p>
+              </div>
+            </div>
+            <span class="matcher-status-chip">Smart Engine Active</span>
+          </div>
+
+          <form class="matcher-form" id="matcherForm" onsubmit="return false;">
+            <div class="matcher-grid">
+              <!-- Property Category -->
+              <div class="form-group">
+                <label for="categoryFilter">Property Category</label>
+                <div class="select-wrapper">
+                  <select id="categoryFilter">
+                    <option value="All" selected>All Property Types</option>
+                    <option value="Residential Plots">Residential Plots</option>
+                    <option value="Apartments">Apartments</option>
+                    <option value="Villas">Villas</option>
+                    <option value="Farmland">Farmland</option>
+                    <option value="Commercial">Commercial</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Locality -->
+              <div class="form-group">
+                <label for="locationFilter">Preferred Locality</label>
+                <div class="select-wrapper">
+                  <select id="locationFilter">
+                    <option value="All">Any Prime Locality</option>
+                    <option value="Saravanampatti" selected>Saravanampatti (IT Corridor)</option>
+                    <option value="Gandhipuram">Gandhipuram (City Center)</option>
+                    <option value="RS Puram">RS Puram (Premium Residential)</option>
+                    <option value="Peelamedu">Peelamedu (Avinashi Road)</option>
+                    <option value="Race Course">Race Course (Luxury Zone)</option>
+                    <option value="Annur">Annur (Growth Corridor)</option>
+                    <option value="Sulur">Sulur (Farmland / Plots)</option>
+                    <option value="Kovaipudur">Kovaipudur (Scenic Foothills)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- BHK / Configuration -->
+              <div class="form-group">
+                <label for="bhkFilter">Configuration / BHK</label>
+                <div class="select-wrapper">
+                  <select id="bhkFilter">
+                    <option value="Any">Any Configuration</option>
+                    <option value="1 BHK">1 BHK</option>
+                    <option value="2 BHK">2 BHK</option>
+                    <option value="3 BHK" selected>3 BHK</option>
+                    <option value="4+ BHK">4+ BHK / Luxury Villa</option>
+                    <option value="Plots">Land / Plot Parcel</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Parking Preference -->
+              <div class="form-group">
+                <label for="parkingFilter">Dedicated Parking</label>
+                <div class="select-wrapper">
+                  <select id="parkingFilter">
+                    <option value="Any">Any</option>
+                    <option value="Yes" selected>Required (Covered / Open)</option>
+                    <option value="No">Not Required</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Budget Range Slider -->
+              <div class="form-group budget-group full-span">
+                <div class="budget-label-row">
+                  <label for="budgetRange">Max Budget Ceiling</label>
+                  <span class="budget-display-badge" id="budgetValueLabel">Up to ₹ 1.50 Cr</span>
+                </div>
+                <div class="range-slider-wrapper">
+                  <input
+                    type="range"
+                    id="budgetRange"
+                    min="15"
+                    max="500"
+                    step="5"
+                    value="150"
+                    class="custom-range"
+                  />
+                  <div class="range-scale">
+                    <span>₹ 15 Lakh</span>
+                    <span>₹ 1.50 Cr</span>
+                    <span>₹ 3.00 Cr</span>
+                    <span>₹ 5.00 Cr</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Match Simulation Output Preview & CTA -->
+            <div class="matcher-action-row">
+              <div class="matcher-live-preview">
+                <div class="match-score-pill">
+                  <span class="score-dial" id="matcherScoreDial">96%</span>
+                  <div class="score-meta">
+                    <strong>Top Match Alignment</strong>
+                    <span id="matcherScoreSubtext">Matching 3 prime listings</span>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary btn-match" id="findMatchBtn">
+                <span>Find Matched Properties</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW MODULE: NEW & UPCOMING PROJECTS SHOWCASE -->
+    <section class="section-new-projects container" id="newProjects">
+      <!-- 1. Section Header & Controls -->
+      <div class="section-header">
+        <div>
+          <span class="section-tag section-tag-emerald">2026 Mega Launches</span>
+          <h2 class="section-title">Explore New Launches &amp; Upcoming Projects</h2>
+          <p class="section-subtitle">
+            Handpicked residential townships, DTCP plots, and prime farmland investments in &amp; around Coimbatore.
+          </p>
+        </div>
+
+        <!-- Locality Search & Fast Filter Bar -->
+        <div class="project-search-bar-wrap">
+          <div class="search-input-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="projectSearchInput" placeholder="Search by area (e.g. Annur, Peelamedu, Sulur)..." />
+            <button type="button" id="clearProjectSearchBtn" class="clear-search-btn" title="Clear search">&times;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Filter Tabs (Pill Style) -->
+      <div class="project-pill-tabs" id="projectPillTabs" role="tablist">
+        <button class="proj-tab-btn active" data-proj-filter="all" role="tab" aria-selected="true" onclick="filterUpcomingProjects('all', this)">All Projects</button>
+        <button class="proj-tab-btn" data-proj-filter="villas-apartments" role="tab" aria-selected="false" onclick="filterUpcomingProjects('villas-apartments', this)">Upcoming Villas &amp; Apartments</button>
+        <button class="proj-tab-btn" data-proj-filter="dtcp-plots" role="tab" aria-selected="false" onclick="filterUpcomingProjects('dtcp-plots', this)">DTCP/RERA Approved Plots</button>
+        <button class="proj-tab-btn" data-proj-filter="dry-land" role="tab" aria-selected="false" onclick="filterUpcomingProjects('dry-land', this)">Agricultural / Dry Land Launches</button>
+        <button class="proj-tab-btn" data-proj-filter="pre-launch" role="tab" aria-selected="false" onclick="filterUpcomingProjects('pre-launch', this)">Under Construction / Pre-Launch</button>
+      </div>
+
+      <!-- 2. Featured Mega Banner (Hero Project of the Month) -->
+      <div class="hero-project-mega-banner" id="megaProjectBanner">
+        <div class="mega-banner-img-wrap" id="heroPropertyImgWrap" style="background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1500&q=80');">
+          <div class="mega-banner-overlay"></div>
+          <div class="mega-top-badges">
+            <span class="mega-badge badge-prelaunch"><i class="badge-spark">★</i> Pre-Launch Offer</span>
+            <span class="mega-badge badge-exclusive">Project of the Month</span>
+            <span class="mega-badge badge-rera" id="heroPropertyApprovalBadge">TN RERA Registered</span>
+          </div>
+          <div class="mega-banner-caption">
+            <span class="mega-loc-tag" id="heroPropertyLocation">Avinashi Road / Airport Hub Corridor</span>
+            <h3 class="mega-project-title" id="heroPropertyTitle">Grand Aeropolis 45-Acre Integrated Smart Township</h3>
+            <p class="mega-project-builder" id="heroPropertyBuilder">By Casagrand &amp; G-Square Promoters • Gated Master Plan</p>
+          </div>
+        </div>
+
+        <div class="mega-banner-sidebar">
+          <div class="mega-pricing-box">
+            <span class="mega-price-label">Pre-Launch Starting Price</span>
+            <div class="mega-price-val" id="heroPropertyPrice">₹ 36.5 Lakhs <small>onwards</small></div>
+            <span class="mega-rate-val" id="heroPropertyRate">₹ 1,450 / sq.ft • Plots &amp; Luxury Villas</span>
+          </div>
+
+          <div class="mega-highlights-box">
+            <h4>Project Highlights &amp; Sanctions</h4>
+            <ul class="mega-highlights-list" id="heroPropertyHighlights">
+              <li><span class="check-icon">✓</span> <strong>40ft &amp; 60ft Wide</strong> Blacktop Arterial Roads with LED Grid</li>
+              <li><span class="check-icon">✓</span> <strong>24/7 Solar Security</strong> &amp; AI-Guided Smart Gate Access</li>
+              <li><span class="check-icon">✓</span> <strong>100% Clear Title</strong> Deeds with Bank Legal Audit</li>
+              <li><span class="check-icon">✓</span> <strong>Bank Loan Approved</strong> by SBI, HDFC &amp; ICICI (Up to 85%)</li>
+            </ul>
+          </div>
+
+          <div class="mega-actions-group">
+            <button class="btn btn-primary full-width" type="button" id="heroBookVisitBtn" onclick="openSiteVisitModal('Grand Aeropolis Smart Township')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              Book Free Site Visit / Cab Pick-up
+            </button>
+            <div class="mega-sub-actions">
+              <button class="btn btn-outline full-width btn-sm" type="button" onclick="openMasterPlanModal('proj-mega')">
+                View Master Layout &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Multi-Card Project Grid -->
+      <div class="upcoming-projects-grid" id="upcomingProjectsGrid">
+        <!-- Injected dynamically via script.js -->
+      </div>
+
+      <!-- 4. Upcoming Land & Farmland (Dry Land) Fast-Track Sub-Section -->
+      <div class="fast-track-land-section farmland-section-wrapper farmland-container" id="upcomingFarmlandFastTrack">
+        <div class="fast-track-header">
+          <div class="fast-track-title-wrap">
+            <span class="section-tag section-tag-farm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+              Strategic Farmland Fast-Track
+            </span>
+            <h3 class="fast-track-main-title">Upcoming Agricultural &amp; Dry Land Investment Corridors</h3>
+            <p class="fast-track-sub">Verified groundwater reports, certified soil composition, and high-yield 5-year capital appreciation forecasts.</p>
+          </div>
+          <button class="btn btn-farm-tour" type="button" onclick="openSiteVisitModal('Coimbatore Strategic Farmland Tour')">
+            Book Farmland Site Tour &rarr;
+          </button>
+        </div>
+
+        <div class="fast-track-cards-grid" id="fastTrackLandGrid">
+          <!-- Injected dynamically via script.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PROPERTY SHOWCASE & SMART RECOMMENDATIONS -->
+    <section class="section-showcase container" id="showcase">
+      <!-- Section Header with Filters & Sort -->
+      <div class="section-header">
+        <div>
+          <span class="section-tag">Curated Portfolio</span>
+          <h2 class="section-title">Explore Smart Matched Properties</h2>
+          <p class="section-subtitle">Data-driven match scores tailored to your budget, location, and livability needs.</p>
+        </div>
+
+        <div class="showcase-controls">
+          <div class="category-tabs" id="categoryTabs" role="tablist">
+            <button class="tab-btn active" data-filter="All" role="tab" aria-selected="true" onclick="filterPropertiesByCategory('All', this)">All Properties</button>
+            <button class="tab-btn" data-filter="Apartments" role="tab" aria-selected="false" onclick="filterPropertiesByCategory('Apartments', this)">🏢 Apartments</button>
+            <button class="tab-btn" data-filter="Villas" role="tab" aria-selected="false" onclick="filterPropertiesByCategory('Villas', this)">🏰 Villas</button>
+            <button class="tab-btn" data-filter="Residential Plots" role="tab" aria-selected="false" onclick="filterPropertiesByCategory('Residential Plots', this)">🏡 Plots</button>
+            <button class="tab-btn" data-filter="Commercial" role="tab" aria-selected="false" onclick="filterPropertiesByCategory('Commercial', this)">🏬 Commercial</button>
+            <button class="tab-btn" data-filter="Dry Land" role="tab" aria-selected="false" onclick="filterPropertiesByCategory('Dry Land', this)">🌾 Dry Land / Farms</button>
+          </div>
+
+          <!-- Sort Selector -->
+          <div class="sort-wrapper">
+            <label for="propertySort" class="sort-label">Sort by:</label>
+            <select id="propertySort" aria-label="Sort Properties">
+              <option value="match-desc">Highest Match %</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="livability-desc">Livability Score</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Match Summary Bar -->
+      <div class="results-meta-bar" id="resultsMetaBar">
+        <div class="meta-left">
+          <span>Showing <strong id="resultsCount">0</strong> verified properties in Coimbatore</span>
+          <span class="active-criteria-tags" id="activeCriteriaTags"></span>
+        </div>
+        <button class="btn-reset-filters" id="resetFiltersBtn" type="button">Reset All Filters</button>
+      </div>
+
+      <!-- Properties Grid Container (Populated via Vanilla JS) -->
+      <div class="properties-grid" id="propertiesGrid">
+        <!-- Dynamic Cards Injected Here -->
+      </div>
+    </section>
+
+    <!-- LIVABILITY & CONVENIENCE INTELLIGENCE ENGINE -->
+    <section class="section-intelligence livability-section-wrapper livability-container" id="intelligence">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag section-tag-light">Data-Driven Intelligence</span>
+          <h2 class="section-title text-white">Livability &amp; Convenience Engine</h2>
+          <p class="section-subtitle text-light-muted">
+            We evaluate over 40+ urban data points per neighborhood to ensure your property investment gives you seamless daily convenience and supreme ROI.
+          </p>
+        </div>
+
+        <div class="intelligence-dashboard">
+          <!-- Left Column: Interactive Neighborhood Selector & Detailed Breakdown -->
+          <div class="intelligence-card intelligence-main">
+            <div class="intelligence-card-top">
+              <div class="selector-zone">
+                <label for="intelligencePropertySelect">Inspect Micro-Market Corridor Livability:</label>
+                <select id="intelligencePropertySelect" aria-label="Inspect micro-market corridor livability breakdown">
+                  <!-- Options injected dynamically -->
+                </select>
+              </div>
+              <div class="livability-composite-score">
+                <div class="composite-val" id="intelligenceCompositeVal">9.3</div>
+                <div class="composite-text">
+                  <span>Overall Score</span>
+                  <small id="intelligenceRatingLabel">Excellent Livability</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Metric Progress Bars -->
+            <div class="livability-meters" id="livabilityMeters">
+              <!-- Schools & Education -->
+              <div class="meter-item">
+                <div class="meter-header">
+                  <span class="meter-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                    Schools &amp; Higher Education
+                  </span>
+                  <strong class="meter-val" id="scoreSchools">9.2 / 10</strong>
+                </div>
+                <div class="meter-track">
+                  <div class="meter-fill" id="barSchools" style="width: 92%;"></div>
+                </div>
+                <span class="meter-hint" id="hintSchools">Within 2.5 km of top CBSE schools &amp; PSG Tech / Kumaraguru</span>
+              </div>
+
+              <!-- Hospitals & Healthcare -->
+              <div class="meter-item">
+                <div class="meter-header">
+                  <span class="meter-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                    Hospitals &amp; Healthcare
+                  </span>
+                  <strong class="meter-val" id="scoreHospitals">8.8 / 10</strong>
+                </div>
+                <div class="meter-track">
+                  <div class="meter-fill fill-health" id="barHospitals" style="width: 88%;"></div>
+                </div>
+                <span class="meter-hint" id="hintHospitals">Emergency care &amp; multispeciality access under 10 mins</span>
+              </div>
+
+              <!-- Supermarkets & Essentials -->
+              <div class="meter-item">
+                <div class="meter-header">
+                  <span class="meter-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Supermarkets &amp; Daily Essentials
+                  </span>
+                  <strong class="meter-val" id="scoreRetail">9.5 / 10</strong>
+                </div>
+                <div class="meter-track">
+                  <div class="meter-fill fill-retail" id="barRetail" style="width: 95%;"></div>
+                </div>
+                <span class="meter-hint" id="hintRetail">Hypermarkets, organic produce, banks &amp; retail hubs within 1 km</span>
+              </div>
+
+              <!-- Public Transport & Connectivity -->
+              <div class="meter-item">
+                <div class="meter-header">
+                  <span class="meter-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M7 17l5-5 5 5"></path><path d="M12 12V3"></path></svg>
+                    Public Transport &amp; Airport Transit
+                  </span>
+                  <strong class="meter-val" id="scoreTransit">9.0 / 10</strong>
+                </div>
+                <div class="meter-track">
+                  <div class="meter-fill fill-transit" id="barTransit" style="width: 90%;"></div>
+                </div>
+                <span class="meter-hint" id="hintTransit">Bus bays at 250m; Airport &amp; Railway junction within 20 mins</span>
+              </div>
+            </div>
+
+            <!-- Price Assessment & ROI Badge Output -->
+            <div class="assessment-banner" id="assessmentBanner">
+              <div class="assessment-badge-icon" id="assessmentBadgeIcon">✓</div>
+              <div class="assessment-badge-text">
+                <div class="badge-title-row">
+                  <strong id="assessmentLabel">Good Value Asset</strong>
+                  <span class="assessment-pill" id="assessmentTypePill">High ROI Potential</span>
+                </div>
+                <p id="assessmentExplanation">Priced 8% below the current market corridor benchmark with expected 14% annual appreciation.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Radar Visualization & Coimbatore Micro-Market Insights -->
+          <div class="intelligence-card intelligence-radar">
+            <div class="radar-card-header">
+              <h3>Livability Proximity Radar</h3>
+              <span class="radar-pill">4-Axis Matrix</span>
+            </div>
+
+            <!-- CSS SVG Radar Visualization -->
+            <div class="radar-visual-wrap">
+              <svg class="radar-svg" viewBox="0 0 300 300">
+                <!-- Concentric guide rings -->
+                <polygon points="150,20 280,150 150,280 20,150" class="radar-grid-poly ring-4"></polygon>
+                <polygon points="150,55 245,150 150,245 55,150" class="radar-grid-poly ring-3"></polygon>
+                <polygon points="150,90 210,150 150,210 90,150" class="radar-grid-poly ring-2"></polygon>
+                <polygon points="150,120 180,150 150,180 120,150" class="radar-grid-poly ring-1"></polygon>
+                
+                <!-- Cross axes -->
+                <line x1="150" y1="20" x2="150" y2="280" class="radar-axis"></line>
+                <line x1="20" y1="150" x2="280" y2="150" class="radar-axis"></line>
+
+                <!-- Dynamic Data Polygon Area -->
+                <polygon id="radarPolygon" points="150,30 265,150 150,268 34,150" class="radar-data-area"></polygon>
+
+                <!-- Data point nodes -->
+                <circle id="radarNodeTop" cx="150" cy="30" r="5" class="radar-node node-edu"></circle>
+                <circle id="radarNodeRight" cx="265" cy="150" r="5" class="radar-node node-health"></circle>
+                <circle id="radarNodeBottom" cx="150" cy="268" r="5" class="radar-node node-retail"></circle>
+                <circle id="radarNodeLeft" cx="34" cy="150" r="5" class="radar-node node-transit"></circle>
+
+                <!-- Labels -->
+                <text x="150" y="14" text-anchor="middle" class="radar-label">Education (Top)</text>
+                <text x="290" y="154" text-anchor="start" class="radar-label">Healthcare (Right)</text>
+                <text x="150" y="296" text-anchor="middle" class="radar-label">Essentials (Bottom)</text>
+                <text x="10" y="154" text-anchor="end" class="radar-label">Transit (Left)</text>
+              </svg>
+            </div>
+
+            <!-- Micro Market Specs Strip -->
+            <div class="micro-market-specs">
+              <div class="spec-item">
+                <span class="spec-k">Groundwater Depth:</span>
+                <strong class="spec-v" id="specWater">120 - 150 Feet (Potable)</strong>
+              </div>
+              <div class="spec-item">
+                <span class="spec-k">Electricity / Grid:</span>
+                <strong class="spec-v" id="specPower">24/7 TNEB 3-Phase + Solar</strong>
+              </div>
+              <div class="spec-item">
+                <span class="spec-k">Key Connecting Arteries:</span>
+                <strong class="spec-v" id="specRoad">Avinashi Rd / Sathy Highway</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEDICATED DRY LAND & RESIDENTIAL PLOTS SHOWCASE (WITH PARALLAX BACKGROUND) -->
+    <section class="section-land" id="landShowcase">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-tag section-tag-amber">Strategic Investment</span>
+            <h2 class="section-title text-white">Featured DTCP Plots &amp; Farmland</h2>
+            <p class="section-subtitle text-light-muted">
+              High-growth dry land, certified agro-parcels, and DTCP/RERA sanctioned gated residential layouts in Coimbatore's expanding corridors.
+            </p>
+          </div>
+          <a href="#matcher" class="btn btn-primary">Find Matching Land &rarr;</a>
+        </div>
+
+        <div class="land-cards-grid" id="landCardsGrid">
+          <!-- Curated Land Cards injected dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUE-ADDED SERVICES HUB & EMI CALCULATOR -->
+    <section class="section-services" id="services">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">End-to-End Solutions</span>
+          <h2 class="section-title">Home Ownership &amp; Financing Hub</h2>
+          <p class="section-subtitle">
+            From customized 3D design consultation to traditional housewarming pooja arrangements and instant home loan calculators.
+          </p>
+        </div>
+
+        <div class="services-dual-layout">
+          <!-- Left Column: Value-Added Service Cards -->
+          <div class="services-column">
+            <!-- Service 1: 3D Interior & Exterior Design Studio -->
+            <article class="service-feature-card">
+              <div class="service-card-header">
+                <div class="service-icon-box bg-emerald">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </div>
+                <div>
+                  <span class="service-mini-pill">Architectural Consultation</span>
+                  <h3>3D Interior &amp; Exterior Design Studio</h3>
+                </div>
+              </div>
+              <p class="service-body-text">
+                Visualize your dream villa or flat with photorealistic 3D renders, VR walkthroughs, custom modular kitchens, and curated Italian marble/woodwork before committing.
+              </p>
+              <ul class="service-perks-list">
+                <li><span>✓</span> Complimentary 3D Floorplan &amp; Moodboard preview</li>
+                <li><span>✓</span> Turnkey execution with 10-year structural warranty</li>
+                <li><span>✓</span> Verified Coimbatore architectural partners</li>
+              </ul>
+              <button class="btn btn-primary btn-service" id="btnBookInteriorModal" type="button" onclick="openInteriorModal()">
+                Book Free 3D Consultation &rarr;
+              </button>
+            </article>
+
+            <!-- Service 2: House Warming / Griha Pravesh Pooja -->
+            <article class="service-feature-card pooja-card">
+              <div class="service-card-header">
+                <div class="service-icon-box bg-amber">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </div>
+                <div>
+                  <span class="service-mini-pill pill-amber">Auspicious Blessings</span>
+                  <h3>Griha Pravesh &amp; Homam Concierge</h3>
+                </div>
+              </div>
+              <p class="service-body-text">
+                Complete traditional Vedic pooja coordination with certified senior Tamil/Sanskrit pandits, premium organic samagri kits, Ganapathi Homam, Navagraha Pooja, and festive floral decor.
+              </p>
+              <div class="pooja-packages-preview">
+                <div class="pooja-tier-tag" onclick="openPoojaModal('Silver')" style="cursor: pointer;">Silver (Essential)</div>
+                <div class="pooja-tier-tag active" onclick="openPoojaModal('Gold')" style="cursor: pointer;">Gold (Grand Homam)</div>
+                <div class="pooja-tier-tag" onclick="openPoojaModal('Platinum')" style="cursor: pointer;">Platinum (Full Feast &amp; Decor)</div>
+              </div>
+              <button class="btn btn-secondary btn-service" id="btnBookPoojaModal" type="button" onclick="openPoojaModal('')">
+                Select Pooja Package &rarr;
+              </button>
+            </article>
+          </div>
+
+          <!-- Right Column: Interactive EMI Calculator & Banking Partners -->
+          <div class="calculator-column">
+            <div class="calc-card">
+              <div class="calc-header">
+                <div class="calc-header-title">
+                  <div class="calc-icon">₹</div>
+                  <div>
+                    <h3>Home Loan / EMI Calculator</h3>
+                    <p>Real-time monthly repayment &amp; interest computation</p>
+                  </div>
+                </div>
+                <span class="calc-live-pill">Live Calculator</span>
+              </div>
+
+              <div class="calc-inputs-container">
+                <!-- Loan Amount -->
+                <div class="calc-input-block">
+                  <div class="calc-label-row">
+                    <label for="loanAmount">Loan Principal Amount</label>
+                    <div class="calc-val-box">
+                      <span class="currency-symbol">₹</span>
+                      <input type="number" id="loanAmount" value="5000000" min="500000" max="50000000" step="50000" />
+                    </div>
+                  </div>
+                  <input
+                    type="range"
+                    id="loanAmountRange"
+                    min="500000"
+                    max="50000000"
+                    step="50000"
+                    value="5000000"
+                    class="calc-range"
+                  />
+                  <div class="calc-ticks">
+                    <span>₹ 5 Lakh</span>
+                    <span>₹ 2.50 Cr</span>
+                    <span>₹ 5.00 Cr</span>
+                  </div>
+                </div>
+
+                <!-- Interest Rate -->
+                <div class="calc-input-block">
+                  <div class="calc-label-row">
+                    <label for="interestRate">Annual Interest Rate (%)</label>
+                    <div class="calc-val-box">
+                      <input type="number" id="interestRate" value="8.40" min="6.0" max="15.0" step="0.05" />
+                      <span class="unit-symbol">%</span>
+                    </div>
+                  </div>
+                  <input
+                    type="range"
+                    id="interestRateRange"
+                    min="6.0"
+                    max="15.0"
+                    step="0.05"
+                    value="8.40"
+                    class="calc-range"
+                  />
+                  <div class="calc-ticks">
+                    <span>6.0%</span>
+                    <span>10.5%</span>
+                    <span>15.0%</span>
+                  </div>
+                </div>
+
+                <!-- Tenure (Years) -->
+                <div class="calc-input-block">
+                  <div class="calc-label-row">
+                    <label for="loanTenure">Repayment Tenure (Years)</label>
+                    <div class="calc-val-box">
+                      <input type="number" id="loanTenure" value="20" min="1" max="30" step="1" />
+                      <span class="unit-symbol">Yrs</span>
+                    </div>
+                  </div>
+                  <input
+                    type="range"
+                    id="loanTenureRange"
+                    min="1"
+                    max="30"
+                    step="1"
+                    value="20"
+                    class="calc-range"
+                  />
+                  <div class="calc-ticks">
+                    <span>1 Year</span>
+                    <span>15 Years</span>
+                    <span>30 Years</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Computed Summary Cards -->
+              <div class="calc-results-grid">
+                <div class="result-tile primary-tile">
+                  <span class="result-label">Monthly EMI</span>
+                  <strong class="result-value" id="emiValue">₹ 43,075</strong>
+                  <span class="result-subtext">Due every month</span>
+                </div>
+                <div class="result-tile">
+                  <span class="result-label">Total Interest</span>
+                  <strong class="result-value text-amber" id="interestValue">₹ 53,38,064</strong>
+                  <span class="result-subtext">Over 20 years</span>
+                </div>
+                <div class="result-tile">
+                  <span class="result-label">Total Payment</span>
+                  <strong class="result-value text-navy" id="totalPaymentValue">₹ 1,03,38,064</strong>
+                  <span class="result-subtext">Principal + Interest</span>
+                </div>
+              </div>
+
+              <!-- Principal vs Interest Breakdown Visual Bar -->
+              <div class="breakdown-bar-section">
+                <div class="breakdown-labels">
+                  <span class="breakdown-key"><i class="key-box key-principal"></i> Principal (<strong id="principalPercent">48%</strong>)</span>
+                  <span class="breakdown-key"><i class="key-box key-interest"></i> Interest (<strong id="interestPercent">52%</strong>)</span>
+                </div>
+                <div class="progress-bar-composite">
+                  <div class="bar-part-principal" id="barPrincipalPortion" style="width: 48%;"></div>
+                  <div class="bar-part-interest" id="barInterestPortion" style="width: 52%;"></div>
+                </div>
+              </div>
+
+              <!-- Partner Banks Strip -->
+              <div class="partner-banks-module">
+                <div class="banks-header">
+                  <h4>Pre-Approved Banking Partners</h4>
+                  <span>Lowest Rates in Coimbatore</span>
+                </div>
+                <div class="banks-grid">
+                  <div class="bank-pill" data-bank="SBI" data-rate="8.40%">
+                    <span class="bank-name">SBI Home Loans</span>
+                    <strong class="bank-rate">8.40% p.a.</strong>
+                  </div>
+                  <div class="bank-pill" data-bank="HDFC" data-rate="8.50%">
+                    <span class="bank-name">HDFC Bank</span>
+                    <strong class="bank-rate">8.50% p.a.</strong>
+                  </div>
+                  <div class="bank-pill" data-bank="ICICI" data-rate="8.60%">
+                    <span class="bank-name">ICICI Bank</span>
+                    <strong class="bank-rate">8.60% p.a.</strong>
+                  </div>
+                  <div class="bank-pill" data-bank="Bank of Baroda" data-rate="8.40%">
+                    <span class="bank-name">Bank of Baroda</span>
+                    <strong class="bank-rate">8.40% p.a.</strong>
+                  </div>
+                </div>
+                <a href="loan-eligibility.html" class="btn btn-outline full-width" id="btnPreApprovalModal" onclick="openPreApprovalModal(event)" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                  Check Pre-Approval &amp; Eligibility &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL PROOF & VERIFIED CUSTOMER REVIEWS -->
+    <section class="section-testimonials container" id="testimonials">
+      <div class="section-header text-center">
+        <span class="section-tag">Trusted by 1,200+ Families</span>
+        <h2 class="section-title">What Our Buyers &amp; Investors Say</h2>
+        <p class="section-subtitle">Real feedback from Coimbatore property owners, NRI investors, and farmland buyers.</p>
+      </div>
+
+      <div class="testimonials-slider-wrapper">
+        <!-- Slider Navigation Controls -->
+        <button class="slider-btn prev-btn" id="prevTestimonialBtn" aria-label="Previous review">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+
+        <div class="testimonials-track" id="testimonialsTrack">
+          <!-- Review 1 -->
+          <article class="review-card active">
+            <div class="review-top">
+              <div class="reviewer-meta">
+                <img class="reviewer-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Dr. Soundarya Raman" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800';" />
+                <div>
+                  <h4 class="reviewer-name">Dr. Soundarya Raman</h4>
+                  <p class="reviewer-prop">Emerald Heights (3 BHK) • Saravanampatti</p>
+                </div>
+              </div>
+              <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+            </div>
+            <div class="verified-buyer-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified Coimbatore Buyer
+            </div>
+            <p class="review-text">
+              “Land And Beyond’s Smart Matcher was accurate to within 98% of what my family needed. The Livability score for schools &amp; healthcare in Saravanampatti made our decision effortless. Got my SBI home loan cleared within 4 working days through their portal.”
+            </p>
+          </article>
+
+          <!-- Review 2 -->
+          <article class="review-card">
+            <div class="review-top">
+              <div class="reviewer-meta">
+                <img class="reviewer-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Karthik Natarajan" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800';" />
+                <div>
+                  <h4 class="reviewer-name">Karthik Natarajan</h4>
+                  <p class="reviewer-prop">Farmcrest Agro Parcel (4.2 Acres) • Sulur</p>
+                </div>
+              </div>
+              <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+            </div>
+            <div class="verified-buyer-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified Land Investor
+            </div>
+            <p class="review-text">
+              “Buying agricultural dry land is usually filled with title ambiguity, but Land And Beyond provided complete DTCP/Patta documentation, soil testing reports, and verified groundwater depth before we made an advance. Transparent and unmatched service.”
+            </p>
+          </article>
+
+          <!-- Review 3 -->
+          <article class="review-card">
+            <div class="review-top">
+              <div class="reviewer-meta">
+                <img class="reviewer-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Ananya &amp; Suresh V." onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800';" />
+                <div>
+                  <h4 class="reviewer-name">Ananya &amp; Suresh V.</h4>
+                  <p class="reviewer-prop">Verdant Villa Residences (4 BHK) • Race Course</p>
+                </div>
+              </div>
+              <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+            </div>
+            <div class="verified-buyer-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified Luxury Villa Owner
+            </div>
+            <p class="review-text">
+              “The 3D interior consultation and the Griha Pravesh pooja package saved us weeks of hassle. From property comparison to turning the key in our Race Course villa, Land And Beyond was our trusted one-stop solution.”
+            </p>
+          </article>
+        </div>
+
+        <button class="slider-btn next-btn" id="nextTestimonialBtn" aria-label="Next review">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- Slider Dots Indicator -->
+      <div class="slider-dots" id="testimonialDots">
+        <button class="dot-btn active" data-index="0" aria-label="Go to slide 1"></button>
+        <button class="dot-btn" data-index="1" aria-label="Go to slide 2"></button>
+        <button class="dot-btn" data-index="2" aria-label="Go to slide 3"></button>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- NEW SECTION: UPCOMING LAUNCHES, LEGAL APPROVALS & NEWS HUB       -->
+    <!-- ================================================================ -->
+    <section class="section-news-hub" id="newsHub">
+      <div class="container">
+        <!-- 1. Section Header -->
+        <div class="section-header">
+          <div>
+            <span class="section-tag section-tag-emerald">Real Estate Intelligence &amp; Regulatory Hub</span>
+            <h2 class="section-title">Market Insights &amp; Upcoming Launches</h2>
+            <p class="section-subtitle">
+              Stay updated with real estate news, newly launched residential projects, and government-approved properties.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. Live Breaking News Ticker Bar -->
+        <div class="news-ticker-container" aria-label="Live Real Estate News Updates">
+          <div class="ticker-badge-wrapper">
+            <div class="ticker-header-badge">
+              <span class="ticker-live-dot"></span>
+              <strong>LIVE UPDATES</strong>
+            </div>
+          </div>
+          <div class="ticker-track-wrap">
+            <div class="ticker-content-track" id="tickerTrack">
+              <div class="ticker-item">⚡ <strong>Coimbatore Metro Corridor:</strong> 10.1 km Avinashi Road Elevated Expressway boosts Saravanampatti &amp; Peelamedu land valuation by +14% YoY.</div>
+              <div class="ticker-item">⚡ <strong>DTCP &amp; Patta Fast-Track:</strong> 100% Subdivided Revenue Patta &amp; DTCP layout sanctions verified across Coimbatore &amp; Tiruppur belts.</div>
+              <div class="ticker-item">⚡ <strong>Concessional Stamp Duty:</strong> TN Government offers concessional 4% registration duty for verified first-time buyers up to ₹ 50 Lakhs.</div>
+              <div class="ticker-item">⚡ <strong>Pollachi Agro Growth:</strong> High-yield organic coconut farmlands generating 9.2% annual agricultural ROI + 18% land appreciation.</div>
+              <div class="ticker-item">⚡ <strong>VIP Doorstep Inspection:</strong> Free AC Cab Pick-up available today for site tours in RS Puram, Saravanampatti &amp; Avinashi Road.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Upcoming Flats & Apartment News / Updates Grid (News Cards) -->
+        <div class="news-articles-grid" id="newsArticlesGrid">
+          <!-- Injected dynamically via script.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FLOATING SIDE-BY-SIDE PROPERTY COMPARISON DOCK -->
+  <aside class="floating-compare-dock" id="floatingCompareDock" aria-label="Selected properties for comparison" hidden>
+    <div class="dock-inner">
+      <div class="dock-summary">
+        <div class="dock-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"></rect><rect x="14" y="3" width="7" height="18" rx="1"></rect></svg>
+        </div>
+        <div>
+          <strong id="dockCountText">2 Properties Selected</strong>
+          <p>Compare specs, livability, road width &amp; match score side by side</p>
+        </div>
+      </div>
+      <div class="dock-thumbnails" id="dockThumbnails">
+        <!-- Thumbnails injected dynamically -->
+      </div>
+      <div class="dock-actions">
+        <button class="btn btn-outline btn-sm" id="dockClearBtn" type="button" onclick="clearAllCompare()">Clear All</button>
+        <button class="btn btn-primary btn-sm" id="dockCompareBtn" type="button" onclick="openCompareDrawer()">Compare Now &rarr;</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-main-grid">
+      <!-- Brand Column -->
+      <div class="footer-col brand-col">
+        <a href="#" class="footer-logo-wrap" aria-label="Land &amp; Beyond Home" style="display: inline-block; background: rgba(255, 255, 255, 0.06); padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.12); margin-bottom: 16px; width: fit-content; text-decoration: none;">
+          <img src="/land-and-beyond-logo.png" alt="Land &amp; Beyond Logo" class="footer-logo-img" onerror="this.src='land-and-beyond-logo.png'" style="height: 52px; width: auto; object-fit: contain; display: block;" />
+        </a>
+        <p class="footer-about">
+          Land And Beyond is Tamil Nadu’s premier real estate search &amp; intelligence engine. We combine data-backed livability scores, DTCP title verifications, and financial engineering to guide your property decisions.
+        </p>
+        <div class="rera-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>TN RERA Registered: <strong>TNRERA/AGT/0421/2026</strong></span>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col">
+        <h4>Property Categories</h4>
+        <ul class="footer-links">
+          <li><a href="#newProjects">New Launches &amp; Townships</a></li>
+          <li><a href="#showcase" data-category="Apartments">Luxury Apartments</a></li>
+          <li><a href="#showcase" data-category="Villas">Gated Community Villas</a></li>
+          <li><a href="#landShowcase">DTCP Approved Plots</a></li>
+          <li><a href="#landShowcase">Agricultural Dry Land</a></li>
+          <li><a href="#newsHub">Market News &amp; Legal Approvals</a></li>
+        </ul>
+      </div>
+
+      <!-- Value Added Services -->
+      <div class="footer-col">
+        <h4>Services &amp; Support</h4>
+        <ul class="footer-links">
+          <li><a href="#services">3D Interior &amp; Exterior Design</a></li>
+          <li><a href="#services">Griha Pravesh Pooja Concierge</a></li>
+          <li><a href="#services">Home Loan EMI Calculator</a></li>
+          <li><a href="#services">Bank Pre-Approval Check</a></li>
+          <li><a href="#matcher">AI Smart Matcher</a></li>
+        </ul>
+      </div>
+
+      <!-- Coimbatore HQ & Contact Details -->
+      <div class="footer-col contact-col">
+        <h4>Coimbatore Headquarters</h4>
+        <ul class="contact-list">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>Coimbatore</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <a href="mailto:landandbeyond03@gmail.com" style="color: inherit; text-decoration: none;">landandbeyond03@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright & Legal -->
+    <div class="container footer-bottom">
+      <p>© 2026 Land And Beyond Realty Solutions India Pvt. Ltd. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">RERA Compliance</a>
+        <a href="#">Legal Disclaimer</a>
+      </div>
+      <p style="width: 100%; text-align: center; margin-top: 14px; font-size: 0.85rem; color: #94a3b8;">
+        Designed and Developed by <a href="https://techkeymonk.com" target="_blank" rel="noopener noreferrer" style="color: #10b981; font-weight: 700; text-decoration: underline; transition: color 0.2s ease;">techkeymonk</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- MODAL DIALOGS CONTAINER                         -->
+  <!-- ============================================== -->
+
+  <!-- 1. FREE SITE VISIT / ADVISORY MODAL -->
+  <div class="modal-backdrop" id="siteVisitPromoModal" aria-hidden="true" role="dialog" aria-modal="true" onclick="if(event.target===this) window.closeAllModals();">
+    <div class="modal-container modal-auth-box">
+      <button class="modal-close-btn" onclick="window.closeAllModals(); event.stopPropagation();" data-close-modal aria-label="Close dialog">&times;</button>
+
+      <div class="auth-modal-header">
+        <div class="auth-brand-badge">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </div>
+        <h3 class="auth-modal-title" id="authModalTitle">Book a <span class="gradient-text">Free Site Visit</span></h3>
+        <p class="auth-modal-subtitle">Explore the Grand Aeropolis 45-Acre Smart Township, Sulur farmland, and future-ready plots with zero-pressure guidance from our advisory team.</p>
+      </div>
+
+      <form class="modal-form auth-form" id="siteVisitForm">
+        <div class="form-group">
+          <label for="visitName">Full Name</label>
+          <input type="text" id="visitName" placeholder="Your name" required />
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="visitPhone">Mobile Number</label>
+            <input type="tel" id="visitPhone" placeholder="+91 98765 43210" required />
+          </div>
+          <div class="form-group">
+            <label for="visitProjectName">Preferred Property</label>
+            <select id="visitProjectName">
+              <option value="Grand Aeropolis 45-Acre Integrated Smart Township">Grand Aeropolis 45-Acre Integrated Smart Township</option>
+              <option value="Sulur Aviation Growth Belt">Sulur Aviation Growth Belt</option>
+              <option value="Annur Industrial Expansion Corridor">Annur Industrial Expansion Corridor</option>
+              <option value="Other property inquiry">Other property inquiry</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="visitDate">Preferred Visit Date</label>
+            <input type="date" id="visitDate" required />
+          </div>
+          <div class="form-group">
+            <label for="visitBudget">Budget Range</label>
+            <select id="visitBudget">
+              <option value="Below ₹25 Lakhs">Below ₹25 Lakhs</option>
+              <option value="₹25L – ₹50L">₹25L – ₹50L</option>
+              <option value="₹50L – ₹1Cr">₹50L – ₹1Cr</option>
+              <option value="₹1Cr and above">₹1Cr and above</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="visitMessage">Project Notes</label>
+          <textarea id="visitMessage" rows="3" placeholder="Share any specific site, financing, or location preferences"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-auth-submit full-width">
+          <span>Confirm Site Visit</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- 2. PROPERTY DETAILS & LIVABILITY DEEP-DIVE MODAL -->
+  <div class="modal-backdrop" id="propertyModal" aria-hidden="true" role="dialog" aria-modal="true" onclick="if(event.target===this) window.closeAllModals();">
+    <div class="modal-container modal-property-box">
+      <button class="modal-close-btn" onclick="window.closeAllModals(); event.stopPropagation();" data-close-modal aria-label="Close dialog">&times;</button>
+      <div id="propertyModalContent">
+        <!-- Injected dynamically via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. SIDE-BY-SIDE PROPERTY COMPARISON MATRIX MODAL -->
+  <div class="modal-backdrop" id="compareModal" aria-hidden="true" role="dialog" aria-modal="true" onclick="if(event.target===this) window.closeAllModals();">
+    <div class="modal-container modal-compare-box">
+      <div class="modal-header-row">
+        <div>
+          <h2>Side-by-Side Property Comparison</h2>
+          <p>Evaluating your selected properties across price, livability, road access, and ROI</p>
+        </div>
+        <button class="modal-close-btn" onclick="window.closeAllModals(); event.stopPropagation();" data-close-modal aria-label="Close comparison dialog">&times;</button>
+      </div>
+
+      <div class="compare-table-responsive" id="compareTableWrap">
+        <!-- Comparison Table Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. SCHEDULE FREE VIP SITE VISIT & CAB PICKUP MODAL -->
+  <div class="modal-backdrop" id="siteVisitModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 99999; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;" onclick="if(event.target===this) window.closeAllModals();">
+    <div class="modal-container modal-service-box" style="background: #ffffff; border-radius: 24px; padding: 32px 36px; max-width: 520px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); position: relative; max-height: 90vh; overflow-y: auto;">
+      <button type="button" class="modal-close-btn" onclick="closeSiteVisitModal()" style="position: absolute; top: 20px; right: 20px; border: none; background: #f1f5f9; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; color: #64748b;">✕</button>
+      
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 16px;">
+        <div style="width: 52px; height: 52px; border-radius: 16px; background: #ecfdf5; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <span style="font-size: 24px;">🚕</span>
+        </div>
+        <div>
+          <h3 style="margin: 0; font-size: 18px; font-weight: 800; color: #0f172a;">Schedule Free VIP Site Visit</h3>
+          <p style="margin: 2px 0 0 0; font-size: 12.5px; color: #64748b;">Complimentary AC Cab Pick-up &amp; Concierge Property Tour</p>
+        </div>
+      </div>
+
+      <form id="siteVisitBookingForm" onsubmit="handleSiteVisitBookingSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+        
+        <!-- Pre-filled Property Context -->
+        <div>
+          <label for="booking-property-name" style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 4px;">Selected Property / Investment Corridor *</label>
+          <input type="text" id="booking-property-name" required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 13.5px; font-weight: 700; color: #0f172a; box-sizing: border-box; outline: none;" />
+        </div>
+
+        <!-- Name & Mobile Number -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label for="booking-name" style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 4px;">Full Name *</label>
+            <input type="text" id="booking-name" required placeholder="e.g. Rajesh Sharma" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 13.5px; box-sizing: border-box; outline: none;" />
+          </div>
+          <div>
+            <label for="booking-phone" style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 4px;">Mobile (10 Digits) *</label>
+            <input type="tel" id="booking-phone" pattern="[0-9]{10}" required placeholder="98421 88421" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 13.5px; box-sizing: border-box; outline: none;" />
+          </div>
+        </div>
+
+        <!-- Preferred Date & Time Slot -->
+        <!-- Preferred Date & Time Slot -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label for="booking-date" style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 4px;">Visit Date *</label>
+            <input type="date" id="booking-date" required style="width: 100%; padding: 9px 12px; border-radius: 10px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 13px; box-sizing: border-box; outline: none;" />
+          </div>
+          <div>
+            <label for="booking-slot" style="display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 4px;">Time Slot *</label>
+            <select id="booking-slot" required style="width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 13px; box-sizing: border-box; outline: none;">
+              <option value="" disabled selected>Select Time Slot</option>
+              <option value="Morning (09:30 AM - 12:00 PM)">Morning (09:30 AM - 12:00 PM)</option>
+              <option value="Afternoon (02:00 PM - 04:30 PM)">Afternoon (02:00 PM - 04:30 PM)</option>
+              <option value="Evening (04:30 PM - 07:00 PM)">Evening (04:30 PM - 07:00 PM)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Free Cab Pickup Address -->
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+            <input type="checkbox" id="booking-pickup-checkbox" checked onchange="togglePickupAddress(this)" style="width: 16px; height: 16px; accent-color: #10b981; cursor: pointer;" />
+            <label for="booking-pickup-checkbox" style="font-size: 12.5px; font-weight: 700; color: #059669; cursor: pointer;">Require Free Chauffeur Cab Pick-up</label>
+          </div>
+          <div id="booking-pickup-address-wrap">
+            <input type="text" id="booking-pickup-address" placeholder="e.g. RS Puram, Gandhipuram, Peelamedu, Airport, Hotel..." required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 13px; box-sizing: border-box; outline: none;" />
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="btn-submit-booking" class="btn btn-primary" style="width: 100%; padding: 14px; border-radius: 12px; border: none; background: #10b981; color: #ffffff; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);">
+          <span>Confirm Free Site Visit Booking &rarr;</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SITE VISIT MODAL CONTROLLER & GLOBAL DOCUMENT EVENT DELEGATION -->
+  <script>
+    function openSiteVisitModal(propertyTitle = 'General Property Inspection') {
+      const modal = document.getElementById('siteVisitModal');
+      const propInput = document.getElementById('booking-property-name');
+      const dateInput = document.getElementById('booking-date');
+      const slotInput = document.getElementById('booking-slot');
+
+      if (propInput) propInput.value = propertyTitle;
+      if (dateInput) {
+        dateInput.min = new Date().toISOString().split('T')[0];
+        dateInput.value = '';
+      }
+      if (slotInput) {
+        slotInput.selectedIndex = 0;
+      }
+
+      // Check for logged-in user to auto-fill
+      try {
+        const session = JSON.parse(localStorage.getItem('lb_user_session') || 'null');
+        if (session) {
+          const nameInput = document.getElementById('booking-name');
+          const phoneInput = document.getElementById('booking-phone');
+          if (nameInput && !nameInput.value && session.name) nameInput.value = session.name;
+          if (phoneInput && !phoneInput.value && session.phone) phoneInput.value = session.phone;
+        }
+      } catch(e) {}
+
+      if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    window.openSiteVisitModal = openSiteVisitModal;
+
+    function closeSiteVisitModal() {
+      const modal = document.getElementById('siteVisitModal');
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    }
+    window.closeSiteVisitModal = closeSiteVisitModal;
+
+    function togglePickupAddress(checkbox) {
+      const wrap = document.getElementById('booking-pickup-address-wrap');
+      const input = document.getElementById('booking-pickup-address');
+      if (wrap) wrap.style.display = checkbox.checked ? 'block' : 'none';
+      if (input) input.required = checkbox.checked;
+    }
+    window.togglePickupAddress = togglePickupAddress;
+
+    // GLOBAL DELEGATION: Intercept ALL booking CTA button clicks
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('button, a, .btn');
+      if (!btn) return;
+      const text = (btn.innerText || btn.textContent || '').trim();
+
+      if (
+        text.includes('Book Free Site Visit') ||
+        text.includes('Book Free Visit') ||
+        text.includes('Cab Pick-up') ||
+        text.includes('Schedule Agro Inspection') ||
+        text.includes('Book Farmland Site Tour') ||
+        text.includes('Book Site Visit')
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Extract context from property card or section
+        let propTitle = 'Grand Aeropolis Smart Township';
+        const card = btn.closest('.property-card, .upcoming-project-card, .fast-track-land-card, .hero-project-mega-banner, article, .card');
+        if (card) {
+          const titleEl = card.querySelector('.card-title, .proj-card-title, .ft-card-title, .mega-project-title, h3, h4, strong');
+          if (titleEl) propTitle = titleEl.innerText.trim();
+        } else if (text.includes('Agro') || text.includes('Farmland')) {
+          propTitle = 'Coimbatore Strategic Farmland Corridor Tour';
+        }
+
+        openSiteVisitModal(propTitle);
+      }
+    });
+
+    // Form Submission & Persistence
+    function handleSiteVisitBookingSubmit(e) {
+      e.preventDefault();
+      const propTitle = document.getElementById('booking-property-name')?.value.trim() || 'Grand Aeropolis Smart Township';
+      const customerName = document.getElementById('booking-name')?.value.trim() || '';
+      const phone = document.getElementById('booking-phone')?.value.trim() || '';
+      const date = document.getElementById('booking-date')?.value || '';
+      const slot = document.getElementById('booking-slot')?.value || '';
+      const pickupCheckbox = document.getElementById('booking-pickup-checkbox');
+      const pickupAddress = document.getElementById('booking-pickup-address')?.value.trim() || 'Coimbatore City Center';
+      const submitBtn = document.getElementById('btn-submit-booking');
+
+      if (!customerName || !phone || !date || !slot) {
+        alert('Please fill in your Name, 10-digit Mobile Number, Visit Date, and Select a Time Slot.');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Scheduling Inspection... ⏳</span>';
+      }
+
+      setTimeout(() => {
+        const formattedContact = phone.startsWith('+') ? phone : `+91 ${phone}`;
+        const newLead = {
+          id: 'inq_' + Date.now(),
+          name: customerName,
+          customerName: customerName,
+          contact: formattedContact,
+          phone: formattedContact,
+          propertyTitle: propTitle,
+          propertyRequested: propTitle,
+          date: date,
+          preferredDate: date + (slot ? ` (${slot.split(' ')[0]})` : ''),
+          pickupNeeded: pickupCheckbox ? pickupCheckbox.checked : true,
+          pickupAddress: pickupAddress,
+          status: 'New Lead',
+          createdAt: new Date().toISOString()
+        };
+
+        // Read and prepend to shared localStorage key
+        let currentTours = [];
+        try {
+          currentTours = JSON.parse(localStorage.getItem('lb_site_tours_data') || '[]');
+        } catch(err) {
+          currentTours = [];
+        }
+
+        currentTours.unshift(newLead);
+        localStorage.setItem('lb_site_tours_data', JSON.stringify(currentTours));
+
+        // POST to REST Server Database API
+        try {
+          fetch('/api/data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: 'lb_site_tours_data', data: currentTours })
+          }).catch(() => {});
+        } catch(e) {}
+
+        // Transmit BroadcastChannel message for instant cross-tab sync with Admin Portal
+        try {
+          if (typeof BroadcastChannel !== 'undefined') {
+            const bc = new BroadcastChannel('lb_sync_channel');
+            bc.postMessage({ type: 'STATE_UPDATE', key: 'lb_site_tours_data', data: currentTours });
+            bc.close();
+          }
+        } catch(e) {}
+
+        // Dispatch local window storage event
+        try {
+          window.dispatchEvent(new StorageEvent('storage', {
+            key: 'lb_site_tours_data',
+            newValue: JSON.stringify(currentTours)
+          }));
+        } catch(err) {
+          window.dispatchEvent(new Event('storage'));
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Confirm Free Site Visit Booking &rarr;</span>';
+        }
+
+        closeSiteVisitModal();
+        const form = document.getElementById('siteVisitBookingForm');
+        if (form) form.reset();
+
+        alert(`✅ Free Site Visit Booked Successfully!
+
+Property: ${propTitle}
+Date: ${date}
+Guest: ${customerName} (${formattedContact})
+
+Our concierge team has reserved your complimentary AC cab pickup.`);
+      }, 400);
+    }
+    window.handleSiteVisitBookingSubmit = handleSiteVisitBookingSubmit;
+  </script>
+
+  <!-- 5. VIEW FLOOR PLAN & MASTER LAYOUT MODAL -->
+  <div class="modal-backdrop" id="masterPlanModal" aria-hidden="true" role="dialog" aria-modal="true" onclick="if(event.target===this) window.closeAllModals();">
+    <div class="modal-container modal-property-box">
+      <button class="modal-close-btn" onclick="window.closeAllModals(); event.stopPropagation();" data-close-modal aria-label="Close dialog">&times;</button>
+      <div id="masterPlanModalContent">
+        <!-- Injected dynamically via script.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 3D INTERIOR DESIGN CONSULTATION BOOKING MODAL -->
+  <div class="modal-backdrop" id="interiorModal" aria-hidden="true" role="dialog" aria-modal="true" onclick="if(event.target===this) window.closeAllModals();">
+    <div class="modal-container modal-service-box">
+      <button class="modal-close-btn" onclick="window.closeAllModals(); event.stopPropagation();" data-close-modal aria-label="Close dialog">&times;</button>
+      <div class="service-modal-header">
+        <div class="service-modal-icon bg-emerald">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+        </div>
+        <div>
+          <h3>Book Free 3D Interior &amp; Exterior Consultation</h3>
+          <p>Get customized 3D render designs, floor layout optimization, and material quotes</p>
+        </div>
+      </div>
+
+      <form class="modal-form" id="interiorForm" onsubmit="handleInteriorSubmit(event)">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="interiorName">Your Full Name</label>
+            <input type="text" id="interiorName" placeholder="Name" required />
+          </div>
+          <div class="form-group">
+            <label for="interiorPhone">Phone Number</label>
+            <input type="tel" id="interiorPhone" placeholder="Phone Number" required />
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="interiorPropType">Property Type</label>
+            <select id="interiorPropType" required>
+              <option value="" disabled selected>Select Property Type</option>
+              <option>Apartment (2/3 BHK)</option>
+              <option>Independent Villa</option>
+              <option>New Plot Construction</option>
+              <option>Commercial / Office</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="interiorDesignStyle">Preferred Aesthetic Style</label>
+            <select id="interiorDesignStyle" required>
+              <option value="" disabled selected>Select Aesthetic Style</option>
+              <option>Contemporary Minimalist</option>
+              <option>Traditional Chettinad &amp; Wood</option>
+              <option>Modern Scandinavian</option>
+              <option>Luxury Italian Marble &amp; Gold</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="interiorBudget">Estimated Interior Budget Tier</label>
+          <select id="interiorBudget" required>
+            <option value="" disabled selected>Select Budget Tier</option>
+            <option>₹ 3.5 Lakh - ₹ 6.0 Lakh (Essential Modular)</option>
+            <option>₹ 6.0 Lakh - ₹ 12.0 Lakh (Premium Semi-Turnkey)</option>
+            <option>₹ 12.0 Lakh - ₹ 25.0 Lakh (Luxury Turnkey + False Ceiling)</option>
+            <option>₹ 25.0 Lakh+ (Bespoke Designer Architecture)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="interiorNotes">Special Requirements / Locality</label>
+          <textarea id="interiorNotes" rows="2" placeholder="Special requirements / locality (optional)"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary full-width">Schedule Free Consultation &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 7. GRIHA PRAVESH POOJA BOOKING MODAL -->
+  <div class="modal-backdrop" id="poojaModal" aria-hidden="true" role="dialog" aria-modal="true" onclick="if(event.target===this) window.closeAllModals();">
+    <div class="modal-container modal-service-box">
+      <button class="modal-close-btn" onclick="window.closeAllModals(); event.stopPropagation();" data-close-modal aria-label="Close dialog">&times;</button>
+      <div class="service-modal-header">
+        <div class="service-modal-icon bg-amber">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </div>
+        <div>
+          <h3>Griha Pravesh &amp; Pooja Concierge Booking</h3>
+          <p>Certified Vedic Pandits, premium organic samagri, and complete ritual support</p>
+        </div>
+      </div>
+
+      <form class="modal-form" id="poojaForm" onsubmit="handlePoojaSubmit(event)">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="poojaName">Devotee / Host Name</label>
+            <input type="text" id="poojaName" placeholder="Name" required />
+          </div>
+          <div class="form-group">
+            <label for="poojaPhone">Contact Number</label>
+            <input type="tel" id="poojaPhone" placeholder="Phone Number" required />
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="poojaPackage">Selected Package</label>
+            <select id="poojaPackage" required>
+              <option value="" disabled selected>Select Package</option>
+              <option value="Silver">Silver Package (Ganapathi &amp; Vastu Homam - ₹ 7,500)</option>
+              <option value="Gold">Gold Package (Navagraha + Maha Lakshmi Homam - ₹ 14,500)</option>
+              <option value="Platinum">Platinum Package (Full Homam + 2 Priests + Floral Decor - ₹ 28,000)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="poojaDate">Auspicious Date (Muhurtham)</label>
+            <input type="date" id="poojaDate" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="poojaTradition">Ritual Linguistic / Vedic Tradition</label>
+          <select id="poojaTradition" required>
+            <option value="" disabled selected>Select Tradition</option>
+            <option value="Tamil Vedic Tradition (Vadakalai / Thenkalai / Smartha)">Tamil Vedic Tradition (Vadakalai / Thenkalai / Smartha)</option>
+            <option value="Telugu Tradition">Telugu Tradition</option>
+            <option value="Malayalam Tradition">Malayalam Tradition</option>
+            <option value="Kannada / North Indian Vedic Tradition">Kannada / North Indian Vedic Tradition</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="poojaAddress">New Home Address in Coimbatore</label>
+          <input type="text" id="poojaAddress" placeholder="Address" required />
+        </div>
+
+        <button type="submit" class="btn btn-secondary full-width">Confirm Pooja Concierge Request &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 8. BANK HOME LOAN PRE-APPROVAL MODAL -->
+  <div class="modal-backdrop" id="loanModal" aria-hidden="true" role="dialog" aria-modal="true" onclick="if(event.target===this) window.closeAllModals();">
+    <div class="modal-container modal-service-box">
+      <button class="modal-close-btn" onclick="window.closeAllModals(); event.stopPropagation();" data-close-modal aria-label="Close dialog">&times;</button>
+      <div class="service-modal-header">
+        <div class="service-modal-icon bg-navy">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+        </div>
+        <div>
+          <h3>Instant Home Loan Pre-Approval</h3>
+          <p>Get exclusive concessional interest rates starting at 8.40% with zero processing fee</p>
+        </div>
+      </div>
+
+      <form class="modal-form" id="loanForm">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="loanApplicantName">Applicant Name</label>
+            <input type="text" id="loanApplicantName" placeholder="Name" required />
+          </div>
+          <div class="form-group">
+            <label for="loanApplicantPhone">Mobile Number</label>
+            <input type="tel" id="loanApplicantPhone" placeholder="Phone Number" required />
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="loanBankPref">Preferred Partner Bank</label>
+            <select id="loanBankPref">
+              <option value="SBI">State Bank of India (8.40%)</option>
+              <option value="HDFC">HDFC Bank (8.50%)</option>
+              <option value="ICICI">ICICI Bank (8.60%)</option>
+              <option value="Bank of Baroda">Bank of Baroda (8.40%)</option>
+              <option value="Axis">Axis Bank (8.65%)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="loanMonthlyIncome">Net Monthly In-Hand Income</label>
+            <select id="loanMonthlyIncome">
+              <option>₹ 40,000 - ₹ 75,000</option>
+              <option selected>₹ 75,000 - ₹ 1,50,000</option>
+              <option>₹ 1,50,000 - ₹ 3,00,000</option>
+              <option>₹ 3,00,000+ (NRI / Business)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="loanRequiredAmount">Required Loan Amount (₹)</label>
+          <input type="text" id="loanRequiredAmount" value="₹ 50,00,000" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary full-width">Check Eligibility &amp; Request Callback &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 9. REAL ESTATE NEWS ARTICLE READER MODAL -->
+  <div class="modal-backdrop" id="newsArticleModal" aria-hidden="true" role="dialog" aria-modal="true" onclick="if(event.target===this) window.closeAllModals();">
+    <div class="modal-container modal-property-box">
+      <button class="modal-close-btn" onclick="window.closeAllModals(); event.stopPropagation();" data-close-modal aria-label="Close dialog">&times;</button>
+      <div id="newsArticleModalContent">
+        <!-- Injected dynamically via script.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. LEGAL DOCUMENTS & DTCP/RERA APPROVAL VERIFICATION MODAL -->
+  <div class="modal-backdrop" id="legalDocsModal" aria-hidden="true" role="dialog" aria-modal="true" onclick="if(event.target===this) window.closeAllModals();">
+    <div class="modal-container modal-property-box">
+      <button class="modal-close-btn" onclick="window.closeAllModals(); event.stopPropagation();" data-close-modal aria-label="Close dialog">&times;</button>
+      <div id="legalDocsModalContent">
+        <!-- Injected dynamically via script.js -->
+      </div>
+    </div>
+  </div>
+
+  
+
+    <!-- AUTHENTICATION (SIGN IN / LOGIN) MODAL -->
+  <!-- ========================================================================
+       AUTHENTICATION & REGISTRATION MODAL (SIGN IN / CREATE ACCOUNT ONBOARDING)
+       ======================================================================== -->
+  <div id="auth-modal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 99999; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
+    
+    <div class="auth-modal-card" style="background: #ffffff; border-radius: 24px; padding: 32px 36px; max-width: 460px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); position: relative; border: 1px solid rgba(255, 255, 255, 0.8); max-height: 90vh; overflow-y: auto;">
+      
+      <!-- Close Button -->
+      <button type="button" id="btn-close-auth" onclick="closeAuthModal()" style="position: absolute; top: 20px; right: 20px; border: none; background: #f1f5f9; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; color: #64748b; transition: all 0.2s;">✕</button>
+
+      <!-- VIEW 1: SIGN IN FORM -->
+      <div id="auth-signin-view">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div style="width: 52px; height: 52px; border-radius: 16px; background: #0f172a; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; box-shadow: 0 8px 16px rgba(15, 23, 42, 0.15);">
+            <span style="color: #10b981; font-size: 24px;">🔐</span>
+          </div>
+          <h3 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px;">Sign In to <span style="color: #10b981;">Land &amp; Beyond</span></h3>
+          <p style="font-size: 13px; color: #64748b; margin: 0; line-height: 1.4;">Access your verified listings, saved searches, and VIP inspection tours.</p>
+        </div>
+
+        <form id="auth-signin-form" onsubmit="handleSignInSubmit(event)" style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <label for="auth-email" style="display: block; font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">Email Address</label>
+            <div style="position: relative;">
+              <input type="email" id="auth-email" required placeholder="name@domain.com" style="width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 14px; color: #0f172a; box-sizing: border-box; outline: none; transition: border-color 0.2s;" />
+            </div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label for="auth-password" style="font-size: 13px; font-weight: 700; color: #0f172a;">Password</label>
+              <a href="#" id="auth-forgot-pass" onclick="handleForgotPass(event)" style="font-size: 12px; color: #10b981; text-decoration: none; font-weight: 600;">Forgot?</a>
+            </div>
+            <div style="position: relative;">
+              <input type="password" id="auth-password" required placeholder="Enter your password..." style="width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 14px; color: #0f172a; box-sizing: border-box; outline: none; transition: border-color 0.2s;" />
+              <button type="button" onclick="togglePasswordVisibility('auth-password', this)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); border: none; background: transparent; cursor: pointer; font-size: 14px; color: #94a3b8;">👁️</button>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-submit-signin" class="btn btn-primary" style="width: 100%; padding: 14px; border-radius: 14px; border: none; background: #0f172a; color: #ffffff; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);">
+            <span>Sign In &rarr;</span>
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 13px; color: #64748b;">
+          Don't have an account? <a href="#" onclick="switchToSignUp(event)" style="color: #10b981; font-weight: 700; text-decoration: none;">Create an Account</a>
+        </div>
+      </div>
+
+      <!-- VIEW 2: CREATE ACCOUNT (REGISTER) FORM -->
+      <div id="auth-signup-view" style="display: none;">
+        <div style="text-align: center; margin-bottom: 22px;">
+          <div style="width: 52px; height: 52px; border-radius: 16px; background: #ecfdf5; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; border: 1px solid #a7f3d0;">
+            <span style="color: #059669; font-size: 24px;">👤</span>
+          </div>
+          <h3 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px;">Create Verified Account</h3>
+          <p style="font-size: 13px; color: #64748b; margin: 0; line-height: 1.4;">Join thousands of Coimbatore buyers, investors, and homeowners.</p>
+        </div>
+
+        <form id="auth-signup-form" onsubmit="handleSignUpSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+          
+          <!-- Full Name -->
+          <div>
+            <label for="reg-name" style="display: block; font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Full Name *</label>
+            <input type="text" id="reg-name" required placeholder="Name" style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 13.5px; box-sizing: border-box; outline: none;" />
+          </div>
+
+          <!-- Phone & Email Row -->
+          <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+            <div>
+              <label for="reg-phone" style="display: block; font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Phone Number (10 Digits) *</label>
+              <div style="display: flex; gap: 6px;">
+                <span style="padding: 11px 10px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 13px; font-weight: 600; color: #475569;">+91</span>
+                <input type="tel" id="reg-phone" pattern="[0-9]{10}" required placeholder="Phone Number" style="flex: 1; padding: 11px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 13.5px; box-sizing: border-box; outline: none;" />
+              </div>
+            </div>
+
+            <div>
+              <label for="reg-email" style="display: block; font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Email Address *</label>
+              <input type="email" id="reg-email" required placeholder="name@domain.com" style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 13.5px; box-sizing: border-box; outline: none;" />
+            </div>
+          </div>
+
+          <!-- Password & Confirm Password Row -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label for="reg-password" style="display: block; font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Password *</label>
+              <div style="position: relative;">
+                <input type="password" id="reg-password" minlength="6" required placeholder="Min 6 chars" style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 13px; box-sizing: border-box; outline: none;" />
+                <button type="button" onclick="togglePasswordVisibility('reg-password', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: transparent; cursor: pointer; font-size: 13px; color: #94a3b8;">👁️</button>
+              </div>
+            </div>
+
+            <div>
+              <label for="reg-confirm-password" style="display: block; font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Confirm *</label>
+              <div style="position: relative;">
+                <input type="password" id="reg-confirm-password" minlength="6" required placeholder="Repeat" style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 13px; box-sizing: border-box; outline: none;" />
+                <button type="button" onclick="togglePasswordVisibility('reg-confirm-password', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: transparent; cursor: pointer; font-size: 13px; color: #94a3b8;">👁️</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit CTA -->
+          <button type="submit" id="btn-submit-signup" class="btn btn-primary" style="width: 100%; padding: 13px; border-radius: 12px; border: none; background: #10b981; color: #ffffff; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);">
+            <span>Create Verified Account &rarr;</span>
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 18px; font-size: 13px; color: #64748b;">
+          Already have an account? <a href="#" onclick="switchToSignIn(event)" style="color: #10b981; font-weight: 700; text-decoration: none;">Sign In</a>
+        </div>
+      </div>
+
+  <!-- 3. PRE-APPROVAL & HOME LOAN ELIGIBILITY FORM MODAL -->
+  <div class="admin-modal-overlay" id="preApprovalModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); z-index: 99999; align-items: center; justify-content: center; padding: 20px;">
+    <div class="admin-modal-card" style="background: #ffffff; border-radius: 20px; max-width: 500px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); border: 1px solid #e2e8f0; overflow: hidden; animation: modal-scale-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+      
+      <!-- Modal Header -->
+      <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; padding: 22px 24px; position: relative;">
+        <button type="button" onclick="closePreApprovalModal()" style="position: absolute; top: 16px; right: 16px; border: none; background: rgba(255,255,255,0.1); color: #ffffff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">&times;</button>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.5rem; background: rgba(16,185,129,0.2); padding: 8px; border-radius: 12px; display: inline-flex;">🏦</span>
+          <div>
+            <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: #ffffff;">Check Pre-Approval &amp; Loan Eligibility</h3>
+            <span style="font-size: 12px; color: #94a3b8;">Instant credit evaluation &amp; pre-sanction offer from top banking partners</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Body Form -->
+      <form id="preApprovalForm" onsubmit="handleLoanEligibilitySubmit(event)" style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+        <div>
+          <label for="loan-name" style="display: block; font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Full Name *</label>
+          <input type="text" id="loan-name" required placeholder="e.g. Rohan Verma" style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 13.5px; box-sizing: border-box; outline: none; transition: border-color 0.2s;" />
+        </div>
+
+        <div>
+          <label for="loan-email" style="display: block; font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Email Address *</label>
+          <input type="email" id="loan-email" required placeholder="e.g. rohan.verma@example.com" style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 13.5px; box-sizing: border-box; outline: none; transition: border-color 0.2s;" />
+        </div>
+
+        <div>
+          <label for="loan-income" style="display: block; font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Monthly Salary / Income *</label>
+          <input type="text" id="loan-income" required placeholder="e.g. ₹ 85,000 / month" style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 13.5px; box-sizing: border-box; outline: none; transition: border-color 0.2s;" />
+        </div>
+
+        <div>
+          <label for="loan-employment" style="display: block; font-size: 12.5px; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Employment Status *</label>
+          <select id="loan-employment" required style="width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 13.5px; box-sizing: border-box; outline: none; transition: border-color 0.2s;">
+            <option value="" disabled selected>Select Employment Status</option>
+            <option value="Employed">Employed / Salaried (Private / Govt)</option>
+            <option value="Business">Self-Employed / Business Owner</option>
+            <option value="Unemployed">Unemployed / Seeking</option>
+          </select>
+        </div>
+
+        <!-- Bank Preference Hint -->
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 10px 14px; border-radius: 10px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: #166534;">
+          <span>⚡</span>
+          <span>Includes rate matching across <strong>SBI (8.40%)</strong>, <strong>HDFC (8.50%)</strong>, &amp; <strong>ICICI Bank</strong>.</span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="btn-submit-loan" class="btn btn-primary" style="width: 100%; padding: 13px; border-radius: 12px; border: none; background: #10b981; color: #ffffff; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);">
+          <span>Submit &amp; Get Pre-Approval &rarr;</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openPreApprovalModal(e) {
+      if (e) e.preventDefault();
+      const amount = document.getElementById('loanPrincipal')?.value || '5000000';
+      const tenure = document.getElementById('loanTenure')?.value || '20';
+      const activeBank = document.querySelector('.bank-pill.active .bank-name')?.textContent || 'SBI';
+      window.location.href = `loan-eligibility.html?amount=${encodeURIComponent(amount)}&tenure=${encodeURIComponent(tenure)}&bank=${encodeURIComponent(activeBank)}`;
+    }
+    window.openPreApprovalModal = openPreApprovalModal;
+
+    function closePreApprovalModal() {
+      const modal = document.getElementById('preApprovalModal');
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    }
+    window.closePreApprovalModal = closePreApprovalModal;
+
+    function handleLoanEligibilitySubmit(e) {
+      if (e) e.preventDefault();
+      
+      const name = document.getElementById('loan-name').value.trim();
+      const email = document.getElementById('loan-email').value.trim();
+      const income = document.getElementById('loan-income').value.trim();
+      const employment = document.getElementById('loan-employment').value;
+      const submitBtn = document.getElementById('btn-submit-loan');
+
+      if (!name || !email || !income || !employment) {
+        alert('Please fill out all required fields (*)');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Processing Pre-Approval... ⏳</span>';
+      }
+
+      setTimeout(() => {
+        const newInquiry = {
+          id: 'loan_' + Date.now(),
+          name,
+          email,
+          income,
+          employment,
+          status: 'Pre-Approval Requested',
+          createdAt: new Date().toISOString()
+        };
+
+        let currentInquiries = [];
+        try {
+          currentInquiries = JSON.parse(localStorage.getItem('lb_loan_eligibility_inquiries') || '[]');
+        } catch(err) {}
+        currentInquiries.unshift(newInquiry);
+        localStorage.setItem('lb_loan_eligibility_inquiries', JSON.stringify(currentInquiries));
+
+        try {
+          fetch('/api/data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: 'lb_loan_eligibility_inquiries', data: currentInquiries })
+          }).catch(() => {});
+        } catch(err) {}
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Submit &amp; Get Pre-Approval &rarr;</span>';
+        }
+
+        closePreApprovalModal();
+        document.getElementById('preApprovalForm').reset();
+
+        if (typeof showToast === 'function') {
+          showToast(`🎉 Thank you ${name}! Our company executive will contact you shortly for further loan details.`, 'success');
+        }
+
+        showSideLoanPopUpNotification(name, email);
+      }, 500);
+    }
+    window.handleLoanEligibilitySubmit = handleLoanEligibilitySubmit;
+
+    function showSideLoanPopUpNotification(name, email) {
+      const container = document.getElementById('toastContainer') || document.body;
+      const popup = document.createElement('div');
+      popup.className = 'side-loan-popup-notification';
+      popup.style.cssText = `
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        max-width: 420px;
+        background: #0f172a;
+        color: #ffffff;
+        border: 2px solid #10b981;
+        border-radius: 16px;
+        padding: 18px 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+        z-index: 999999;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        animation: slide-in-right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      `;
+      
+      popup.innerHTML = `
+        <div style="background: rgba(16,185,129,0.2); width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; color: #10b981;">
+          📞
+        </div>
+        <div style="flex: 1;">
+          <h4 style="margin: 0 0 4px; font-size: 15px; font-weight: 800; color: #ffffff;">Pre-Approval Request Received!</h4>
+          <p style="margin: 0; font-size: 13px; color: #cbd5e1; line-height: 1.4;">
+            Thank you, <strong>${name}</strong>! Our company executive will contact you shortly for further details.
+          </p>
+          <div style="margin-top: 8px; font-size: 11.5px; color: #10b981; font-weight: 600;">
+            ✓ Pre-approval update dispatched to ${email}
+          </div>
+        </div>
+        <button type="button" onclick="this.parentElement.remove()" style="border: none; background: transparent; color: #94a3b8; cursor: pointer; font-size: 18px; padding: 0; line-height: 1;">&times;</button>
+      `;
+
+      container.appendChild(popup);
+      setTimeout(() => {
+        if (popup.parentElement) {
+          popup.style.transition = 'opacity 0.3s, transform 0.3s';
+          popup.style.opacity = '0';
+          popup.style.transform = 'translateX(20px)';
+          setTimeout(() => popup.remove(), 300);
+        }
+      }, 7000);
+    }
+    window.showSideLoanPopUpNotification = showSideLoanPopUpNotification;
+  </script>
+
+  <!-- AUTHENTICATION & ONBOARDING CONTROLLER SCRIPT -->
+  <script>
+    function openAuthModal(initialView = 'signin') {
+      const modal = document.getElementById('auth-modal');
+      if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        if (initialView === 'signup') {
+          switchToSignUp();
+        } else {
+          switchToSignIn();
+        }
+      }
+    }
+    window.openAuthModal = openAuthModal;
+
+    function closeAuthModal() {
+      const modal = document.getElementById('auth-modal');
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    }
+    window.closeAuthModal = closeAuthModal;
+
+    function switchToSignUp(e) {
+      if (e) e.preventDefault();
+      document.getElementById('auth-signin-view').style.display = 'none';
+      document.getElementById('auth-signup-view').style.display = 'block';
+      setTimeout(() => document.getElementById('reg-name')?.focus(), 50);
+    }
+    window.switchToSignUp = switchToSignUp;
+
+    function switchToSignIn(e) {
+      if (e) e.preventDefault();
+      document.getElementById('auth-signup-view').style.display = 'none';
+      document.getElementById('auth-signin-view').style.display = 'block';
+      setTimeout(() => document.getElementById('auth-email')?.focus(), 50);
+    }
+    window.switchToSignIn = switchToSignIn;
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (input) {
+        input.type = input.type === 'password' ? 'text' : 'password';
+        btn.textContent = input.type === 'password' ? '👁️' : '🙈';
+      }
+    }
+    window.togglePasswordVisibility = togglePasswordVisibility;
+
+    function handleForgotPass(e) {
+      e.preventDefault();
+      const email = document.getElementById('auth-email')?.value.trim() || prompt('Enter your registered email address for password recovery:');
+      if (email) {
+        alert(`✓ Password reset instructions have been dispatched to ${email}.`);
+      }
+    }
+    window.handleForgotPass = handleForgotPass;
+
+    // Handle Sign In Submit
+    function handleSignInSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('auth-email').value.trim();
+      const password = document.getElementById('auth-password').value.trim();
+      const submitBtn = document.getElementById('btn-submit-signin');
+
+      if (!email || !password) return;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Signing in... ⏳</span>';
+
+      setTimeout(() => {
+        // Look up user in registered list
+        let users = [];
+        try {
+          users = JSON.parse(localStorage.getItem('lb_registered_users') || '[]');
+        } catch(err) {}
+
+        const matched = users.find(u => (u.email || '').toLowerCase() === email.toLowerCase());
+        const userName = matched ? matched.name : email.split('@')[0];
+
+        const sessionData = {
+          id: matched ? matched.id : 'user_' + Date.now(),
+          email: email,
+          name: userName,
+          role: matched ? matched.role : 'Buyer',
+          loggedInAt: new Date().toISOString()
+        };
+        localStorage.setItem('lb_user_session', JSON.stringify(sessionData));
+
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Sign In &rarr;</span>';
+
+        closeAuthModal();
+        updateNavbarLoggedIn(sessionData);
+
+        if (typeof showToast === 'function') {
+          showToast(`✓ Welcome back, ${userName}!`);
+        } else {
+          alert(`✓ Welcome back, ${userName}! Successfully signed in.`);
+        }
+      }, 500);
+    }
+    window.handleSignInSubmit = handleSignInSubmit;
+
+    // Handle Create Account (Sign Up) Submit
+    function handleSignUpSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const confirmPassword = document.getElementById('reg-confirm-password').value;
+      const submitBtn = document.getElementById('btn-submit-signup');
+
+      if (!name || !phone || !email || !password) {
+        alert('Please fill out all required fields.');
+        return;
+      }
+
+      if (phone.length !== 10 || !/^[0-9]{10}$/.test(phone)) {
+        alert('Please enter a valid 10-digit mobile number.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match. Please re-enter your password.');
+        document.getElementById('reg-confirm-password').focus();
+        return;
+      }
+
+      // Check if user already exists
+      let registeredUsers = [];
+      try {
+        registeredUsers = JSON.parse(localStorage.getItem('lb_registered_users') || '[]');
+      } catch(err) {}
+
+      const exists = registeredUsers.some(u => 
+        (u.email || '').toLowerCase() === email.toLowerCase() || (u.phone || '').trim() === phone
+      );
+
+      if (exists) {
+        alert('An account with this email address or phone number already exists. Please sign in.');
+        switchToSignIn();
+        document.getElementById('auth-email').value = email;
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Creating Account... ⏳</span>';
+
+      setTimeout(() => {
+        const newUser = {
+          id: 'user_' + Date.now(),
+          name,
+          phone,
+          email,
+          password,
+          role: 'Verified Buyer',
+          createdAt: new Date().toISOString()
+        };
+
+        registeredUsers.push(newUser);
+        localStorage.setItem('lb_registered_users', JSON.stringify(registeredUsers));
+
+        // Auto-login session
+        const sessionData = {
+          id: newUser.id,
+          email: newUser.email,
+          name: newUser.name,
+          phone: newUser.phone,
+          role: newUser.role,
+          loggedInAt: new Date().toISOString()
+        };
+        localStorage.setItem('lb_user_session', JSON.stringify(sessionData));
+
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Create Verified Account &rarr;</span>';
+
+        closeAuthModal();
+        document.getElementById('auth-signup-form').reset();
+        updateNavbarLoggedIn(sessionData);
+
+        if (typeof showToast === 'function') {
+          showToast(`✓ Account created successfully! Welcome to Land & Beyond, ${name}!`);
+        } else {
+          alert(`✓ Account created successfully! Welcome, ${name}!`);
+        }
+      }, 600);
+    }
+    window.handleSignUpSubmit = handleSignUpSubmit;
+
+    function updateNavbarLoggedIn(user) {
+      const name = typeof user === 'object' ? user.name : (user || 'User');
+      const email = typeof user === 'object' ? user.email : user;
+      const initial = name ? name.charAt(0).toUpperCase() : 'U';
+
+      const authBtnText = document.getElementById('authBtnText');
+      const loginBtn = document.getElementById('loginBtn') || document.getElementById('btn-navbar-auth');
+      const drawerAuth = document.querySelector('.btn-drawer-auth');
+
+      if (authBtnText) authBtnText.textContent = name;
+      if (loginBtn) {
+        loginBtn.innerHTML = `
+          <span style="width: 24px; height: 24px; border-radius: 50%; background: #10b981; color: #ffffff; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; margin-right: 6px;">${initial}</span>
+          <span>${name}</span>
+        `;
+        loginBtn.title = `Signed in as ${name} (${email}) - Click to sign out`;
+      }
+      if (drawerAuth) {
+        drawerAuth.innerHTML = `
+          <span style="width: 24px; height: 24px; border-radius: 50%; background: #10b981; color: #ffffff; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; margin-right: 6px;">${initial}</span>
+          <span>${name}</span>
+        `;
+      }
+    }
+
+    function checkUserSession() {
+      try {
+        const session = JSON.parse(localStorage.getItem('lb_user_session') || 'null');
+        if (session && (session.name || session.email)) {
+          updateNavbarLoggedIn(session);
+        }
+      } catch(e) {}
+    }
+
+    // Attach click listener to navbar login buttons to prompt sign-out if logged in
+    document.addEventListener('DOMContentLoaded', () => {
+      checkUserSession();
+
+      const triggers = document.querySelectorAll('#loginBtn, #btn-navbar-auth, #btn-drawer-login, .btn-drawer-auth, [data-open-auth]');
+      triggers.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const session = localStorage.getItem('lb_user_session');
+          if (session) {
+            try {
+              const u = JSON.parse(session);
+              if (confirm(`You are signed in as ${u.name || u.email}. Would you like to sign out?`)) {
+                localStorage.removeItem('lb_user_session');
+                window.location.reload();
+                return;
+              }
+              return;
+            } catch(err) {}
+          }
+          openAuthModal('signin');
+        });
+      });
+    });
+  </script>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+<script>
+// --------------------------------------------------------------------------
+// AUTHENTICATION (SIGN IN / LOGIN) MODAL CONTROLLER
+// --------------------------------------------------------------------------
+function initAuthModalHandlers() {
+  const modal = document.getElementById('auth-modal');
+  const form = document.getElementById('auth-form');
+  const closeBtn = document.getElementById('btn-close-auth');
+  const emailInput = document.getElementById('auth-email');
+  const passInput = document.getElementById('auth-password');
+  const submitBtn = document.getElementById('btn-submit-auth');
+  const forgotLink = document.getElementById('auth-forgot-pass');
+  const signupLink = document.getElementById('auth-toggle-signup');
+
+  function openAuthModal() {
+    if (modal) {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => emailInput?.focus(), 50);
+    }
+  }
+
+  function closeAuthModal() {
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  }
+
+  function checkExistingSession() {
+    try {
+      const session = JSON.parse(localStorage.getItem('lb_user_session') || 'null');
+      if (session && session.email) {
+        updateNavbarLoggedIn(session.email);
+      }
+    } catch (e) {}
+  }
+
+  function updateNavbarLoggedIn(email) {
+    const authBtnText = document.getElementById('authBtnText');
+    const loginBtn = document.getElementById('loginBtn');
+    const drawerAuth = document.querySelector('.btn-drawer-auth');
+    const prefix = email.split('@')[0];
+    const initial = prefix.charAt(0).toUpperCase();
+
+    if (authBtnText) {
+      authBtnText.textContent = prefix;
+    }
+    if (loginBtn) {
+      loginBtn.innerHTML = `
+        <span style="width: 22px; height: 22px; border-radius: 50%; background: #10b981; color: #ffffff; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-right: 4px;">${initial}</span>
+        <span>${prefix}</span>
+      `;
+      loginBtn.title = `Signed in as ${email} (Click to manage)`;
+    }
+    if (drawerAuth) {
+      drawerAuth.innerHTML = `
+        <span style="width: 22px; height: 22px; border-radius: 50%; background: #10b981; color: #ffffff; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-right: 6px;">${initial}</span>
+        <span>${email}</span>
+      `;
+    }
+  }
+
+  // Close handlers
+  if (closeBtn) closeBtn.addEventListener('click', closeAuthModal);
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeAuthModal();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
+      closeAuthModal();
+    }
+  });
+
+  // Global trigger delegation
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('#loginBtn, .login-btn, .btn-drawer-auth, [data-open-auth], button:has(#authBtnText)') ||
+                    (e.target.innerText && (e.target.innerText.includes('Login / Sign In') || e.target.innerText.trim() === 'Login') ? e.target : null);
+    if (trigger) {
+      e.preventDefault();
+      // If already logged in, show options or prompt
+      const session = localStorage.getItem('lb_user_session');
+      if (session && !e.target.closest('#auth-modal')) {
+        const parsed = JSON.parse(session);
+        if (confirm(`You are signed in as ${parsed.email}. Would you like to sign out?`)) {
+          localStorage.removeItem('lb_user_session');
+          window.location.reload();
+          return;
+        }
+      }
+      openAuthModal();
+    }
+  });
+
+  // Form submit
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      const pass = passInput.value.trim();
+
+      if (!email || !pass) return;
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Signing in... ⏳</span>';
+        submitBtn.style.opacity = '0.7';
+      }
+
+      setTimeout(() => {
+        const sessionData = {
+          email: email,
+          loggedInAt: new Date().toISOString()
+        };
+        localStorage.setItem('lb_user_session', JSON.stringify(sessionData));
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Sign In &rarr;</span>';
+          submitBtn.style.opacity = '1';
+        }
+
+        closeAuthModal();
+        updateNavbarLoggedIn(email);
+
+        if (typeof showToast === 'function') {
+          showToast(`✓ Welcome back, ${email.split('@')[0]}! Successfully signed in.`);
+        } else {
+          alert(`Welcome back! Successfully signed in as ${email}.`);
+        }
+      }, 600);
+    });
+  }
+
+  if (forgotLink) {
+    forgotLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim() || 'your email';
+      alert(`Password reset instructions have been sent to ${email}.`);
+    });
+  }
+
+  if (signupLink) {
+    signupLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const email = prompt('Enter your full name to create a Land & Beyond verified account:');
+      if (email) {
+        alert('Account created! Please sign in with your email and password.');
+      }
+    });
+  }
+
+  checkExistingSession();
+  window.openAuthModal = openAuthModal;
+  window.closeAuthModal = closeAuthModal;
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAuthModalHandlers);
+} else {
+  initAuthModalHandlers();
+}
+</script>
+
+  <!-- Decoupled Dedicated Navbar Sign In Trigger -->
+  <script>
+    (function() {
+      function attachDecoupledAuth() {
+        const loginBtn = document.getElementById('btn-navbar-auth') || document.getElementById('btn-navbar-login') || document.getElementById('loginBtn');
+        const drawerBtn = document.getElementById('btn-drawer-login');
+        const authModal = document.getElementById('auth-modal');
+        const siteVisitModal = document.getElementById('siteVisitModal') || document.getElementById('site-visit-modal');
+        const siteVisitPromoModal = document.getElementById('siteVisitPromoModal');
+
+        function triggerAuth(e) {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          if (siteVisitModal) {
+            siteVisitModal.classList.remove('open');
+            siteVisitModal.style.display = 'none';
+          }
+          if (siteVisitPromoModal) {
+            siteVisitPromoModal.classList.remove('open');
+            siteVisitPromoModal.style.display = 'none';
+          }
+
+          const session = localStorage.getItem('lb_user_session');
+          if (session) {
+            try {
+              const parsed = JSON.parse(session);
+              if (confirm(`You are signed in as ${parsed.email}. Would you like to sign out?`)) {
+                localStorage.removeItem('lb_user_session');
+                window.location.reload();
+                return;
+              }
+            } catch(err) {}
+          }
+
+          if (authModal) {
+            authModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => document.getElementById('auth-email')?.focus(), 50);
+          }
+        }
+
+        if (loginBtn) loginBtn.onclick = triggerAuth;
+        if (drawerBtn) drawerBtn.onclick = triggerAuth;
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', attachDecoupledAuth);
+      } else {
+        attachDecoupledAuth();
+      }
+    })();
+  </script>
+
+
+  <!-- Real-Time Cross-Tab Synchronization with Admin Dashboard -->
+  <script>
+    (function() {
+      const STORAGE_KEY = 'lb_properties_data';
+      function syncFromAdmin() {
+        if (typeof renderProperties === 'function') {
+          renderProperties();
+        }
+      }
+      window.addEventListener('storage', function(e) {
+        if (e.key === STORAGE_KEY || !e.key) {
+          syncFromAdmin();
+        }
+      });
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          const bc = new BroadcastChannel('lb_sync_channel');
+          bc.onmessage = function(e) {
+            syncFromAdmin();
+          };
+        }
+      } catch(e) {}
+    })();
+
+    function scrollToReviews(e) {
+      if (e) e.preventDefault();
+      const section = document.getElementById('testimonials') || document.getElementById('reviews');
+      if (section) {
+        const yOffset = -90;
+        const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        const mainNav = document.getElementById('mainNav');
+        const backdrop = document.getElementById('mobileNavBackdrop');
+        if (mainNav) mainNav.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('open');
+      } else {
+        window.location.href = 'index.html#testimonials';
+      }
+    }
+    window.scrollToReviews = scrollToReviews;
+
+    // Mobile Navigation Drawer Toggle Handler
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mainNav = document.getElementById('mainNav');
+      const backdrop = document.getElementById('mobileNavBackdrop');
+      const btnDrawerClose = document.getElementById('btnDrawerClose');
+
+      function openMobileNav() {
+        if (mainNav) mainNav.classList.add('open');
+        if (backdrop) backdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileNav() {
+        if (mainNav) mainNav.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      if (mobileToggle) {
+        mobileToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (mainNav && mainNav.classList.contains('open')) {
+            closeMobileNav();
+          } else {
+            openMobileNav();
+          }
+        });
+      }
+
+      if (btnDrawerClose) {
+        btnDrawerClose.addEventListener('click', function(e) {
+          e.preventDefault();
+          closeMobileNav();
+        });
+      }
+
+      if (backdrop) {
+        backdrop.addEventListener('click', closeMobileNav);
+      }
+
+      if (mainNav) {
+        mainNav.querySelectorAll('.nav-link').forEach(function(link) {
+          link.addEventListener('click', closeMobileNav);
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

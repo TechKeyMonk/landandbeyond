@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check Pre-Approval &amp; Loan Eligibility | Land And Beyond</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --primary-light: #ecfdf5;
+      --navy: #0f172a;
+      --navy-light: #1e293b;
+      --slate: #64748b;
+      --card-bg: #ffffff;
+      --bg-color: #f8fafc;
+      --border-color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--navy);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* Top Bar */
+    .eligibility-navbar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: #475569;
+      font-weight: 700;
+      font-size: 13.5px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .nav-back-link:hover {
+      background: #f1f5f9;
+      color: var(--navy);
+      border-color: #94a3b8;
+      transform: translateX(-2px);
+    }
+
+    /* Main Container */
+    .page-wrapper {
+      max-width: 820px;
+      margin: 36px auto;
+      padding: 0 20px 60px;
+      width: 100%;
+    }
+
+    /* Hero Banner */
+    .page-hero {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 999px;
+      color: #065f46;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .hero-desc {
+      font-size: 14.5px;
+      color: var(--slate);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Main Card */
+    .form-card {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.07);
+      overflow: hidden;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    /* Card Top Strip */
+    .card-header-strip {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 24px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .strip-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .strip-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .strip-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+
+    .strip-subtitle {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .loan-quick-pill {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 8px 16px;
+      text-align: right;
+    }
+
+    .loan-quick-label {
+      font-size: 11px;
+      color: #cbd5e1;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .loan-quick-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #34d399;
+    }
+
+    /* Form Body */
+    .form-body {
+      padding: 36px 36px 40px;
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0 18px;
+      color: #475569;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .section-divider:first-of-type {
+      margin-top: 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .form-body {
+        padding: 24px 20px 30px;
+      }
+      .card-header-strip {
+        padding: 20px 20px;
+      }
+      .loan-quick-pill {
+        text-align: left;
+        width: 100%;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+
+    .form-label span.req {
+      color: #ef4444;
+      margin-left: 2px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      font-size: 16px;
+      color: #94a3b8;
+      pointer-events: none;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: 12px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 14px;
+      color: #0f172a;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-control.no-icon {
+      padding-left: 14px;
+    }
+
+    .form-control:focus {
+      background: #ffffff;
+      border-color: #10b981;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
+    }
+
+    .form-control::placeholder {
+      color: #94a3b8;
+    }
+
+    textarea.form-control {
+      min-height: 85px;
+      resize: vertical;
+    }
+
+    .hint-text {
+      font-size: 11.5px;
+      color: #64748b;
+      margin-top: 5px;
+    }
+
+    /* Bank selection pills */
+    .bank-options-wrap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .bank-options-wrap {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .bank-choice-card {
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 10px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .bank-choice-card:hover {
+      border-color: #94a3b8;
+      background: #ffffff;
+    }
+
+    .bank-choice-card.active {
+      border-color: #10b981;
+      background: #ecfdf5;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+    }
+
+    .bank-choice-card strong {
+      display: block;
+      font-size: 12.5px;
+      color: var(--navy);
+    }
+
+    .bank-choice-card span {
+      font-size: 11px;
+      color: #059669;
+      font-weight: 700;
+    }
+
+    /* Trust notice box */
+    .trust-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 22px 0 28px;
+      font-size: 13px;
+      color: #166534;
+      line-height: 1.45;
+    }
+
+    .trust-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Submit Button */
+    .btn-submit-app {
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-submit-app:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.45);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+
+    .btn-submit-app:active {
+      transform: translateY(0);
+    }
+
+    /* Success State Screen */
+    #successCard {
+      display: none;
+      padding: 44px 36px;
+      text-align: center;
+      animation: popIn 0.35s ease-out;
+    }
+
+    .success-icon-wrap {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #ecfdf5;
+      border: 3px solid #10b981;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      color: #10b981;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.25);
+      animation: bounce 0.6s ease;
+    }
+
+    .success-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    /* Requested Primary Message Highlight */
+    .company-contact-banner {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 2px dashed #10b981;
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 22px auto;
+      max-width: 620px;
+      text-align: center;
+    }
+
+    .company-contact-banner h4 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #065f46;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .company-contact-banner p {
+      font-size: 14.5px;
+      color: #047857;
+      font-weight: 600;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .app-summary-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 24px auto;
+      max-width: 620px;
+      text-align: left;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #edf2f7;
+      font-size: 13.5px;
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .summary-val {
+      color: var(--navy);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .success-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary-action {
+      padding: 13px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-action-primary {
+      background: var(--navy);
+      color: #ffffff;
+    }
+
+    .btn-action-primary:hover {
+      background: #1e293b;
+      transform: translateY(-2px);
+    }
+
+    .btn-action-outline {
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-action-outline:hover {
+      background: #f1f5f9;
+      color: var(--navy);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="eligibility-navbar">
+    <a href="index.html" class="brand-logo-wrap">
+      <div class="brand-icon-box">🏛️</div>
+      <div>
+        <div class="brand-title">Land &amp; Beyond</div>
+        <div class="brand-sub">Smart Real Estate &amp; Finance</div>
+      </div>
+    </a>
+    <a href="index.html#loanCalculator" class="nav-back-link">
+      <span>←</span> Back to EMI Calculator
+    </a>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="page-wrapper">
+    
+    <!-- Hero Header -->
+    <div class="page-hero">
+      <div class="hero-badge">
+        <span>⚡</span> Instant Bank Pre-Sanction Evaluation
+      </div>
+      <h1 class="hero-title">Check Pre-Approval &amp; Loan Eligibility</h1>
+      <p class="hero-desc">
+        Complete your details below to check maximum loan eligibility, lowest interest rates, and pre-approved offers across top Coimbatore banking partners.
+      </p>
+    </div>
+
+    <!-- Main Form Card -->
+    <div class="form-card">
+      
+      <!-- Strip Header -->
+      <div class="card-header-strip">
+        <div class="strip-left">
+          <div class="strip-icon">📋</div>
+          <div>
+            <div class="strip-title">Pre-Approval Application Form</div>
+            <div class="strip-subtitle">Zero impact on credit score • Instant processing</div>
+          </div>
+        </div>
+        <div class="loan-quick-pill">
+          <span class="loan-quick-label">Requested Loan Amount</span>
+          <span class="loan-quick-val" id="displayLoanAmount">₹ 50,00,000</span>
+        </div>
+      </div>
+
+      <!-- Application Form -->
+      <form id="eligibilityForm" class="form-body" onsubmit="handlePreApprovalSubmission(event)">
+        
+        <!-- SECTION 1: APPLICANT PERSONAL & CONTACT DETAILS -->
+        <div class="section-divider">1. Personal &amp; Contact Details</div>
+
+        <div class="grid-2">
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="appName" class="form-label">Full Name <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                id="appName" 
+                name="name" 
+                class="form-control" 
+                placeholder="Name" 
+                required 
+                autocomplete="name"
+              />
+            </div>
+          </div>
+
+          <!-- Email Address -->
+          <div class="form-group">
+            <label for="appEmail" class="form-label">Email Address <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input 
+                type="email" 
+                id="appEmail" 
+                name="email" 
+                class="form-control" 
+                placeholder="Email Address" 
+                required 
+                autocomplete="email"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Phone Number -->
+          <div class="form-group">
+            <label for="appPhone" class="form-label">Phone Number (10 Digits) <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input 
+                type="tel" 
+                id="appPhone" 
+                name="phone" 
+                class="form-control" 
+                placeholder="Phone Number" 
+                pattern="[0-9]{10}" 
+                maxlength="10"
+                required 
+                autocomplete="tel"
+              />
+            </div>
+            <div class="hint-text">Our financial advisor will contact you on this number.</div>
+          </div>
+
+          <!-- Pincode -->
+          <div class="form-group">
+            <label for="appPincode" class="form-label">Pincode <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                id="appPincode" 
+                name="pincode" 
+                class="form-control" 
+                placeholder="Pincode" 
+                pattern="[0-9]{6}" 
+                maxlength="6"
+                required 
+              />
+            </div>
+            <div class="hint-text">6-digit postal code.</div>
+          </div>
+        </div>
+
+        <!-- Full Residential Address -->
+        <div class="form-group">
+          <label for="appAddress" class="form-label">Residential Address <span class="req">*</span></label>
+          <div class="input-wrapper">
+            <textarea 
+              id="appAddress" 
+              name="address" 
+              class="form-control" 
+              placeholder="Address" 
+              required
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- SECTION 2: LOAN & INCOME PREFERENCES -->
+        <div class="section-divider">2. Income &amp; Loan Preferences</div>
+
+        <div class="grid-2">
+          <!-- Monthly Salary / Income -->
+          <div class="form-group">
+            <label for="appIncome" class="form-label">Monthly Net Income / Salary <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                id="appIncome" 
+                name="income" 
+                class="form-control" 
+                placeholder="Monthly Salary / Income" 
+                required 
+              />
+            </div>
+          </div>
+
+          <!-- Employment Status -->
+          <div class="form-group">
+            <label for="appEmployment" class="form-label">Employment Type <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <select id="appEmployment" name="employment" class="form-control" required>
+                <option value="Salaried (Private / Corporate)">Salaried (Private / Corporate)</option>
+                <option value="Salaried (Government / PSU)">Salaried (Government / PSU)</option>
+                <option value="Self-Employed / Business Owner">Self-Employed / Business Owner</option>
+                <option value="Professional (Doctor, CA, Lawyer)">Professional (Doctor, CA, Lawyer)</option>
+                <option value="NRI / Overseas Salaried">NRI / Overseas Salaried</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Loan Amount Required -->
+          <div class="form-group">
+            <label for="appLoanAmount" class="form-label">Required Loan Principal (₹) <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input 
+                type="number" 
+                id="appLoanAmount" 
+                name="loanAmount" 
+                class="form-control" 
+                value="5000000" 
+                min="100000" 
+                step="50000" 
+                required 
+                oninput="updateLoanHeader(this.value)"
+              />
+            </div>
+          </div>
+
+          <!-- Preferred Repayment Tenure -->
+          <div class="form-group">
+            <label for="appTenure" class="form-label">Preferred Tenure <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <select id="appTenure" name="tenure" class="form-control no-icon" required>
+                <option value="5 Years">5 Years</option>
+                <option value="10 Years">10 Years</option>
+                <option value="15 Years">15 Years</option>
+                <option value="20 Years" selected>20 Years</option>
+                <option value="25 Years">25 Years</option>
+                <option value="30 Years">30 Years</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preferred Banking Partner -->
+        <div class="form-group">
+          <label class="form-label">Select Preferred Banking Partner</label>
+          <input type="hidden" id="selectedBank" name="bank" value="SBI Home Loans (8.40%)" />
+          <div class="bank-options-wrap">
+            <div class="bank-choice-card active" onclick="chooseBank(this, 'SBI Home Loans (8.40%)')">
+              <strong>SBI Home Loans</strong>
+              <span>8.40% p.a.</span>
+            </div>
+            <div class="bank-choice-card" onclick="chooseBank(this, 'HDFC Bank (8.50%)')">
+              <strong>HDFC Bank</strong>
+              <span>8.50% p.a.</span>
+            </div>
+            <div class="bank-choice-card" onclick="chooseBank(this, 'ICICI Bank (8.60%)')">
+              <strong>ICICI Bank</strong>
+              <span>8.60% p.a.</span>
+            </div>
+            <div class="bank-choice-card" onclick="chooseBank(this, 'Bank of Baroda (8.40%)')">
+              <strong>Bank of Baroda</strong>
+              <span>8.40% p.a.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust Note -->
+        <div class="trust-box">
+          <span class="trust-icon">🛡️</span>
+          <div>
+            <strong>100% Data Confidentiality &amp; Fast-Track Clearance:</strong>
+            Your personal information is protected under bank-grade 256-bit encryption and is directly reviewed by verified lending officers.
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="btnSubmitEligibility" class="btn-submit-app">
+          <span>Submit Application &amp; Check Pre-Approval &rarr;</span>
+        </button>
+      </form>
+
+      <!-- SUCCESS CONFIRMATION STATE (SHOWN AFTER SUBMIT) -->
+      <div id="successCard">
+        <div class="success-icon-wrap">✓</div>
+        
+        <h2 class="success-heading">Application Submitted Successfully!</h2>
+        
+        <!-- SPECIFIC REQUESTED MESSAGE -->
+        <div class="company-contact-banner">
+          <h4>
+            <span>📞</span> For Further Details: Company Will Contact You
+          </h4>
+          <p>
+            Thank you for your pre-approval application. Our senior financial executive will review your eligibility and reach out to you directly with your sanctioned loan quotation.
+          </p>
+        </div>
+
+        <!-- Application Summary Card -->
+        <div class="app-summary-box">
+          <div class="summary-row">
+            <span class="summary-label">Application Reference ID</span>
+            <span class="summary-val" id="sumRefId" style="color: #10b981;">LNB-2026-9482</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Applicant Name</span>
+            <span class="summary-val" id="sumName">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Phone Number</span>
+            <span class="summary-val" id="sumPhone">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Email Address</span>
+            <span class="summary-val" id="sumEmail">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Address &amp; Pincode</span>
+            <span class="summary-val" id="sumAddress">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Loan Amount &amp; Bank</span>
+            <span class="summary-val" id="sumLoanBank">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Status</span>
+            <span class="summary-val" style="color: #d97706; background: #fef3c7; padding: 2px 8px; border-radius: 6px; font-size: 12px;">Under Review by Bank Officer</span>
+          </div>
+        </div>
+
+        <!-- Action Links -->
+        <div class="success-actions">
+          <a href="index.html" class="btn-secondary-action btn-action-primary">
+            <span>🏠</span> Return to Home Page
+          </a>
+          <a href="index.html#featuredProperties" class="btn-secondary-action btn-action-outline">
+            <span>🔍</span> Browse Available Properties
+          </a>
+          <button type="button" onclick="resetFormForNew()" class="btn-secondary-action btn-action-outline">
+            <span>↺</span> Apply for Another Loan
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // 1. Pre-fill loan amount & details from URL parameters if passed from index.html calculator
+    const urlParams = new URLSearchParams(window.location.search);
+    const passedAmount = urlParams.get('amount');
+    const passedTenure = urlParams.get('tenure');
+    const passedBank = urlParams.get('bank');
+
+    if (passedAmount && !isNaN(passedAmount)) {
+      document.getElementById('appLoanAmount').value = passedAmount;
+      updateLoanHeader(passedAmount);
+    } else {
+      updateLoanHeader(5000000);
+    }
+
+    if (passedTenure) {
+      const tenureSelect = document.getElementById('appTenure');
+      for (let i = 0; i < tenureSelect.options.length; i++) {
+        if (tenureSelect.options[i].value.includes(passedTenure)) {
+          tenureSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+
+    // Auto-fill logged in or saved user session if available
+    try {
+      const session = JSON.parse(localStorage.getItem('lb_user_session') || 'null');
+      if (session) {
+        if (session.name) document.getElementById('appName').value = session.name;
+        if (session.email) document.getElementById('appEmail').value = session.email;
+        if (session.phone) document.getElementById('appPhone').value = session.phone.replace('+91', '').trim();
+        if (session.address) document.getElementById('appAddress').value = session.address;
+        if (session.pincode) document.getElementById('appPincode').value = session.pincode;
+      }
+    } catch (e) {}
+
+    function updateLoanHeader(val) {
+      const num = Number(val);
+      if (isNaN(num) || num <= 0) return;
+      document.getElementById('displayLoanAmount').textContent = '₹ ' + num.toLocaleString('en-IN');
+    }
+
+    function chooseBank(el, bankName) {
+      document.querySelectorAll('.bank-choice-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('selectedBank').value = bankName;
+    }
+
+    // Handle Pre-Approval Form Submission
+    async function handlePreApprovalSubmission(event) {
+      event.preventDefault();
+      
+      const submitBtn = document.getElementById('btnSubmitEligibility');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>⏳ Processing Application...</span>';
+
+      const name = document.getElementById('appName').value.trim();
+      const email = document.getElementById('appEmail').value.trim();
+      const phone = document.getElementById('appPhone').value.trim();
+      const pincode = document.getElementById('appPincode').value.trim();
+      const address = document.getElementById('appAddress').value.trim();
+      const income = document.getElementById('appIncome').value.trim();
+      const employment = document.getElementById('appEmployment').value;
+      const loanAmount = document.getElementById('appLoanAmount').value;
+      const tenure = document.getElementById('appTenure').value;
+      const bank = document.getElementById('selectedBank').value;
+
+      const refId = 'LNB-LOAN-' + Math.floor(10000 + Math.random() * 90000);
+      const timestamp = new Date().toISOString();
+
+      const newApplication = {
+        id: refId,
+        name: name,
+        customerName: name,
+        email: email,
+        phone: '+91 ' + phone,
+        contact: '+91 ' + phone,
+        pincode: pincode,
+        address: address,
+        monthlyIncome: income,
+        employmentType: employment,
+        loanAmount: Number(loanAmount),
+        loanAmountFormatted: '₹ ' + Number(loanAmount).toLocaleString('en-IN'),
+        tenure: tenure,
+        preferredBank: bank,
+        type: 'Loan Pre-Approval & Eligibility',
+        status: 'Pending Contact',
+        notes: 'Company will contact customer for further documentation and pre-approval sanctioning.',
+        submittedAt: timestamp
+      };
+
+      // 1. Save to local storage approvals list
+      try {
+        const existing = JSON.parse(localStorage.getItem('lb_loan_applications') || '[]');
+        existing.unshift(newApplication);
+        localStorage.setItem('lb_loan_applications', JSON.stringify(existing));
+
+        // Also add to global leads/approvals for executive dashboard
+        const approvals = JSON.parse(localStorage.getItem('lb_approvals_data') || '[]');
+        approvals.unshift({
+          id: refId,
+          type: 'Pre-Approval / EMI',
+          title: `Home Loan Request: ₹${Number(loanAmount).toLocaleString('en-IN')} (${bank.split(' ')[0]})`,
+          requester: name,
+          contact: '+91 ' + phone,
+          pincode: pincode,
+          address: address,
+          status: 'Pending Contact',
+          date: new Date().toLocaleDateString('en-GB')
+        });
+        localStorage.setItem('lb_approvals_data', JSON.stringify(approvals));
+
+        // 2. Post to backend server API if active
+        fetch('/api/data', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: 'lb_approvals_data', data: approvals })
+        }).catch(err => console.log('Backend sync offline:', err));
+
+      } catch (e) {
+        console.error('Storage error:', e);
+      }
+
+      // Simulate swift 600ms network verification
+      setTimeout(() => {
+        // Populate summary elements
+        document.getElementById('sumRefId').textContent = refId;
+        document.getElementById('sumName').textContent = name;
+        document.getElementById('sumPhone').textContent = '+91 ' + phone;
+        document.getElementById('sumEmail').textContent = email;
+        document.getElementById('sumAddress').textContent = address + ' - PIN: ' + pincode;
+        document.getElementById('sumLoanBank').textContent = '₹ ' + Number(loanAmount).toLocaleString('en-IN') + ' (' + bank + ')';
+
+        // Switch form view to success view
+        document.getElementById('eligibilityForm').style.display = 'none';
+        document.querySelector('.card-header-strip').style.display = 'none';
+        document.getElementById('successCard').style.display = 'block';
+
+        // Scroll to top of card smoothly
+        document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 600);
+    }
+
+    function resetFormForNew() {
+      document.getElementById('eligibilityForm').reset();
+      document.getElementById('eligibilityForm').style.display = 'block';
+      document.querySelector('.card-header-strip').style.display = 'flex';
+      document.getElementById('successCard').style.display = 'none';
+      const submitBtn = document.getElementById('btnSubmitEligibility');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span>Submit Application &amp; Check Pre-Approval &rarr;</span>';
+      updateLoanHeader(5000000);
+    }
+  </script>
+</body>
+</html>

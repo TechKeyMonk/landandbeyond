@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Official Property Brochure & Legal Clearance Docket | Land & Beyond</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      color: #0f172a;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    .brochure-nav {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .brochure-container {
+      max-width: 960px;
+      margin: 36px auto;
+      padding: 0 20px;
+    }
+    .brochure-card {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+      overflow: hidden;
+    }
+    .brochure-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 40px 48px;
+      position: relative;
+    }
+    .brochure-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      color: #34d399;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .brochure-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .brochure-meta {
+      font-size: 15px;
+      color: #94a3b8;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .brochure-body {
+      padding: 40px 48px;
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+    .spec-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .spec-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .spec-val {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .blueprint-preview-box {
+      background: #0f172a;
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 36px;
+      position: relative;
+    }
+    .blueprint-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .actions-bar {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    .btn-brochure-dl {
+      flex: 1;
+      min-width: 220px;
+      padding: 16px 28px;
+      border-radius: 14px;
+      background: #10b981;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(16,185,129,0.35);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .btn-brochure-dl:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+    .btn-site-visit {
+      flex: 1;
+      min-width: 220px;
+      padding: 16px 28px;
+      border-radius: 14px;
+      background: #0f172a;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .btn-site-visit:hover {
+      background: #1e293b;
+      transform: translateY(-2px);
+    }
+    @media print {
+      .brochure-nav, .actions-bar { display: none !important; }
+      body { background: #fff; }
+      .brochure-card { border: none; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="brochure-nav">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <a href="index.html" style="text-decoration: none; color: #64748b; font-weight: 700; font-size: 13.5px;">← Back to Home</a>
+      <span style="color: #cbd5e1;">|</span>
+      <span style="font-weight: 800; font-family: 'Outfit', sans-serif; color: #0f172a;">Land &amp; Beyond Official Docket</span>
+    </div>
+    <button onclick="downloadPDF()" class="btn-brochure-dl" style="padding: 8px 18px; font-size: 13.5px; min-width: auto;">
+      <span>⬇️ Download PDF</span>
+    </button>
+  </nav>
+
+  <main class="brochure-container">
+    <div class="brochure-card">
+      <div class="brochure-hero">
+        <div class="brochure-hero-badge">
+          <span>🛡️ Verified Legal Title &amp; DTCP Sanctioned Docket</span>
+        </div>
+        <h1 class="brochure-title" id="displayPropTitle">Mayflower Grandeur Residences</h1>
+        <div class="brochure-meta">
+          <span id="displayPropLoc">📍 Peelamedu, Coimbatore</span>
+          <span id="displayPropBuilder">🏢 By Mayflower Enterprises</span>
+          <span id="displayPropStatus">🟢 RERA Approved • 100% Clear Title</span>
+        </div>
+      </div>
+
+      <div class="brochure-body">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; margin-top: 0; margin-bottom: 20px; color: #0f172a;">Project Specifications &amp; Infrastructure Highlights</h3>
+        
+        <div class="spec-grid">
+          <div class="spec-box">
+            <div class="spec-label">Starting Price</div>
+            <div class="spec-val" id="displayPropPrice" style="color: #059669;">₹ 88 Lakh onwards</div>
+          </div>
+          <div class="spec-box">
+            <div class="spec-label">Sanction Approval No.</div>
+            <div class="spec-val" id="displayApprovalNo">TN/11/Layout/0284/2026</div>
+          </div>
+          <div class="spec-box">
+            <div class="spec-label">Road Infrastructure</div>
+            <div class="spec-val">40ft &amp; 60ft Arterial Roads</div>
+          </div>
+          <div class="spec-box">
+            <div class="spec-label">Smart Security</div>
+            <div class="spec-val">24/7 AI Gate Access &amp; CCTV</div>
+          </div>
+        </div>
+
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; margin-top: 0; margin-bottom: 16px; color: #0f172a;">Sanctioned Master Layout Plan</h3>
+        <div class="blueprint-preview-box">
+          <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop" alt="Master Layout Blueprint" class="blueprint-img" />
+          <div style="margin-top: 14px; font-size: 13px; color: #94a3b8;">Official Architectural Master Plan registered with DTCP &amp; RERA Tamil Nadu</div>
+        </div>
+
+        <div class="actions-bar">
+          <button onclick="downloadPDF()" class="btn-brochure-dl">
+            <span>⬇️ Download PDF Brochure</span>
+          </button>
+          <a href="#" id="bookVisitLink" class="btn-site-visit">
+            <span>🚕 Schedule Free VIP Site Visit</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const propTitle = params.get('property') || params.get('title') || 'Mayflower Grandeur Residences';
+
+    document.getElementById('displayPropTitle').textContent = decodeURIComponent(propTitle);
+    document.getElementById('bookVisitLink').href = `book-visit.html?property=${encodeURIComponent(propTitle)}`;
+
+    try {
+      const properties = JSON.parse(localStorage.getItem('lb_properties_data') || '[]');
+      const match = properties.find(p => (p.title || '').toLowerCase() === propTitle.toLowerCase());
+      if (match) {
+        if (match.location) document.getElementById('displayPropLoc').textContent = `📍 ${match.location}`;
+        if (match.builder) document.getElementById('displayPropBuilder').textContent = `🏢 By ${match.builder}`;
+        if (match.price) document.getElementById('displayPropPrice').textContent = match.price;
+        if (match.approvalNumber || match.legalNo) document.getElementById('displayApprovalNo').textContent = match.approvalNumber || match.legalNo;
+      }
+    } catch(e) {}
+
+    function downloadPDF() {
+      alert(`⬇️ Generating verified PDF brochure for "${decodeURIComponent(propTitle)}"...`);
+      window.print();
+    }
+  </script>
+</body>
+</html>

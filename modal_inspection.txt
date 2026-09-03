@@ -1,0 +1,595 @@
+1451:         <div class="table-container" style="background: #ffffff; border-radius: 12px; padding: 20px; border: 1px solid #f1f5f9; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+1452:           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+1453:             <div style="font-weight: 700; color: #0f172a; font-size: 15px; display: flex; align-items: center; gap: 8px;">
+1454:               <span>☀️</span> <span>Confirmed &amp; In-Progress Ritual Ceremonies</span>
+1455:             </div>
+1456:             <div style="font-size: 13px; color: #64748b;">
+1457:               Total Scheduled: <strong id="griha-count-badge" style="color: #059669;">8</strong> Bookings
+1458:             </div>
+1459:           </div>
+1460:           <div class="table-responsive" style="overflow-x: auto;">
+1461:             <table class="data-table admin-data-table" id="table-grihapravesh" style="width: 100%; border-collapse: collapse; text-align: left;">
+1462:               <thead>
+1463:                 <tr style="border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+1464:                   <th style="padding: 12px 14px;">CUSTOMER &amp; CONTACT</th>
+1465:                   <th style="padding: 12px 14px;">SELECTED PACKAGE</th>
+1466:                   <th style="padding: 12px 14px;">AUSPICIOUS DATE / MUHURTHAM</th>
+1467:                   <th style="padding: 12px 14px;">SAMAGRI &amp; PANDIT</th>
+1468:                   <th style="padding: 12px 14px;">BOOKING STATUS</th>
+1469:                   <th style="padding: 12px 14px; text-align: right;">ACTIONS</th>
+1470:                 </tr>
+1471:               </thead>
+1472:               <tbody id="tbody-grihapravesh">
+1473:                 <!-- Dynamically Populated with 8 Seed Records -->
+1474:               </tbody>
+1475:             </table>
+1476:           </div>
+1477:         </div>
+1478:       </section>
+1479:     </main>
+1480:   </div>
+1481: 
+1482:   <!-- Add New Listing Modal Dialog -->
+1483:     <!-- Upgraded Add New Property Listing Modal Dialog -->
+1484:     <!-- Upgraded Add New Property Listing Modal Dialog -->
+1485:   <div class="admin-modal-overlay" id="addPropertyModal">
+1486:     <div class="admin-modal-card" style="max-width: 660px; max-height: 90vh; overflow-y: auto;">
+1487:       <div class="modal-header-row">
+1488:         <h3>➕ Add New Property &amp; Compliance Listing</h3>
+1489:         <button type="button" class="modal-close-btn" onclick="closeAddPropertyModal()">&times;</button>
+1490:       </div>
+1491: 
+1492:       <form id="addPropertyForm" onsubmit="handleAddPropertySubmit(event)">
+1493:         <div class="form-field-group">
+1494:           <label for="newTitle">Property Name / Title</label>
+1495:           <input type="text" id="newTitle" placeholder="e.g. Grand Aeropolis Smart Township (Phase I)" required />
+1496:         </div>
+1497: 
+1498:         <div class="form-grid-2">
+1499:           <div class="form-field-group">
+1500:             <label for="newCategory">Category</label>
+1501:             <select id="newCategory" required>
+1502:               <option value="Plots">Plots</option>
+1503:               <option value="Farmland">Farmland</option>
+1504:               <option value="Villas">Villas</option>
+1505:               <option value="Flats">Flats</option>
+1506:               <option value="Commercial">Commercial</option>
+1507:             </select>
+1508:           </div>
+1509: 
+1510:           <div class="form-field-group">
+1511:             <label for="newLocation">Location / Region</label>
+1512:             <input type="text" id="newLocation" placeholder="e.g. Avinashi Road, Coimbatore" required />
+1513:           </div>
+1514:         </div>
+1515: 
+1516:         <div class="form-grid-2">
+1517:           <div class="form-field-group">
+1518:             <label for="newPromoter">Promoter / Builder Name</label>
+1519:             <input type="text" id="newPromoter" placeholder="e.g. Casagrand &amp; G-Square Promoters" required />
+1520:           </div>
+1521: 
+1522:           <div class="form-field-group">
+1523:             <label for="newPrice">Rate / Pricing</label>
+1524:             <input type="text" id="newPrice" placeholder="e.g. ₹ 35.0 Lakhs onwards / ₹ 42 Lakh / Acre" required />
+1525:           </div>
+1526:         </div>
+1527: 
+1528:         <div class="form-grid-2">
+1529:           <div class="form-field-group">
+1530:             <label for="newApprovalType">Approval Type</label>
+1531:             <select id="newApprovalType" required>
+1532:               <option value="DTCP Approved">DTCP Approved</option>
+1533:               <option value="RERA Approved">RERA Approved</option>
+1534:               <option value="Both DTCP &amp; RERA">Both DTCP &amp; RERA</option>
+1535:               <option value="Patta Verified">Patta Verified</option>
+1536:               <option value="Doc Audit In-Review">Doc Audit In-Review</option>
+1537:               <option value="Patta Title Check">Patta Title Check</option>
+1538:             </select>
+1539:           </div>
+1540: 
+1541:           <div class="form-field-group">
+1542:             <label for="newApprovalNumber">RERA / DTCP Approval Number</label>
+1543:             <input type="text" id="newApprovalNumber" placeholder="e.g. TN/11/Layout/0284/2026" required />
+1544:           </div>
+1545:         </div>
+1546: 
+1547:         <div class="form-grid-2">
+1548:           <div class="form-field-group">
+1549:             <label for="newStatus">Status</label>
+1550:             <select id="newStatus" required>
+1551:               <option value="Active">Active</option>
+1552:               <option value="Under Review">Under Review</option>
+1553:               <option value="Patta Title Check">Patta Title Check</option>
+1554:               <option value="Patta Verified">Patta Verified</option>
+1555:             </select>
+1556:           </div>
+1557: 
+1558:           <div class="form-field-group">
+1559:             <label for="newArea">Total Area / Acreage</label>
+1560:             <input type="text" id="newArea" placeholder="e.g. 45 Acres / 2,400 sq.ft" required />
+1561:           </div>
+1562:         </div>
+1563: 
+1564:         <div class="form-field-group">
+1565:           <label for="newMetrics">Key Metrics / Specs</label>
+1566:           <input type="text" id="newMetrics" placeholder="e.g. 2,400 sq.ft • 30ft Blacktop Roads • 3-Phase EB" required />
+1567:         </div>
+1568: 
+1569:         <!-- Property Media / Dual Image Asset Section -->
+1570:         <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px; margin-top: 4px; margin-bottom: 12px;">
+1571:           <label style="font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 8px; display: block;">📸 Property Image Asset (Upload File or Paste URL)</label>
+1572:           
+1573:           <div class="form-grid-2" style="margin-bottom: 8px;">
+1574:             <div class="form-field-group">
+1575:               <label for="property-image-url" style="font-size: 0.72rem; color: #64748B;">Option A: Direct Image URL</label>
+1576:               <input type="url" id="property-image-url" placeholder="https://images.unsplash.com/..." oninput="handleImageUrlChange(this.value)" />
+1577:             </div>
+1578: 
+1579:             <div class="form-field-group">
+1580:               <label for="property-image-file" style="font-size: 0.72rem; color: #64748B;">Option B: Local File Upload</label>
+1581:               <input type="file" id="property-image-file" accept="image/*" onchange="handleImageFileSelect(event)" style="padding: 6px 8px; font-size: 0.76rem;" />
+1582:             </div>
+1583:           </div>
+1584: 
+1585:           <!-- Live Image Preview Box -->
+1586:           <div id="image-preview-container" style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
+1587:             <div id="image-preview-box" style="width: 72px; height: 50px; border-radius: 6px; border: 1px dashed #CBD5E1; background: #FFFFFF url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=400&q=80') center/cover no-repeat; flex-shrink: 0;"></div>
+1588:             <div style="font-size: 0.72rem; color: #64748B;">
+1589:               <strong id="preview-status-text" style="color: #059669;">✓ Default Preview Asset Active</strong>
+1590:               <div style="font-size: 0.68rem; color: #94A3B8;">Base64 or external CDN URLs will render automatically on public cards.</div>
+1591:             </div>
+1592:           </div>
+1593:         </div>
+1594: 
+1595:         <div style="display: flex; gap: 10px; margin-top: 16px;">
+1596:           <button type="button" class="btn-outline-action" style="flex: 1; justify-content: center; padding: 11px;" onclick="closeAddPropertyModal()">Cancel</button>
+1597:           <button type="submit" class="btn-primary-action" style="flex: 2; justify-content: center; padding: 11px;">Publish Listing Live</button>
+1598:         </div>
+1599:       </form>
+1600:     </div>
+1601:   </div>
+1602: 
+1603:     <!-- SERVICE DETAILS / ASSET PREVIEW MODAL -->
+1604:   <div class="admin-modal-overlay" id="serviceDetailsModal">
+1605:     <div class="admin-modal-card" style="max-width: 620px; max-height: 90vh; overflow-y: auto;">
+1606:       <div class="modal-header-row">
+1607:         <h3 id="serviceModalTitle">👁️ Service Ticket Details</h3>
+1608:         <button type="button" class="modal-close-btn" onclick="closeServiceDetailsModal()">&times;</button>
+1609:       </div>
+1610: 
+1611:       <div id="serviceModalBody" style="padding-top: 10px;">
+1612:         <!-- Injected Dynamically -->
+1613:       </div>
+1614: 
+1615:       <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 14px;">
+1616:         <button type="button" class="btn-outline-action" onclick="closeServiceDetailsModal()">Close</button>
+1617:         <button type="button" class="btn-primary-action" id="serviceModalPrimaryBtn" onclick="closeServiceDetailsModal()">Done</button>
+1618:       </div>
+1619:     </div>
+1620:   </div>
+1621: 
+1622:     <!-- MANUAL ADD 3D INTERIOR DESIGN TICKET MODAL -->
+1623:   <div class="admin-modal-overlay" id="addInteriorModal">
+1624:     <div class="admin-modal-card" style="max-width: 580px;">
+1625:       <div class="modal-header-row">
+1626:         <h3>🏠 Add 3D Interior Design Ticket</h3>
+1627:         <button type="button" class="modal-close-btn" onclick="closeAddInteriorModal()">&times;</button>
+1628:       </div>
+1629: 
+1630:       <form id="addInteriorForm" onsubmit="handleAddInteriorSubmit(event)">
+1631:         <div class="form-field-group">
+1632:           <label for="newIntName">Client Name &amp; Contact</label>
+1633:           <input type="text" id="newIntName" placeholder="e.g. Ramesh Kumar (+91 98765 43210)" required />
+1634:         </div>
+1635: 
+1636:         <div class="form-grid-2">
+1637:           <div class="form-field-group">
+1638:             <label for="newIntLocation">Property Locality</label>
+1639:             <input type="text" id="newIntLocation" placeholder="e.g. Saravanampatti, Coimbatore" required />
+1640:           </div>
+1641:           <div class="form-field-group">
+1642:             <label for="newIntPropType">Property Type</label>
+1643:             <select id="newIntPropType" required>
+1644:               <option value="Apartment (3 BHK)">Apartment (3 BHK)</option>
+1645:               <option value="Luxury Villa">Luxury Villa</option>
+1646:               <option value="Duplex House">Duplex House</option>
+1647:               <option value="Commercial / Studio">Commercial / Studio</option>
+1648:             </select>
+1649:           </div>
+1650:         </div>
+1651: 
+1652:         <div class="form-grid-2">
+1653:           <div class="form-field-group">
+1654:             <label for="newIntStyle">Preferred Aesthetic Style</label>
+1655:             <select id="newIntStyle" required>
+1656:               <option value="Contemporary Minimalist">Contemporary Minimalist</option>
+1657:               <option value="Luxury Italian Marble &amp; Gold">Luxury Italian Marble &amp; Gold</option>
+1658:               <option value="Traditional Chettinad &amp; Wood">Traditional Chettinad &amp; Wood</option>
+1659:               <option value="Modern Scandinavian">Modern Scandinavian</option>
+1660:               <option value="Japandi Warm Wood">Japandi Warm Wood</option>
+1661:             </select>
+1662:           </div>
+1663:           <div class="form-field-group">
+1664:             <label for="newIntBudget">Budget Tier</label>
+1665:             <select id="newIntBudget" required>
+1666:               <option value="₹ 6.0L - ₹ 12.0L">₹ 6.0L - ₹ 12.0L</option>
+1667:               <option value="₹ 12.0L - ₹ 18.0L">₹ 12.0L - ₹ 18.0L</option>
+1668:               <option value="₹ 15.0L+ (Custom Turnkey)">₹ 15.0L+ (Custom Turnkey)</option>
+1669:               <option value="₹ 25.0L+ (Bespoke Designer)">₹ 25.0L+ (Bespoke Designer)</option>
+1670:             </select>
+1671:           </div>
+1672:         </div>
+1673: 
+1674:         <div class="form-field-group">
+1675:           <label for="newIntStatus">Initial Status</label>
+1676:           <select id="newIntStatus" required>
+1677:             <option value="Design In-Review">Design In-Review</option>
+1678:             <option value="3D Render Ready">3D Render Ready</option>
+1679:             <option value="Designer Assigned">Designer Assigned</option>
+1680:           </select>
+1681:         </div>
+1682: 
+1683:         <div style="display: flex; gap: 10px; margin-top: 14px;">
+1684:           <button type="button" class="btn-outline-action" style="flex: 1; justify-content: center; padding: 10px;" onclick="closeAddInteriorModal()">Cancel</button>
+1685:           <button type="submit" class="btn-primary-action" style="flex: 2; justify-content: center; padding: 10px;">Save Design Ticket</button>
+1686:         </div>
+1687:       </form>
+1688:     </div>
+1689:   </div>
+1690: 
+1691:   <!-- MANUAL ADD GRIHA PRAVESH POOJA MODAL -->
+1692:   <div class="admin-modal-overlay" id="addPoojaModal">
+1693:     <div class="admin-modal-card" style="max-width: 580px;">
+1694:       <div class="modal-header-row">
+1695:         <h3>☀️ Schedule Griha Pravesh Pooja</h3>
+1696:         <button type="button" class="modal-close-btn" onclick="closeAddPoojaModal()">&times;</button>
+1697:       </div>
+1698: 
+1699:       <form id="addPoojaForm" onsubmit="handleAddPoojaSubmit(event)">
+1700:         <div class="form-field-group">
+1701:           <label for="newPoojaName">Customer Name &amp; Phone</label>
+1702:           <input type="text" id="newPoojaName" placeholder="e.g. Senthil Nathan (+91 97890 23456)" required />
+1703:         </div>
+1704: 
+1705:         <div class="form-grid-2">
+1706:           <div class="form-field-group">
+1707:             <label for="newPoojaLocation">City / Locality</label>
+1708:             <input type="text" id="newPoojaLocation" placeholder="e.g. Vadavalli, Coimbatore" required />
+1709:           </div>
+1710:           <div class="form-field-group">
+1711:             <label for="newPoojaPackage">Selected Package</label>
+1712:             <select id="newPoojaPackage" required>
+1713:               <option value="Gold (Grand Homam)">Gold (Grand Homam)</option>
+1714:               <option value="Platinum (Full Feast &amp; Decor)">Platinum (Full Feast &amp; Decor)</option>
+1715:               <option value="Silver (Essential)">Silver (Essential)</option>
+1716:             </select>
+1717:           </div>
+1718:         </div>
+1719: 
+1720:         <div class="form-grid-2">
+1721:           <div class="form-field-group">
+1722:             <label for="newPoojaDate">Muhurtham Date</label>
+1723:             <input type="text" id="newPoojaDate" placeholder="e.g. 12 Sep 2026" required />
+1724:           </div>
+1725:           <div class="form-field-group">
+1726:             <label for="newPoojaTime">Auspicious Time Slot</label>
+1727:             <input type="text" id="newPoojaTime" placeholder="e.g. 06:15 AM (Brahma Muhurtham)" required />
+1728:           </div>
+1729:         </div>
+1730: 
+1731:         <div class="form-grid-2">
+1732:           <div class="form-field-group">
+1733:             <label for="newPoojaPandit">Assigned Pandit</label>
+1734:             <input type="text" id="newPoojaPandit" placeholder="e.g. Vadhyar Sundaresan (Assigned)" required />
+1735:           </div>
+1736:           <div class="form-field-group">
+1737:             <label for="newPoojaStatus">Booking Status</label>
+1738:             <select id="newPoojaStatus" required>
+1739:               <option value="Confirmed &amp; Scheduled">Confirmed &amp; Scheduled</option>
+1740:               <option value="Coordination Active">Coordination Active</option>
+1741:               <option value="Pending Verification">Pending Verification</option>
+1742:             </select>
+1743:           </div>
+1744:         </div>
+1745: 
+1746:         <div style="display: flex; gap: 10px; margin-top: 14px;">
+1747:           <button type="button" class="btn-outline-action" style="flex: 1; justify-content: center; padding: 10px;" onclick="closeAddPoojaModal()">Cancel</button>
+1748:           <button type="submit" class="btn-primary-action" style="flex: 2; justify-content: center; padding: 10px;">Schedule Booking</button>
+1749:         </div>
+1750:       </form>
+1751:     </div>
+1752:   </div>
+1753: 
+1754:     <!-- GRIHA PRAVESH OFFICIAL CEREMONY SLIP MODAL -->
+1755:   <div class="admin-modal-overlay" id="pooja-slip-modal">
+1756:     <div class="admin-modal-card" style="max-width: 650px; max-height: 90vh; overflow-y: auto;">
+1757:       <div class="modal-header-row" style="border-bottom: 1px solid #FCD34D; padding-bottom: 12px; margin-bottom: 14px;">
+1758:         <div style="display: flex; align-items: center; gap: 8px;">
+1759:           <span style="font-size: 1.3rem;">☀️</span>
+1760:           <h3 style="margin: 0; color: #92400E; font-size: 1.1rem;" id="slipModalHeaderTitle">Official Griha Pravesh &amp; Vedic Homam Slip</h3>
+1761:         </div>
+1762:         <button type="button" class="modal-close-btn" onclick="closeAllPoojaModals()">&times;</button>
+1763:       </div>
+1764: 
+1765:       <div id="poojaSlipModalContent">
+1766:         <!-- Injected Dynamically -->
+1767:       </div>
+1768: 
+1769:       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; border-top: 1px solid #E2E8F0; padding-top: 14px;">
+1770:         <button type="button" id="btn-print-slip" class="btn-outline-action" onclick="window.print()" style="display: flex; align-items: center; gap: 6px;">
+1771:           <span>🖨️ Print Slip</span>
+1772:         </button>
+1773:         <button type="button" id="btn-close-slip" class="btn-primary-action" onclick="closeAllPoojaModals()" style="padding: 8px 24px;">
+1774:           <span>Close</span>
+1775:         </button>
+1776:       </div>
+1777:     </div>
+1778:   </div>
+1779: 
+1780:   <!-- GRIHA PRAVESH EDIT BOOKING MODAL -->
+1781:   <div class="admin-modal-overlay" id="pooja-edit-modal">
+1782:     <div class="admin-modal-card" style="max-width: 540px;">
+1783:       <div class="modal-header-row">
+1784:         <h3 style="color: #0F172A; font-size: 1.1rem;">✏️ Edit Vedic Ceremony Booking</h3>
+1785:         <button type="button" class="modal-close-btn" onclick="closeAllPoojaModals()">&times;</button>
+1786:       </div>
+1787: 
+1788:       <form id="editPoojaBookingForm" onsubmit="handleSavePoojaEdit(event)">
+1789:         <input type="hidden" id="editPoojaId" />
+1790: 
+1791:         <div class="form-field-group" style="margin-bottom: 12px;">
+1792:           <label style="font-size: 0.76rem; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Customer Details</label>
+1793:           <input type="text" id="editPoojaCustomer" disabled style="background: #F1F5F9; color: #334155; font-size: 0.82rem; font-weight: 600;" />
+1794:         </div>
+1795: 
+1796:         <div class="form-field-group" style="margin-bottom: 12px;">
+1797:           <label for="editPoojaPanditSelect" style="font-size: 0.76rem; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Assigned Chief Vedic Pandit</label>
+1798:           <select id="editPoojaPanditSelect" style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.82rem;" required>
+1799:             <option value="Vadhyar Sundaresan (Assigned)">Vadhyar Sundaresan (Assigned)</option>
+1800:             <option value="Sastri Vidyasagar (Assigned)">Sastri Vidyasagar (Assigned)</option>
+1801:             <option value="Vadhyar Ganapathi Bhat (Assigned)">Vadhyar Ganapathi Bhat (Assigned)</option>
+1802:             <option value="Senior Sastri Swaminathan">Senior Sastri Swaminathan</option>
+1803:             <option value="Vadhyar Ramanathan (Assigned)">Vadhyar Ramanathan (Assigned)</option>
+1804:             <option value="Vadhyar Narayana Dikshitar">Vadhyar Narayana Dikshitar</option>
+1805:             <option value="Pandit Allotment In-Progress">Pandit Allotment In-Progress</option>
+1806:           </select>
+1807:         </div>
+1808: 
+1809:         <div class="form-field-group" style="margin-bottom: 12px;">
+1810:           <label for="editPoojaSamagriSelect" style="font-size: 0.76rem; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Samagri Kit &amp; Mandap Logistics Status</label>
+1811:           <select id="editPoojaSamagriSelect" style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.82rem;" required>
+1812:             <option value="48-Item Organic Samagri Dispatched">48-Item Organic Samagri Dispatched</option>
+1813:             <option value="Mandap &amp; Floral Team Dispatched">Mandap &amp; Floral Team Dispatched</option>
+1814:             <option value="Kit Delivered to Venue">Kit Delivered to Venue</option>
+1815:             <option value="Traditional Feast &amp; Decor Confirmed">Traditional Feast &amp; Decor Confirmed</option>
+1816:             <option value="Standard Samagri Kit Packed">Standard Samagri Kit Packed</option>
+1817:             <option value="Complete Homa Kit QC Passed">Complete Homa Kit QC Passed</option>
+1818:             <option value="Vedic Samagri List Ready">Vedic Samagri List Ready</option>
+1819:           </select>
+1820:         </div>
+1821: 
+1822:         <div class="form-field-group" style="margin-bottom: 16px;">
+1823:           <label for="editPoojaStatusSelect" style="font-size: 0.76rem; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Ceremony Booking Status</label>
+1824:           <select id="editPoojaStatusSelect" style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.82rem;" required>
+1825:             <option value="Confirmed &amp; Scheduled">Confirmed &amp; Scheduled (Green)</option>
+1826:             <option value="Coordination Active">Coordination Active (Blue)</option>
+1827:             <option value="Pending Pandit Assign">Pending Pandit Assign (Amber)</option>
+1828:             <option value="Completed">Completed (Green)</option>
+1829:           </select>
+1830:         </div>
+1831: 
+1832:         <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #E2E8F0; padding-top: 14px;">
+1833:           <button type="button" id="btn-close-edit" class="btn-outline-action" onclick="closeAllPoojaModals()">Cancel</button>
+1834:           <button type="submit" class="btn-primary-action" style="padding: 8px 20px;">Save Changes</button>
+1835:         </div>
+1836:       </form>
+1837:     </div>
+1838:   </div>
+1839: 
+1840:     <!-- DTCP / RERA LEGAL VERIFICATION REVIEW MODAL -->
+1841:   <div class="admin-modal-overlay" id="dtcpReviewModal">
+1842:     <div class="admin-modal-card" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+1843:       <div class="modal-header-row" style="border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 14px;">
+1844:         <div style="display: flex; align-items: center; gap: 8px;">
+1845:           <span style="font-size: 1.3rem;">🛡️</span>
+1846:           <h3 style="margin: 0; color: #0F172A; font-size: 1.1rem;" id="dtcpModalPropertyTitle">Review DTCP / RERA Compliance</h3>
+1847:         </div>
+1848:         <button type="button" class="modal-close-btn" onclick="closeDtcpReviewModal()">&times;</button>
+1849:       </div>
+1850: 
+1851:       <div id="dtcpModalBodyContent">
+1852:         <!-- Injected Dynamically -->
+1853:       </div>
+1854: 
+1855:       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; border-top: 1px solid var(--border-color); padding-top: 14px; gap: 10px; flex-wrap: wrap;">
+1856:         <button type="button" class="btn-outline-action" onclick="requestResubmissionListing()" style="color: #D97706; border-color: #FDE68A; background: #FFFBEB;">
+1857:           <span>⚠️ Request Resubmission</span>
+1858:         </button>
+1859:         <div style="display: flex; gap: 8px;">
+1860:           <button type="button" class="btn-outline-action" onclick="closeDtcpReviewModal()">Cancel</button>
+1861:           <button type="button" class="btn-primary-action" id="btnApproveCompliance" onclick="approveVerificationListing()">
+1862:             <span>✓ Approve &amp; Move to Active Listings</span>
+1863:           </button>
+1864:         </div>
+1865:       </div>
+1866:     </div>
+1867:   </div>
+1868: 
+1869:     <!-- FARMLAND AGRONOMY & TELEMETRY AUDIT MODAL -->
+1870:   <div class="admin-modal-overlay" id="farmlandAuditModal">
+1871:     <div class="admin-modal-card" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+1872:       <div class="modal-header-row" style="border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 14px;">
+1873:         <div style="display: flex; align-items: center; gap: 8px;">
+1874:           <span style="font-size: 1.3rem;">🌱</span>
+1875:           <h3 style="margin: 0; color: #0F172A; font-size: 1.1rem;" id="farmlandModalTitle">Farmland Agronomy &amp; Telemetry Audit</h3>
+1876:         </div>
+1877:         <button type="button" class="modal-close-btn" onclick="closeFarmlandAuditModal()">&times;</button>
+1878:       </div>
+1879: 
+1880:       <div id="farmlandModalContent">
+1881:         <!-- Injected Dynamically -->
+1882:       </div>
+1883: 
+1884:       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; border-top: 1px solid var(--border-color); padding-top: 14px; gap: 10px; flex-wrap: wrap;">
+1885:         <button type="button" class="btn-outline-action" onclick="closeFarmlandAuditModal()">Close</button>
+1886:         <button type="button" class="btn-primary-action" id="btnPassFarmlandAudit" onclick="confirmFarmlandAuditPass()">
+1887:           <span>✓ Mark as Verified Prime Asset</span>
+1888:         </button>
+1889:       </div>
+1890:     </div>
+1891:   </div>
+1892: 
+1893:     <!-- EDIT PROPERTY LISTING MODAL -->
+1894:   <!-- EDIT PROPERTY MODAL -->
+1895:   <div id="edit-property-modal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+1896:     <div style="background: #ffffff; border-radius: 20px; padding: 28px 32px; max-width: 500px; width: 100%; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); position: relative; max-height: 90vh; overflow-y: auto;">
+1897:       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px;">
+1898:         <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: #0f172a;">✏️ Edit Property Listing</h3>
+1899:         <button type="button" id="btn-close-edit-prop" style="border: none; background: #f1f5f9; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;">✕</button>
+1900:       </div>
+1901:       <form id="form-edit-property" style="display: flex; flex-direction: column; gap: 14px;">
+1902:         <input type="hidden" id="edit-prop-index" />
+1903:         <input type="hidden" id="edit-prop-id" />
+1904:         <div>
+1905:           <label for="edit-prop-title" style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 4px;">Property Name</label>
+1906:           <input type="text" id="edit-prop-title" required style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; box-sizing: border-box;" />
+1907:         </div>
+1908:         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+1909:           <div>
+1910:             <label for="edit-prop-location" style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 4px;">Location</label>
+1911:             <input type="text" id="edit-prop-location" required style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; box-sizing: border-box;" />
+1912:           </div>
+1913:           <div>
+1914:             <label for="edit-prop-category" style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 4px;">Category</label>
+1915:             <select id="edit-prop-category" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; box-sizing: border-box;">
+1916:               <option value="Plots">Residential Plots</option>
+1917:               <option value="Farmland">Farmland</option>
+1918:               <option value="Villas">Villas</option>
+1919:               <option value="Flats">Apartments / Flats</option>
+1920:               <option value="Commercial">Dry Land / Commercial</option>
+1921:             </select>
+1922:           </div>
+1923:         </div>
+1924:         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+1925:           <div>
+1926:             <label for="edit-prop-price" style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 4px;">Rate / Pricing</label>
+1927:             <input type="text" id="edit-prop-price" required style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; box-sizing: border-box;" />
+1928:           </div>
+1929:           <div>
+1930:             <label for="edit-prop-metrics" style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 4px;">Key Metrics</label>
+1931:             <input type="text" id="edit-prop-metrics" required style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; box-sizing: border-box;" />
+1932:           </div>
+1933:         </div>
+1934:         <div>
+1935:           <label for="edit-prop-status" style="display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 4px;">Status</label>
+1936:           <select id="edit-prop-status" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; box-sizing: border-box;">
+1937:             <option value="Active">Active</option>
+1938:             <option value="Under Review">Under Review</option>
+1939:             <option value="Patta Verified">Patta Verified</option>
+1940:             <option value="Sold Out">Sold Out</option>
+1941:           </select>
+1942:         </div>
+1943:         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; border-top: 1px solid #e2e8f0; padding-top: 12px;">
+1944:           <button type="button" id="btn-cancel-edit-prop" style="padding: 10px 18px; border-radius: 8px; border: 1px solid #cbd5e1; background: #fff; color: #475569; font-weight: 600; cursor: pointer;">Cancel</button>
+1945:           <button type="submit" id="btn-submit-edit-prop" style="padding: 10px 20px; border-radius: 8px; border: none; background: #10b981; color: #fff; font-weight: 700; cursor: pointer;">Save Changes</button>
+1946:         </div>
+1947:       </form>
+1948:     </div>
+1949:   </div>
+1950: 
+1951:         <div class="form-grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+1952:           <div class="form-field-group">
+1953:             <label for="editPropertyPrice" style="font-size: 0.78rem; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Rate / Price</label>
+1954:             <input type="text" id="editPropertyPrice" placeholder="e.g. ₹ 45.0 Lakhs" required style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem; box-sizing: border-box;" />
+1955:           </div>
+1956:           <div class="form-field-group">
+1957:             <label for="editPropertyMetrics" style="font-size: 0.78rem; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Key Metrics / Size</label>
+1958:             <input type="text" id="editPropertyMetrics" placeholder="e.g. 2,400 sq.ft • DTCP Approved" required style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem; box-sizing: border-box;" />
+1959:           </div>
+1960:         </div>
+1961: 
+1962:         <div class="form-field-group" style="margin-bottom: 16px;">
+1963:           <label for="editPropertyStatus" style="font-size: 0.78rem; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Listing Status</label>
+1964:           <select id="editPropertyStatus" required style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem; box-sizing: border-box;">
+1965:             <option value="Active">🟢 Active / Live</option>
+1966:             <option value="Pending Approval">⏳ Pending Verification</option>
+1967:             <option value="Patta Verified">🛡️ Patta Verified</option>
+1968:             <option value="Sold Out">🔴 Sold Out</option>
+1969:           </select>
+1970:         </div>
+1971: 
+1972:         <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 14px;">
+1973:           <button type="button" id="btn-cancel-edit" class="btn-outline-action" onclick="closePropertyEditModal()" style="padding: 8px 16px; border: 1px solid #cbd5e1; background: #ffffff; border-radius: 8px; cursor: pointer;">Cancel</button>
+1974:           <button type="submit" id="btn-save-property" class="btn-primary-action" style="padding: 8px 20px; background: #059669; color: #ffffff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Save Changes</button>
+1975:         </div>
+1976:       </form>
+1977:     </div>
+1978:   </div>
+1979: 
+1980:   <!-- Edit Listing Modal Dialog -->
+1981:   <div class="admin-modal-overlay" id="editListingModal">
+1982:     <div class="admin-modal-card">
+1983:       <div class="modal-header-row">
+1984:         <h3>✏️ Edit Property Listing Details</h3>
+1985:         <button type="button" class="modal-close-btn" onclick="closeEditListingModal()">&times;</button>
+1986:       </div>
+1987: 
+1988:       <form id="editListingForm" onsubmit="handleEditListingSubmit(event)">
+1989:         <input type="hidden" id="editListingId" />
+1990: 
+1991:         <div class="form-field-group">
+1992:           <label for="editListingTitle">Property Title / Name</label>
+1993:           <input type="text" id="editListingTitle" required />
+1994:         </div>
+1995: 
+1996:         <div class="form-grid-2">
+1997:           <div class="form-field-group">
+1998:             <label for="editListingCategory">Category</label>
+1999:             <select id="editListingCategory" required>
+2000:               <option value="Plots">Plots</option>
+2001:               <option value="Farmland">Farmland</option>
+2002:               <option value="Villas">Villas</option>
+2003:               <option value="Flats">Flats</option>
+2004:             </select>
+2005:           </div>
+2006: 
+2007:           <div class="form-field-group">
+2008:             <label for="editListingLocation">Location</label>
+2009:             <input type="text" id="editListingLocation" required />
+2010:           </div>
+2011:         </div>
+2012: 
+2013:         <div class="form-grid-2">
+2014:           <div class="form-field-group">
+2015:             <label for="editListingPrice">Rate / Pricing</label>
+2016:             <input type="text" id="editListingPrice" placeholder="e.g. ₹ 35.0 Lakhs onwards" required />
+2017:           </div>
+2018: 
+2019:           <div class="form-field-group">
+2020:             <label for="editListingStatus">Status</label>
+2021:             <select id="editListingStatus" required>
+2022:               <option value="Active">Active</option>
+2023:               <option value="Patta Verified">Patta Verified</option>
+2024:               <option value="Pending Review">Pending Review</option>
+2025:             </select>
+2026:           </div>
+2027:         </div>
+2028: 
+2029:         <div class="form-field-group">
+2030:           <label for="editListingMetrics">Key Metrics / Specs</label>
+2031:           <input type="text" id="editListingMetrics" placeholder="e.g. 2,400 sq.ft • DTCP Approved" required />
+2032:         </div>
+2033: 
+2034:         <div style="display: flex; gap: 10px; margin-top: 14px;">
+2035:           <button type="button" class="btn-outline-action" style="flex: 1; justify-content: center; padding: 10px;" onclick="closeEditListingModal()">Cancel</button>
+2036:           <button type="submit" class="btn-primary-action" style="flex: 2; justify-content: center; padding: 10px;">Save Changes</button>
+2037:         </div>
+2038:       </form>
+2039:     </div>
+2040:   </div>
+2041: 
+2042:   <!-- Toast Notification Container -->
+2043:   <div class="admin-toast-container" id="adminToastContainer"></div>
+2044: 
+2045: <!-- Centralized LocalStorage Sync & Interactive Engine -->

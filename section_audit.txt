@@ -1,0 +1,31 @@
+Line 1081:   <aside class="admin-sidebar" id="adminSidebar">
+Line 1193:   </aside>
+Line 1196:   <div class="admin-main">
+Line 1197:     <main class="admin-content">
+Line 1220:       <section class="page-tab-content active" id="tab-overview">
+Line 1356:       </section>
+Line 1359:       <section class="page-tab-content" id="tab-properties">
+Line 1398:       </section>
+Line 1401:       <section class="page-tab-content" id="tab-approvals">
+Line 1431:       </section>
+Line 1434:       <section class="page-tab-content" id="tab-farmland">
+Line 1468:       </section>
+Line 1471:       <section class="page-tab-content" id="tab-leads">
+Line 1501:       </section>
+Line 1504:       <section class="page-tab-content" id="tab-settings">
+Line 1541:       </section>
+Line 1544:       <section class="page-tab-content" id="tab-interiors">
+Line 1589:       </section>
+Line 1592:       <section class="page-tab-content" id="tab-grihapravesh">
+Line 1635:       </section>
+Line 1636:     </main>
+Line 1642:   <div class="admin-modal-overlay" id="addPropertyModal">
+Line 1761:   <div class="admin-modal-overlay" id="serviceDetailsModal">
+Line 1780:   <div class="admin-modal-overlay" id="addInteriorModal">
+Line 1849:   <div class="admin-modal-overlay" id="addPoojaModal">
+Line 1912:   <div class="admin-modal-overlay" id="pooja-slip-modal">
+Line 1938:   <div class="admin-modal-overlay" id="pooja-edit-modal">
+Line 1998:   <div class="admin-modal-overlay" id="dtcpReviewModal">
+Line 2027:   <div class="admin-modal-overlay" id="farmlandAuditModal">
+Line 2052:   <div id="edit-property-modal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 9999; justify-content: center; align-items: center; padding: 20px;">
+Line 2138:   <div class="admin-modal-overlay" id="editListingModal">
