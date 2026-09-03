@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule VIP Site Visit & Cab Pickup | Land & Beyond</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; color: #0f172a; margin: 0; padding: 0; }
+    .form-container { max-width: 600px; margin: 40px auto; padding: 0 20px; }
+    .form-card { background: #ffffff; border-radius: 24px; border: 1px solid #e2e8f0; padding: 36px 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+    .form-header { text-align: center; margin-bottom: 24px; }
+    .input-box { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 14px; box-sizing: border-box; outline: none; margin-bottom: 14px; }
+    .btn-submit { width: 100%; padding: 14px; border-radius: 12px; background: #10b981; color: #fff; font-size: 15px; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(16,185,129,0.3); }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-card">
+      <div style="margin-bottom: 16px;"><a href="index.html" style="text-decoration: none; color: #64748b; font-weight: 700; font-size: 13px;">← Back to Home</a></div>
+      <div class="form-header">
+        <div style="width: 56px; height: 56px; border-radius: 16px; background: #ecfdf5; border: 1px solid #a7f3d0; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px;">
+          <span style="font-size: 26px;">🚕</span>
+        </div>
+        <h2 style="margin: 0 0 6px; font-size: 1.45rem; font-weight: 800; color: #0f172a;">Schedule Free VIP Site Visit</h2>
+        <p style="margin: 0; font-size: 13px; color: #64748b;">Complimentary AC Cab Pick-up &amp; Chauffeur Property Tour</p>
+      </div>
+
+      <form id="bookingPageForm" onsubmit="handleBookingPageSubmit(event)">
+        <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 4px;">Selected Property *</label>
+        <input type="text" id="propName" class="input-box" required style="background: #f8fafc; font-weight: 700;" />
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 4px;">Full Name *</label>
+            <input type="text" id="custName" class="input-box" required placeholder="Name" />
+          </div>
+          <div>
+            <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 4px;">Mobile (10 Digits) *</label>
+            <input type="tel" id="custPhone" class="input-box" pattern="[0-9]{10}" required placeholder="Phone Number" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 4px;">Visit Date *</label>
+            <input type="date" id="visitDate" class="input-box" required />
+          </div>
+          <div>
+            <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 4px;">Time Slot *</label>
+            <select id="timeSlot" class="input-box" required>
+              <option value="" disabled selected>Select Time Slot</option>
+              <option value="Morning (09:30 AM - 12:00 PM)">Morning (09:30 AM - 12:00 PM)</option>
+              <option value="Afternoon (02:00 PM - 04:30 PM)">Afternoon (02:00 PM - 04:30 PM)</option>
+              <option value="Evening (04:30 PM - 07:00 PM)">Evening (04:30 PM - 07:00 PM)</option>
+            </select>
+          </div>
+        </div>
+
+        <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 4px;">Pickup Address in Coimbatore *</label>
+        <input type="text" id="pickupAddr" class="input-box" required placeholder="e.g. RS Puram / Gandhipuram / Airport / Hotel" />
+
+        <button type="submit" class="btn-submit">Confirm VIP Booking &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const propTitle = params.get('property') || params.get('title') || 'Grand Aeropolis Smart Township';
+    document.getElementById('propName').value = decodeURIComponent(propTitle);
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    const dateInputEl = document.getElementById('visitDate');
+    if (dateInputEl) {
+      dateInputEl.min = todayStr;
+      dateInputEl.value = '';
+    }
+
+    try {
+      const session = JSON.parse(localStorage.getItem('lb_user_session') || 'null');
+      if (session) {
+        if (session.name) document.getElementById('custName').value = session.name;
+        if (session.phone) document.getElementById('custPhone').value = session.phone;
+      }
+    } catch(e) {}
+
+    function handleBookingPageSubmit(e) {
+      e.preventDefault();
+      const pTitle = (document.getElementById('propName')?.value || 'General Property Inspection').trim();
+      const name = (document.getElementById('custName')?.value || '').trim();
+      const phone = (document.getElementById('custPhone')?.value || '').trim();
+      const date = document.getElementById('visitDate')?.value || '';
+      const slot = document.getElementById('timeSlot')?.value || '';
+
+      if (!name || !phone || !date || !slot) {
+        alert('Please fill in your Name, Mobile Number, Visit Date, and Select a Time Slot.');
+        return;
+      }
+      const pickup = (document.getElementById('pickupAddr')?.value || '').trim() || 'Coimbatore City Center';
+
+      if (!name || !phone || !date) {
+        alert('Please fill in all required fields (Name, Phone, Visit Date).');
+        return;
+      }
+
+      const formattedPhone = phone.startsWith('+') ? phone : `+91 ${phone}`;
+
+      const newLead = {
+        id: 'inq_' + Date.now(),
+        name: name,
+        customerName: name,
+        contact: formattedPhone,
+        phone: formattedPhone,
+        propertyTitle: pTitle,
+        propertyRequested: pTitle,
+        date: date,
+        preferredDate: `${date} (${slot.split(' ')[0]})`,
+        timeSlot: slot,
+        pickupNeeded: true,
+        pickupAddress: pickup,
+        status: 'New Lead',
+        createdAt: new Date().toISOString()
+      };
+
+      let leads = [];
+      try {
+        const raw = localStorage.getItem('lb_site_tours_data');
+        if (raw) {
+          leads = JSON.parse(raw);
+          if (!Array.isArray(leads)) leads = [];
+        }
+      } catch(e) {
+        leads = [];
+      }
+
+      leads.unshift(newLead);
+      try {
+        localStorage.setItem('lb_site_tours_data', JSON.stringify(leads));
+      } catch(e) {}
+
+      // POST to backend API
+      try {
+        fetch('/api/data', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: 'lb_site_tours_data', data: leads })
+        }).catch(() => {});
+      } catch(e) {}
+
+      // Broadcast to Admin Dashboard for instant real-time live update
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          const bc = new BroadcastChannel('lb_sync_channel');
+          bc.postMessage({ type: 'STATE_UPDATE', key: 'lb_site_tours_data', data: leads });
+          bc.close();
+        }
+      } catch(e) {}
+
+      alert(`✅ VIP Site Tour Booked Successfully!\n\nProperty: ${pTitle}\nGuest: ${name} (${formattedPhone})\nDate: ${date}\nPickup Location: ${pickup}\n\nOur concierge team will pick you up.`);
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

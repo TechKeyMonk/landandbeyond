@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Architectural Layout Viewer | Land & Beyond</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; color: #ffffff; margin: 0; padding: 0; }
+    .viewer-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 28px; background: rgba(15,23,42,0.9); border-bottom: 1px solid #334155; }
+    .viewer-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; text-align: center; }
+    .blueprint-img { width: 100%; max-height: 600px; object-fit: contain; border-radius: 16px; border: 1px solid #334155; background: #1e293b; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+  </style>
+</head>
+<body>
+  <div class="viewer-header">
+    <a href="index.html" style="color: #34d399; font-weight: 700; text-decoration: none; font-size: 14px;">← Back to Portal</a>
+    <h3 id="layoutTitle" style="margin: 0; font-size: 16px; font-weight: 700;">Master Sanctioned Blueprint</h3>
+    <button onclick="window.print()" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #475569; background: #1e293b; color: #fff; cursor: pointer; font-weight: 600;">🖨️ Export PDF</button>
+  </div>
+  <div class="viewer-container">
+    <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">High-Resolution DTCP / RERA Sanctioned Boundary &amp; Road Geometry Layout</p>
+    <img id="layoutImg" class="blueprint-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400" alt="Master Layout" />
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const pName = params.get('project') || 'Grand Aeropolis Smart Township';
+    document.getElementById('layoutTitle').textContent = decodeURIComponent(pName) + ' — Master Layout';
+  </script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Land And Beyond — Staff &amp; Admin Login</title>
+  <meta name="description" content="Land And Beyond Master Staff &amp; Admin Gateway. Private enterprise access." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  <style>
+    :root {
+      --bg-canvas: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --border-color: #E2E8F0;
+      
+      --text-heading: #0F172A;
+      --text-body: #334155;
+      --text-secondary: #64748B;
+      
+      --emerald-600: #059669;
+      --emerald-500: #10B981;
+      --emerald-soft: #ECFDF5;
+      --emerald-border: #A7F3D0;
+      
+      --rose-500: #EF4444;
+      --rose-soft: #FEF2F2;
+      --rose-border: #FECACA;
+      
+      --font-main: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-canvas);
+      background-image: none !important;
+      color: var(--text-body);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input {
+      font-family: inherit;
+    }
+
+    .admin-auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      border-radius: var(--radius-lg);
+      padding: 38px 32px;
+      text-align: center;
+      position: relative;
+    }
+
+    .auth-card-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-heading);
+      line-height: 1.2;
+    }
+
+    .auth-card-title span {
+      color: var(--emerald-600);
+    }
+
+    .auth-card-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      margin-bottom: 20px;
+    }
+
+    .auth-error-banner {
+      display: none;
+      background: var(--rose-soft);
+      border: 1px solid var(--rose-border);
+      color: #DC2626;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .btn-autofill {
+      background: #F1F5F9;
+      border: 1px solid var(--border-color);
+      color: var(--text-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      margin-bottom: 16px;
+      width: 100%;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-autofill:hover {
+      background: #E2E8F0;
+      color: var(--text-heading);
+    }
+
+    .auth-field-wrap {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+
+    .auth-field-wrap label {
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .auth-input-container {
+      position: relative;
+    }
+
+    .auth-input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      pointer-events: none;
+    }
+
+    .auth-input {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 11px 14px 11px 40px;
+      color: var(--text-heading);
+      font-size: 0.88rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .auth-input:focus {
+      border-color: var(--emerald-500);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+
+    .auth-input.input-error {
+      border-color: var(--rose-500) !important;
+      background-color: #FFFBFB;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+    }
+
+    .btn-auth-submit {
+      width: 100%;
+      background: var(--emerald-500);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 6px;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-auth-submit:hover {
+      background: var(--emerald-600);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-auth-submit:disabled {
+      opacity: 0.75;
+      cursor: not-allowed;
+    }
+
+    .auth-back-link {
+      display: inline-block;
+      margin-top: 20px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .auth-back-link:hover {
+      color: var(--emerald-600);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-auth-card" id="adminAuthView">
+    <!-- Brand Logo Header -->
+    <div style="display: flex; justify-content: center; margin-bottom: 24px;">
+      <a href="index.html" title="Land &amp; Beyond Home" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+        <img 
+          src="/public/land-and-beyond-logo.png" 
+          alt="Land &amp; Beyond" 
+          style="max-height: 68px; max-width: 220px; width: auto; height: auto; object-fit: contain; display: block;" 
+          onerror="this.onerror=null; this.src='/land-and-beyond-logo.png';" 
+        />
+      </a>
+    </div>
+
+    <h1 class="auth-card-title">Staff &amp; <span>Admin Portal</span></h1>
+    <p class="auth-card-subtitle">Master Control Center • Restricted Enterprise Gateway</p>
+
+    <!-- Inline Error Feedback Banner -->
+    <div id="authErrorMessage" class="auth-error-banner" role="alert"></div>
+
+    <form id="adminLoginForm" novalidate>
+      <div class="auth-field-wrap">
+        <label for="adminEmail">Email / Access Key</label>
+        <div class="auth-input-container">
+          <svg class="auth-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <input 
+            type="email" 
+            class="auth-input" 
+            id="adminEmail" 
+            placeholder="landandbeyond03@gmail.com" 
+            required 
+            autocomplete="username" 
+          />
+        </div>
+      </div>
+
+      <div class="auth-field-wrap">
+        <label for="adminPassword">Security Passcode</label>
+        <div class="auth-input-container">
+          <svg class="auth-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <input 
+            type="password" 
+            class="auth-input" 
+            id="adminPassword" 
+            placeholder="••••••••••••" 
+            required 
+            autocomplete="current-password" 
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="btn-auth-submit" id="btnAuthSubmit">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+        <span id="btnAuthSubmitText">Authenticate &amp; Access Panel</span>
+      </button>
+    </form>
+
+    <a href="index.html" class="auth-back-link">&larr; Return to Public Website</a>
+  </div>
+
+  <script>
+    function handleAdminLoginSubmit(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      const emailInput = document.getElementById('adminEmail');
+      const pwdInput = document.getElementById('adminPassword');
+      const errEl = document.getElementById('authErrorMessage');
+      const btnSubmit = document.getElementById('btnAuthSubmit');
+      const btnText = document.getElementById('btnAuthSubmitText');
+
+      const email = emailInput ? emailInput.value.trim() : '';
+      const password = pwdInput ? pwdInput.value.trim() : '';
+
+      if (emailInput) emailInput.classList.remove('input-error');
+      if (pwdInput) pwdInput.classList.remove('input-error');
+      if (errEl) errEl.style.display = 'none';
+
+      let hasError = false;
+
+      if (!email) {
+        if (emailInput) emailInput.classList.add('input-error');
+        hasError = true;
+      }
+
+      if (!password) {
+        if (pwdInput) pwdInput.classList.add('input-error');
+        hasError = true;
+      }
+
+      if (hasError) {
+        if (errEl) {
+          errEl.textContent = 'Please enter both Admin Email and Password.';
+          errEl.style.display = 'block';
+        }
+        return false;
+      }
+
+      // Strict Authentication: landandbeyond03@gmail.com / techkeymonk
+      const isValid = (email.toLowerCase() === 'landandbeyond03@gmail.com' && password === 'techkeymonk');
+
+      if (!isValid) {
+        if (emailInput) emailInput.classList.add('input-error');
+        if (pwdInput) pwdInput.classList.add('input-error');
+        if (errEl) {
+          errEl.textContent = 'Invalid Email or Password. Access denied.';
+          errEl.style.display = 'block';
+        }
+        return false;
+      }
+
+      if (btnSubmit) btnSubmit.disabled = true;
+      if (btnText) btnText.textContent = 'Authenticating...';
+
+      localStorage.setItem('isAdminAuthenticated', 'true');
+      sessionStorage.setItem('isAdminAuthenticated', 'true');
+      sessionStorage.setItem('isAdminAuth', 'true');
+      sessionStorage.setItem('isAdminLoggedIn', 'true');
+      localStorage.setItem('lb_admin_email', 'landandbeyond03@gmail.com');
+
+      setTimeout(() => {
+        window.location.href = 'dashboard.html#newprojects';
+      }, 300);
+
+      return false;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('adminLoginForm');
+      if (form) {
+        form.addEventListener('submit', handleAdminLoginSubmit);
+      }
+
+      const emailInput = document.getElementById('adminEmail');
+      const pwdInput = document.getElementById('adminPassword');
+      const errEl = document.getElementById('authErrorMessage');
+
+      [emailInput, pwdInput].forEach(input => {
+        if (input) {
+          input.addEventListener('input', () => {
+            input.classList.remove('input-error');
+            if (errEl && (!emailInput || !emailInput.classList.contains('input-error')) && (!pwdInput || !pwdInput.classList.contains('input-error'))) {
+              errEl.style.display = 'none';
+            }
+          });
+        }
+      });
+    });
+
+    window.handleAutoFillDemo = handleAutoFillDemo;
+    window.handleAdminLoginSubmit = handleAdminLoginSubmit;
+  </script>
+</body>
+</html>
