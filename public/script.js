@@ -355,18 +355,23 @@ window.closeAuthModal = closeAllModals;
 window.closeSiteVisitModal = closeAllModals;
 
 
-const LB_KEYS = {
+const LB_STORAGE_KEYS = {
   PROPERTIES: 'lb_properties_data',
   APPROVALS: 'lb_approvals_data',
   FARMLAND: 'lb_farmland_data',
   SITE_TOURS: 'lb_site_tours_data',
   INTERIORS: 'lb_interior_consultations',
   GRIHA_PRAVESH: 'lb_griha_pravesh_bookings',
-  USERS: 'lb_registered_users',
-  SESSION: 'lb_user_session',
+  NEW_PROJECTS: 'lb_new_projects_data',
+  AUDIT: 'lb_admin_audit_logs',
+  COMPARE: 'lb_compare_list',
   FAVORITES: 'lb_user_favorites',
-  COMPARE: 'lb_compare_list'
+  USERS: 'lb_registered_users',
+  SESSION: 'lb_user_session'
 };
+const LB_KEYS = LB_STORAGE_KEYS;
+window.LB_KEYS = LB_KEYS;
+window.LB_STORAGE_KEYS = LB_STORAGE_KEYS;
 
 const _memoryStorageFallback = {};
 
@@ -379,6 +384,7 @@ function safeStorageGet(key) {
   } catch(e) {}
   return _memoryStorageFallback[key] || null;
 }
+
 
 function safeStorageSet(key, val) {
   try {
@@ -1277,15 +1283,8 @@ purgeFakeDummyData();
 
 // --------------------------------------------------------------------------
 // PURE REACTIVE CLIENT-SIDE DATA BRIDGE (SHARED WITH ADMIN PORTAL)
+// LB_STORAGE_KEYS and LB_KEYS are already defined globally at the top of this file.
 // --------------------------------------------------------------------------
-const LB_STORAGE_KEYS = {
-  PROPERTIES: 'lb_properties_data',
-  APPROVALS: 'lb_approvals_data',
-  FARMLAND: 'lb_farmland_data',
-  SITE_TOURS: 'lb_site_tours_data',
-  INTERIORS: 'lb_interior_consultations',
-  GRIHA_PRAVESH: 'lb_griha_pravesh_bookings'
-};
 
 let lbSyncChannel = null;
 try {
@@ -1293,7 +1292,6 @@ try {
     lbSyncChannel = new BroadcastChannel('lb_sync_channel');
   }
 } catch(e) {
-  console.warn('BroadcastChannel unavailable:', e);
   lbSyncChannel = null;
 }
 

@@ -57,8 +57,8 @@ module.exports = async (req, res) => {
         
         // Auto-sync into Supabase Cloud
         try {
-          const res = await syncToSupabase(dbKey, payload.data);
-          isSupabaseSynced = Boolean(res);
+          const syncResult = await syncToSupabase(dbKey, payload.data);
+          isSupabaseSynced = Boolean(syncResult);
           if (dbKey === 'properties' && Array.isArray(payload.data)) {
             const farmItems = payload.data.filter(p => {
               const cat = (p.category || '').toLowerCase();

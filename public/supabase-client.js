@@ -111,7 +111,8 @@ async function syncToSupabase(tableName, items) {
     'lb_griha_pravesh_bookings': 'poojas'
   };
 
-  const targetTable = tableMap[tableName] || tableName;
+  const targetTable = tableMap[tableName];
+  if (!targetTable) return false;
 
   try {
     const formatted = items.map((item, idx) => {

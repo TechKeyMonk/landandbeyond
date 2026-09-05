@@ -2392,10 +2392,9 @@
     window.purgeFakeDummyData = purgeFakeDummyData;
     purgeFakeDummyData();
 
-    // Helper to safely get and parse storage (Only original Admin data)
+    // Helper to safely get and parse storage (reads from localStorage / Supabase-synced cache)
     function getStoredData(key) {
       try {
-        purgeFakeDummyData();
         const raw = localStorage.getItem(key);
         if (raw) {
           const parsed = JSON.parse(raw);
@@ -2408,23 +2407,30 @@
     }
 
     async function setStoredData(key, data) {
+      // 1. Write to localStorage immediately for instant local render
       try {
         localStorage.setItem(key, JSON.stringify(data));
       } catch(e) {}
+      // 2. Broadcast to other open tabs
       broadcastChange(key, data);
+      // 3. Push to server → Supabase (global source of truth)
       try {
-        const res = await fetch('/api/data', {
+        const apiRes = await fetch('/api/data', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ key: key, data: data })
         });
-        if (res.ok) {
-          const json = await res.json();
+        if (apiRes.ok) {
+          const json = await apiRes.json();
           if (json.supabaseSynced) {
-            console.log(`☁️ Simultaneously synced ${key} to Supabase Cloud`);
+            console.log(`☁️ Synced ${key} → Supabase Cloud`);
           }
+          // 4. Pull back the canonical server state to confirm and re-render all modules
+          await fetchServerDB();
         }
-      } catch(e) {}
+      } catch(e) {
+        console.warn('setStoredData sync error:', e);
+      }
     }
 
     function logAdminAudit(actionType, target, details) {
@@ -4115,6 +4121,12 @@
 
       if (!confirm(`Are you sure you want to delete "${name}"?`)) return;
 
+      try {
+        await fetch('/api/property/' + encodeURIComponent(id), { method: 'DELETE' });
+      } catch(e) {
+        console.warn('API delete warning:', e);
+      }
+
       properties = properties.filter(p => p && p.id !== id && (p.title || p.name || '').trim().toLowerCase() !== name.trim().toLowerCase());
       await setStoredData(LB_STORAGE_KEYS.PROPERTIES, properties);
 
@@ -4122,10 +4134,6 @@
         farmland = farmland.filter(f => f && f.id !== id && (f.title || f.name || '').trim().toLowerCase() !== name.trim().toLowerCase());
         await setStoredData(LB_STORAGE_KEYS.FARMLAND, farmland);
       }
-
-      try {
-        await fetch('/api/property/' + encodeURIComponent(id), { method: 'DELETE' });
-      } catch(e) {}
 
       logAdminAudit('DELETE', name, `Deleted property listing (${item ? item.category : 'Property'} in ${item ? item.location : 'Coimbatore'})`);
 
