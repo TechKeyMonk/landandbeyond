@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no" />
   <title>Land And Beyond | Smart Property, Plots &amp; Farmland Finder</title>
   <meta
     name="description"
@@ -24,6 +24,37 @@
        COMPREHENSIVE RESPONSIVE & ACCESSIBLE BUTTON SYSTEM (MOBILE/TABLET/DESKTOP)
        ======================================================================== -->
   <style>
+    /* 0. Android Chrome & iOS Cross-Platform Normalization */
+    html, body {
+      -webkit-text-size-adjust: 100% !important;
+      -moz-text-size-adjust: 100% !important;
+      -ms-text-size-adjust: 100% !important;
+      text-size-adjust: 100% !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+      position: relative !important;
+      -webkit-font-smoothing: antialiased !important;
+      -moz-osx-font-smoothing: grayscale !important;
+      text-rendering: optimizeLegibility !important;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box !important;
+    }
+
+    /* Native select and input styling normalization across Android and iOS */
+    select {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+      background-repeat: no-repeat !important;
+      background-position: right 10px center !important;
+      background-size: 14px 14px !important;
+      padding-right: 32px !important;
+    }
+
     /* 1. Global Button Normalization & Minimum Touch Target (44px) */
     .btn,
     .btn-primary,
@@ -100,9 +131,13 @@
       justify-content: center !important;
       background: rgba(255, 255, 255, 0.95) !important;
       backdrop-filter: blur(4px) !important;
+      -webkit-backdrop-filter: blur(4px) !important;
       border: 1px solid #e2e8f0 !important;
       cursor: pointer !important;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      box-sizing: border-box !important;
+      padding: 0 !important;
+      line-height: 1 !important;
     }
 
     .btn-icon-circle:hover,
@@ -130,14 +165,81 @@
       gap: 8px !important;
       overflow-x: auto !important;
       -webkit-overflow-scrolling: touch !important;
-      scrollbar-width: none !important; /* Firefox */
-      padding-bottom: 4px !important;
+      overscroll-behavior-x: contain !important;
+      scrollbar-width: none !important;
+      touch-action: pan-x pan-y !important;
+      padding-bottom: 6px !important;
+      flex-wrap: nowrap !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    .section-showcase .section-header {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 16px !important;
+    }
+
+    .showcase-controls {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      flex: 1 1 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 12px !important;
+      box-sizing: border-box !important;
+    }
+
+    .sort-wrapper {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      background: #ffffff !important;
+      border: 1px solid var(--slate-200) !important;
+      padding: 8px 14px !important;
+      border-radius: var(--radius-full) !important;
+    }
+
+    .sort-wrapper .sort-label {
+      flex-shrink: 0 !important;
+      font-size: 0.82rem !important;
+      color: var(--slate-500) !important;
+      font-weight: 600 !important;
+    }
+
+    .sort-wrapper select {
+      flex: 1 !important;
+      min-width: 0 !important;
+      border: none !important;
+      background: transparent !important;
+      font-size: 0.85rem !important;
+      font-weight: 700 !important;
+      color: var(--navy-900) !important;
+      outline: none !important;
+      cursor: pointer !important;
+      text-align: right !important;
+      text-align-last: right !important;
     }
 
     .category-tabs::-webkit-scrollbar,
     .project-pill-tabs::-webkit-scrollbar,
     .filter-pills-wrapper::-webkit-scrollbar {
-      display: none !important; /* Chrome / Safari / Edge */
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
     }
 
     .tab-btn,
@@ -150,20 +252,13 @@
       border-radius: 9999px !important;
     }
 
-    /* 5. Property Card Full-Width CTA */
-    .property-card .btn-primary,
-    .property-card .card-action-row button,
-    .upcoming-project-card .btn-primary,
-    .fast-track-land-card .btn-primary {
+    /* 5. Mobile Property Card Button System (Universal Perfect Alignment) */
+    .property-card,
+    .upcoming-project-card,
+    .fast-track-land-card {
       width: 100% !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      padding: 12px 16px !important;
-      font-weight: 700 !important;
-      font-size: 0.9rem !important;
-      border-radius: 10px !important;
-      min-height: 44px !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
     }
 
     /* 6. Modal Close & Cancel High-Visibility Tap Targets (Min 40px) */
@@ -197,17 +292,328 @@
       }
     }
 
-    /* 8. Small Mobile Breakpoint (< 640px) Full-Width CTA Stacking */
+    /* Smart Sticky Navbar: Hide on Scroll Down, Reveal on Scroll Up */
+    .site-header-wrapper {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      z-index: 1000 !important;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
+      will-change: transform;
+      background: #ffffff !important;
+    }
+
+    .site-header-wrapper.header-hidden {
+      transform: translateY(-100%) !important;
+      box-shadow: none !important;
+    }
+
+    .site-header-wrapper.header-visible {
+      transform: translateY(var(--announcement-offset, -38px)) !important;
+      box-shadow: 0 4px 25px rgba(15, 23, 42, 0.12) !important;
+    }
+
+    .site-header-wrapper.header-at-top {
+      transform: translateY(0) !important;
+      box-shadow: none !important;
+    }
+
+    body.drawer-open .site-header-wrapper,
+    .site-header-wrapper:has(.main-nav.open) {
+      z-index: 2005 !important;
+      transform: translateY(0) !important;
+    }
+
+    .mobile-nav-backdrop {
+      z-index: 998 !important;
+    }
+
+    /* Mobile Navigation Drawer: High-Contrast & Sharp Visibility */
+    @media (max-width: 1024px) {
+      .main-nav {
+        position: fixed !important;
+        top: 0 !important;
+        right: -340px !important;
+        width: 320px !important;
+        max-width: 85vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        background: #0f172a !important;
+        box-shadow: -10px 0 35px rgba(0, 0, 0, 0.6) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: stretch !important;
+        padding: 24px 20px 36px !important;
+        z-index: 2010 !important;
+        transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        box-sizing: border-box !important;
+      }
+
+      .main-nav.open {
+        right: 0 !important;
+      }
+
+      .main-nav .nav-link {
+        color: #ffffff !important;
+        font-size: 1.02rem !important;
+        font-weight: 600 !important;
+        padding: 14px 12px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        border-radius: 8px !important;
+        text-decoration: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transition: all 0.2s ease !important;
+      }
+
+      .main-nav .nav-link:hover,
+      .main-nav .nav-link:active {
+        color: #34d399 !important;
+        background: rgba(16, 185, 129, 0.15) !important;
+      }
+
+      .main-nav .nav-highlight {
+        color: #34d399 !important;
+        font-weight: 700 !important;
+      }
+
+      .main-nav .nav-hot-dot {
+        background: #ef4444 !important;
+      }
+
+      .mobile-drawer-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding-bottom: 16px !important;
+        margin-bottom: 12px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+      }
+
+      .mobile-drawer-header .brand-large {
+        color: #ffffff !important;
+        font-size: 1.25rem !important;
+        font-weight: 800 !important;
+      }
+
+      .mobile-drawer-header .brand-small {
+        color: #34d399 !important;
+        font-size: 1.25rem !important;
+        font-weight: 800 !important;
+      }
+
+      .btn-drawer-close {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        border-radius: 50% !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        color: #ffffff !important;
+        font-size: 22px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        line-height: 1 !important;
+      }
+    }
+
+    .site-header {
+      position: relative !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      background: #ffffff !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+    }
+
+    .header-spacer {
+      height: 118px;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .header-spacer {
+        height: 98px;
+      }
+    }
+
     @media (max-width: 640px) {
+      .header-spacer {
+        height: 96px;
+      }
+    }
+
+    /* 8. Small Mobile Breakpoint (< 640px) Flawless Android & iOS Layout */
+    @media (max-width: 640px) {
+      /* Clean, un-squished mobile sticky header */
+      .site-header {
+        height: 58px !important;
+        min-height: 58px !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      .site-header .header-container.nav-wrap {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 14px !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        box-sizing: border-box !important;
+      }
+
+      .header-logo-wrap {
+        height: auto !important;
+        margin-right: 0 !important;
+        flex-shrink: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        text-decoration: none !important;
+      }
+
+      .brand-logo-icon {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        min-height: 34px !important;
+        border-radius: 8px !important;
+        object-fit: contain !important;
+        flex-shrink: 0 !important;
+      }
+
+      .brand-part-dark,
+      .brand-part-emerald {
+        font-size: 1.05rem !important;
+        font-weight: 800 !important;
+      }
+
+      .brand-tagline-text {
+        font-size: 0.58rem !important;
+        letter-spacing: 0.05em !important;
+        color: #64748b !important;
+      }
+
+      /* Compact Header Toolbar: Keep City Selector & Hamburger, move compare/auth to drawer */
+      .nav-tools.nav-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        margin-left: auto !important;
+        flex-shrink: 0 !important;
+      }
+
+      .site-header .city-selector-wrap {
+        padding: 5px 8px !important;
+        font-size: 0.76rem !important;
+        max-width: 120px !important;
+        min-height: 34px !important;
+      }
+
+      .site-header #citySelector {
+        font-size: 0.76rem !important;
+        padding-right: 18px !important;
+        max-width: 90px !important;
+        text-overflow: ellipsis !important;
+      }
+
+      .site-header .compare-nav-pill,
+      #btn-navbar-auth {
+        display: none !important;
+      }
+
+      .mobile-toggle {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        border-radius: 8px !important;
+        flex-shrink: 0 !important;
+      }
+
+      /* Unified 2-Tier Mobile Card Action Buttons:
+         Row 1: [Compare] [Layout] (50% each)
+         Row 2: [Book Free VIP Site Visit] (100% full width) */
+      .property-card div[style*="display: flex; gap: 8px"],
+      .upcoming-project-card div[style*="display: flex; gap: 8px"],
+      .property-card .card-actions-row,
+      .property-card .card-action-bar {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+
+      .property-card .btn-outline,
+      .upcoming-project-card .btn-outline {
+        flex: 1 1 calc(50% - 4px) !important;
+        min-height: 40px !important;
+        padding: 8px 10px !important;
+        font-size: 0.8rem !important;
+        justify-content: center !important;
+        text-align: center !important;
+      }
+
+      .property-card .btn-primary,
+      .upcoming-project-card .btn-primary,
+      .fast-track-land-card .btn-primary {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 11px 16px !important;
+        font-weight: 700 !important;
+        font-size: 0.88rem !important;
+        border-radius: 10px !important;
+        min-height: 44px !important;
+        margin-top: 2px !important;
+      }
+
+      /* Budget slider scale ticks on mobile */
+      .range-scale,
+      .calc-ticks {
+        font-size: 0.7rem !important;
+        letter-spacing: -0.01em !important;
+      }
+
+      /* Form button and CTA stacking */
       .hero-cta-btn,
       .matcher-submit-btn,
+      .btn-match,
       .modal-submit-btn,
       .section-header .btn,
-      #btn-matcher-submit {
+      #btn-matcher-submit,
+      #findMatchBtn {
         width: 100% !important;
         font-size: 0.95rem !important;
         padding: 13px 18px !important;
         min-height: 48px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+
+      .matcher-action-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
       }
 
       .mega-actions-group,
@@ -236,107 +642,119 @@
 
 </head>
 <body>
-  <!-- Top Announcement Bar -->
-  <aside class="announcement-bar" aria-label="Announcement">
-    <div class="header-container announcement-inner">
-      <div class="announcement-badge">NEW LAUNCH</div>
-      <p id="topAnnouncementText">Mega Pre-Launch: Grand Aeropolis 45–Acre Smart City on Avinashi Road — <strong>Free VIP Site Visit &amp; 0% Brokerage</strong></p>
-      <a href="#newProjects" class="announcement-link">Explore Projects &rarr;</a>
-    </div>
-  </aside>
+  <!-- Unified Smart Header System (Announcement + Sticky Navbar) -->
+  <div class="site-header-wrapper" id="siteHeaderWrapper">
+    <!-- Top Announcement Bar -->
+    <aside class="announcement-bar" id="topAnnouncementBar" aria-label="Announcement">
+      <div class="header-container announcement-inner">
+        <div class="announcement-badge">NEW LAUNCH</div>
+        <p id="topAnnouncementText">Mega Pre-Launch: Grand Aeropolis 45–Acre Smart City on Avinashi Road — <strong>Free VIP Site Visit &amp; 0% Brokerage</strong></p>
+        <a href="#newProjects" class="announcement-link">Explore Projects &rarr;</a>
+      </div>
+    </aside>
 
-  <!-- Sticky Main Header -->
-  <header class="site-header" id="siteHeader">
-    <div class="header-container nav-wrap">
-      <!-- Brand Logo (Natural Aspect Ratio) -->
-      <a href="#" class="header-logo-wrap" aria-label="Land &amp; Beyond Home" style="display: flex; align-items: center; justify-content: flex-start; height: 100%; margin-right: 24px; flex-shrink: 0; text-decoration: none; overflow: visible;">
-        <img src="/land-and-beyond-logo.png" alt="Land &amp; Beyond" class="header-brand-logo header-logo-img" onerror="this.src='land-and-beyond-logo.png'" />
-      </a>
-
-      <!-- Primary Navigation Links (Desktop 2-Tier Stacked Hierarchy & Mobile Drawer) -->
-      <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
-        <div class="mobile-drawer-header">
-          <div class="brand-text">
-            <span class="brand-large" style="color: #ffffff;">Land</span>
-            <span class="brand-small text-green">And Beyond</span>
-          </div>
-          <button class="btn-agro-compact" style="padding: 6px 14px !important; font-size: 12px !important; font-weight: 600 !important; height: 32px !important; min-height: 32px !important; max-height: 32px !important; border-radius: 8px !important; gap: 6px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; white-space: nowrap !important; line-height: 1 !important;"  type="button" class="btn-drawer-close" id="btnDrawerClose" aria-label="Close navigation drawer">&times;</button>
-        </div>
-
-        <a href="#matcher" class="nav-link">Smart Matcher</a>
-        <a href="#newProjects" class="nav-link nav-highlight">
-          <span>New Launches</span>
-          <span class="nav-hot-dot" aria-hidden="true"></span>
-        </a>
-        <a href="#showcase" class="nav-link">Properties</a>
-        <a href="#landShowcase" class="nav-link">Plots &amp; Farmland</a>
-        <a href="#services" class="nav-link">Services &amp; Loans</a>
-        <a href="#newsHub" class="nav-link">News &amp; Approvals</a>
-        <a href="#testimonials" class="nav-link" onclick="scrollToReviews(event)">Reviews</a>
-
-        <!-- Mobile Drawer Quick Actions -->
-        <div class="mobile-drawer-actions">
-          <div class="drawer-tools-row" style="display: flex; gap: 8px; margin-bottom: 12px;">
-            <div class="city-selector-wrap" style="flex: 1; background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); color: #ffffff;">
-              <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              <select id="mobileCitySelector" aria-label="Select City" style="color: #ffffff; background: transparent; border: none; outline: none; font-size: 0.85rem;" onchange="if (document.getElementById('citySelector')) { document.getElementById('citySelector').value = this.value; document.getElementById('citySelector').dispatchEvent(new Event('change')); }">
-                <option value="Coimbatore" selected style="color: #000;">Coimbatore</option>
-                <option value="Chennai" style="color: #000;">Chennai</option>
-                <option value="Bangalore" style="color: #000;">Bangalore</option>
-                <option value="Kochi" style="color: #000;">Kochi</option>
-                <option value="Hyderabad" style="color: #000;">Hyderabad</option>
-              </select>
+    <!-- Sticky Main Header -->
+    <header class="site-header" id="siteHeader">
+      <div class="header-container nav-wrap">
+        <!-- Brand Logo (Crisp Modern Identity) -->
+        <a href="#" class="header-logo-wrap" aria-label="Land &amp; Beyond Home" style="display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0;">
+          <img src="/favicon.png" alt="Land &amp; Beyond" class="brand-logo-icon" style="width: 36px; height: 36px; min-width: 36px; min-height: 36px; border-radius: 8px; object-fit: contain; flex-shrink: 0;" />
+          <div class="brand-text-block">
+            <div class="brand-title-line">
+              <span class="brand-part-dark">Land</span>
+              <span class="brand-part-emerald">&nbsp;&amp;&nbsp;Beyond</span>
             </div>
-            <button type="button" class="compare-nav-pill" style="flex: 1; justify-content: center; background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); color: #ffffff;" onclick="openModal('compareModal'); document.getElementById('mainNav')?.classList.remove('open'); document.getElementById('mobileNavBackdrop')?.classList.remove('open');">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"></rect><rect x="14" y="3" width="7" height="18" rx="1"></rect></svg>
-              <span>Compare</span>
-              <span class="compare-badge" id="mobileCompareCount">0</span>
+            <span class="brand-tagline-text">Find the right property</span>
+          </div>
+        </a>
+
+        <!-- Primary Navigation Links (Desktop 2-Tier Stacked Hierarchy & Mobile Drawer) -->
+        <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
+          <div class="mobile-drawer-header">
+            <div class="brand-text">
+              <span class="brand-large" style="color: #ffffff;">Land</span>
+              <span class="brand-small text-green">And Beyond</span>
+            </div>
+            <button type="button" class="btn-drawer-close" id="btnDrawerClose" aria-label="Close navigation drawer">&times;</button>
+          </div>
+
+          <a href="#matcher" class="nav-link">Smart Matcher</a>
+          <a href="#newProjects" class="nav-link nav-highlight">
+            <span>New Launches</span>
+            <span class="nav-hot-dot" aria-hidden="true"></span>
+          </a>
+          <a href="#showcase" class="nav-link">Properties</a>
+          <a href="#landShowcase" class="nav-link">Plots &amp; Farmland</a>
+          <a href="#services" class="nav-link">Services &amp; Loans</a>
+          <a href="#newsHub" class="nav-link">News &amp; Approvals</a>
+          <a href="#testimonials" class="nav-link" onclick="scrollToReviews(event)">Reviews</a>
+
+          <!-- Mobile Drawer Quick Actions -->
+          <div class="mobile-drawer-actions">
+            <div class="drawer-tools-row" style="display: flex; gap: 8px; margin-bottom: 12px;">
+              <div class="city-selector-wrap" style="flex: 1; background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); color: #ffffff;">
+                <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <select id="mobileCitySelector" aria-label="Select City" style="color: #ffffff; background: transparent; border: none; outline: none; font-size: 0.85rem;" onchange="if (document.getElementById('citySelector')) { document.getElementById('citySelector').value = this.value; document.getElementById('citySelector').dispatchEvent(new Event('change')); }">
+                  <option value="Coimbatore" selected style="color: #000;">Coimbatore</option>
+                  <option value="Chennai" style="color: #000;">Chennai</option>
+                  <option value="Bangalore" style="color: #000;">Bangalore</option>
+                  <option value="Kochi" style="color: #000;">Kochi</option>
+                  <option value="Hyderabad" style="color: #000;">Hyderabad</option>
+                </select>
+              </div>
+              <button type="button" class="compare-nav-pill" style="flex: 1; justify-content: center; background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); color: #ffffff;" onclick="openModal('compareModal'); document.getElementById('mainNav')?.classList.remove('open'); document.getElementById('mobileNavBackdrop')?.classList.remove('open');">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"></rect><rect x="14" y="3" width="7" height="18" rx="1"></rect></svg>
+                <span>Compare</span>
+                <span class="compare-badge" id="mobileCompareCount">0</span>
+              </button>
+            </div>
+            <button type="button" class="btn-drawer-auth btn-signin" id="btn-drawer-login" onclick="if(typeof openAuthModal==='function') openAuthModal(); document.getElementById('mainNav')?.classList.remove('open'); document.getElementById('mobileNavBackdrop')?.classList.remove('open');">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>Sign In / Login</span>
             </button>
           </div>
-          <button type="button" class="btn-drawer-auth btn-signin" id="btn-drawer-login" onclick="if(typeof openAuthModal==='function') openAuthModal(); document.getElementById('mainNav')?.classList.remove('open'); document.getElementById('mobileNavBackdrop')?.classList.remove('open');">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <span>Sign In / Login</span>
+        </nav>
+
+        <!-- Header Tools (City Selector, Compare Pill, Auth Button) -->
+        <div class="nav-tools nav-actions nav-right">
+          <div class="city-selector-wrap" title="Select Location">
+            <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <select id="citySelector" aria-label="Select City">
+              <option value="Coimbatore" selected>Coimbatore</option>
+              <option value="Chennai">Chennai</option>
+              <option value="Bangalore">Bangalore</option>
+              <option value="Kochi">Kochi</option>
+              <option value="Hyderabad">Hyderabad</option>
+            </select>
+          </div>
+
+          <!-- Quick Comparison Trigger Pill -->
+          <button type="button" class="compare-nav-pill" id="compareNavPill" title="View Property Comparison" onclick="openCompareDrawer()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"></rect><rect x="14" y="3" width="7" height="18" rx="1"></rect></svg>
+            <span>Compare</span>
+            <span class="compare-badge" id="compareNavCount">0</span>
+          </button>
+
+          <button id="btn-navbar-auth" type="button" class="btn-auth-pill login-btn btn-signin" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 20px; border: 1px solid #e2e8f0; background: #ffffff; color: #0f172a; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" title="Sign In / Login">
+            <span style="font-size: 14px;">👤</span>
+            <span id="authBtnText">Sign In / Login</span>
+          </button>
+
+          <!-- Database Status Indicator Dot (Strictly dot, no text) -->
+          <span class="db-status-dot" id="dbStatusDot" style="display: inline-block; width: 10px; height: 10px; min-width: 10px; min-height: 10px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); vertical-align: middle; transition: all 0.3s ease;"></span>
+
+          <!-- Mobile Menu Toggle Button -->
+          <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
           </button>
         </div>
-      </nav>
-
-      <!-- Header Tools (City Selector, Compare Pill, Auth Button) -->
-      <div class="nav-tools nav-actions nav-right">
-        <div class="city-selector-wrap" title="Select Location">
-          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          <select id="citySelector" aria-label="Select City">
-            <option value="Coimbatore" selected>Coimbatore</option>
-            <option value="Chennai">Chennai</option>
-            <option value="Bangalore">Bangalore</option>
-            <option value="Kochi">Kochi</option>
-            <option value="Hyderabad">Hyderabad</option>
-          </select>
-        </div>
-
-        <!-- Quick Comparison Trigger Pill -->
-        <button type="button" class="compare-nav-pill" id="compareNavPill" title="View Property Comparison" onclick="openCompareDrawer()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"></rect><rect x="14" y="3" width="7" height="18" rx="1"></rect></svg>
-          <span>Compare</span>
-          <span class="compare-badge" id="compareNavCount">0</span>
-        </button>
-
-        <button id="btn-navbar-auth" type="button" class="btn-auth-pill login-btn btn-signin" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 20px; border: 1px solid #e2e8f0; background: #ffffff; color: #0f172a; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" title="Sign In / Login">
-          <span style="font-size: 14px;">👤</span>
-          <span id="authBtnText">Sign In / Login</span>
-        </button>
-
-        <!-- Database Status Indicator Dot (Strictly dot, no text) -->
-        <span class="db-status-dot" id="dbStatusDot" style="display: inline-block; width: 10px; height: 10px; min-width: 10px; min-height: 10px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); vertical-align: middle; transition: all 0.3s ease;"></span>
-
-        <!-- Mobile Menu Toggle Button -->
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
       </div>
-    </div>
-  </header>
+    </header>
+  </div>
+  <!-- Header Spacer to maintain natural page flow under fixed header -->
+  <div class="header-spacer" id="headerSpacer" aria-hidden="true"></div>
 
   <!-- Mobile Navigation Backdrop Overlay -->
   <div class="mobile-nav-backdrop" id="mobileNavBackdrop" aria-hidden="true"></div>
@@ -581,6 +999,7 @@
         <button class="proj-tab-btn active" data-proj-filter="all" role="tab" aria-selected="true" onclick="filterUpcomingProjects('all', this)">All Projects</button>
         <button class="proj-tab-btn" data-proj-filter="villas-apartments" role="tab" aria-selected="false" onclick="filterUpcomingProjects('villas-apartments', this)">Upcoming Villas &amp; Apartments</button>
         <button class="proj-tab-btn" data-proj-filter="dtcp-plots" role="tab" aria-selected="false" onclick="filterUpcomingProjects('dtcp-plots', this)">DTCP/RERA Approved Plots</button>
+        <button class="proj-tab-btn" data-proj-filter="commercial" role="tab" aria-selected="false" onclick="filterUpcomingProjects('commercial', this)">🏬 Commercial &amp; Land</button>
         <button class="proj-tab-btn" data-proj-filter="dry-land" role="tab" aria-selected="false" onclick="filterUpcomingProjects('dry-land', this)">Agricultural / Dry Land Launches</button>
         <button class="proj-tab-btn" data-proj-filter="pre-launch" role="tab" aria-selected="false" onclick="filterUpcomingProjects('pre-launch', this)">Under Construction / Pre-Launch</button>
       </div>
@@ -1119,7 +1538,7 @@
 
       <div class="testimonials-slider-wrapper">
         <!-- Slider Navigation Controls -->
-        <button class="slider-btn prev-btn" id="prevTestimonialBtn" aria-label="Previous review">
+        <button class="slider-btn prev-btn" id="prevTestimonialBtn" aria-label="Previous review" onclick="if(window.slideTestimonial)window.slideTestimonial(-1)">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
 
@@ -1185,16 +1604,16 @@
           </article>
         </div>
 
-        <button class="slider-btn next-btn" id="nextTestimonialBtn" aria-label="Next review">
+        <button class="slider-btn next-btn" id="nextTestimonialBtn" aria-label="Next review" onclick="if(window.slideTestimonial)window.slideTestimonial(1)">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
       </div>
 
       <!-- Slider Dots Indicator -->
       <div class="slider-dots" id="testimonialDots">
-        <button class="dot-btn active" data-index="0" aria-label="Go to slide 1"></button>
-        <button class="dot-btn" data-index="1" aria-label="Go to slide 2"></button>
-        <button class="dot-btn" data-index="2" aria-label="Go to slide 3"></button>
+        <button class="dot-btn active" data-index="0" aria-label="Go to slide 1" onclick="if(window.goToTestimonialSlide)window.goToTestimonialSlide(0)"></button>
+        <button class="dot-btn" data-index="1" aria-label="Go to slide 2" onclick="if(window.goToTestimonialSlide)window.goToTestimonialSlide(1)"></button>
+        <button class="dot-btn" data-index="2" aria-label="Go to slide 3" onclick="if(window.goToTestimonialSlide)window.goToTestimonialSlide(2)"></button>
       </div>
     </section>
 
@@ -2698,21 +3117,36 @@ if (document.readyState === 'loading') {
   <script>
     (function() {
       const STORAGE_KEY = 'lb_properties_data';
-      function syncFromAdmin() {
-        if (typeof renderProperties === 'function') {
-          renderProperties();
+      function syncFromAdmin(key, data) {
+        if (key && data) {
+          try {
+            localStorage.setItem(key, JSON.stringify(data));
+          } catch(e) {}
+        }
+        if (typeof renderFrontendProperties === 'function') renderFrontendProperties();
+        if (typeof renderNewProjects === 'function') renderNewProjects();
+        if (typeof renderProperties === 'function') renderProperties();
+        if (typeof renderFarmlandFastTrack === 'function') renderFarmlandFastTrack();
+        if (typeof renderFastTrackLand === 'function') renderFastTrackLand();
+        if (typeof renderLandShowcase === 'function') renderLandShowcase();
+        if (typeof fetchServerDB === 'function') {
+          fetchServerDB();
         }
       }
       window.addEventListener('storage', function(e) {
-        if (e.key === STORAGE_KEY || !e.key) {
-          syncFromAdmin();
+        if (e.key === STORAGE_KEY || !e.key || e.key === 'lb_new_projects_data') {
+          syncFromAdmin(e.key);
         }
       });
       try {
         if (typeof BroadcastChannel !== 'undefined') {
           const bc = new BroadcastChannel('lb_sync_channel');
           bc.onmessage = function(e) {
-            syncFromAdmin();
+            if (e && e.data) {
+              syncFromAdmin(e.data.key, e.data.data);
+            } else {
+              syncFromAdmin();
+            }
           };
         }
       } catch(e) {}
@@ -2743,12 +3177,23 @@ if (document.readyState === 'loading') {
       const btnDrawerClose = document.getElementById('btnDrawerClose');
 
       function openMobileNav() {
+        const headerWrapper = document.getElementById('siteHeaderWrapper');
+        if (headerWrapper) {
+          headerWrapper.classList.remove('header-hidden');
+          headerWrapper.style.zIndex = '2005';
+        }
+        document.body.classList.add('drawer-open');
         if (mainNav) mainNav.classList.add('open');
         if (backdrop) backdrop.classList.add('open');
         document.body.style.overflow = 'hidden';
       }
 
       function closeMobileNav() {
+        const headerWrapper = document.getElementById('siteHeaderWrapper');
+        if (headerWrapper) {
+          headerWrapper.style.zIndex = '';
+        }
+        document.body.classList.remove('drawer-open');
         if (mainNav) mainNav.classList.remove('open');
         if (backdrop) backdrop.classList.remove('open');
         document.body.style.overflow = '';
@@ -2782,6 +3227,73 @@ if (document.readyState === 'loading') {
           link.addEventListener('click', closeMobileNav);
         });
       }
+
+      // Smart Sticky Header Controller: Auto-hide on Scroll Down, Reveal on Scroll Up
+      (function() {
+        let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        let isTicking = false;
+        const wrapper = document.getElementById('siteHeaderWrapper');
+        const annBar = document.getElementById('topAnnouncementBar');
+        const spacer = document.getElementById('headerSpacer');
+
+        if (!wrapper) return;
+
+        function updateOffsets() {
+          const annH = annBar ? annBar.offsetHeight : 0;
+          const wrapH = wrapper.offsetHeight;
+          wrapper.style.setProperty('--announcement-offset', `-${annH}px`);
+          if (spacer) {
+            spacer.style.height = `${wrapH}px`;
+          }
+        }
+
+        updateOffsets();
+        window.addEventListener('resize', updateOffsets, { passive: true });
+        setTimeout(updateOffsets, 250);
+
+        const scrollDeltaThreshold = 8;
+        const topThreshold = 40;
+
+        function updateHeaderOnScroll() {
+          const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+          const isDrawerOpen = mainNav && mainNav.classList.contains('open');
+
+          if (isDrawerOpen) {
+            wrapper.style.transform = 'none';
+            wrapper.classList.remove('header-hidden');
+            wrapper.classList.add('header-visible');
+            lastScrollY = currentScrollY;
+            isTicking = false;
+            return;
+          } else {
+            wrapper.style.transform = '';
+          }
+
+          if (currentScrollY <= topThreshold) {
+            wrapper.classList.remove('header-hidden');
+            wrapper.classList.remove('header-visible');
+            wrapper.classList.add('header-at-top');
+          } else if (currentScrollY > lastScrollY + scrollDeltaThreshold) {
+            wrapper.classList.remove('header-at-top');
+            wrapper.classList.remove('header-visible');
+            wrapper.classList.add('header-hidden');
+          } else if (currentScrollY < lastScrollY - scrollDeltaThreshold) {
+            wrapper.classList.remove('header-at-top');
+            wrapper.classList.remove('header-hidden');
+            wrapper.classList.add('header-visible');
+          }
+
+          lastScrollY = Math.max(0, currentScrollY);
+          isTicking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+          if (!isTicking) {
+            window.requestAnimationFrame(updateHeaderOnScroll);
+            isTicking = true;
+          }
+        }, { passive: true });
+      })();
     });
   </script>
 

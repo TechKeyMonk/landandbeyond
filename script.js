@@ -81,26 +81,262 @@ function openSiteVisitModal(projectName = 'Grand Aeropolis Smart Township') {
 }
 window.openSiteVisitModal = openSiteVisitModal;
 
-function openMasterPlanModal(projectTitle = 'Grand Aeropolis Smart Township') {
+function openMasterPlanModal(projectIdentifier = 'Grand Aeropolis Smart Township', customImageUrl = '') {
+  let displayTitle = projectIdentifier || 'Grand Aeropolis Smart Township';
+  let projectImage = customImageUrl || '';
+  let projectLocation = '';
+  let projectApproval = 'DTCP & RERA Sanctioned Master Blueprint Architecture';
+
+  // If proj-mega is clicked, get the hero project title and image
+  if (projectIdentifier === 'proj-mega') {
+    const heroTitleElem = document.getElementById('heroPropertyTitle');
+    if (heroTitleElem && heroTitleElem.textContent.trim()) {
+      displayTitle = heroTitleElem.textContent.trim();
+    } else {
+      displayTitle = 'Grand Aeropolis 45-Acre Integrated Smart Township';
+    }
+    const heroWrap = document.getElementById('heroPropertyImgWrap');
+    if (!projectImage && heroWrap && heroWrap.style.backgroundImage) {
+      const match = heroWrap.style.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/i);
+      if (match && match[1]) {
+        projectImage = match[1];
+      }
+    }
+    const heroLocElem = document.getElementById('heroPropertyLocation');
+    if (heroLocElem && heroLocElem.textContent.trim()) {
+      projectLocation = heroLocElem.textContent.trim();
+    }
+  }
+
+  function fetchCollectionArray(key) {
+    try {
+      if (typeof getLBData === 'function') {
+        const d = getLBData(key);
+        if (Array.isArray(d) && d.length > 0) return d;
+      }
+      const raw = safeStorageGet(key);
+      if (raw) {
+        if (Array.isArray(raw)) return raw;
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch(e) {}
+    return [];
+  }
+
+  // Look across all database collections to find matching property/project
+  const collections = [
+    fetchCollectionArray('lb_properties_data'),
+    fetchCollectionArray('lb_new_projects_data'),
+    fetchCollectionArray('lb_farmland_data'),
+    fetchCollectionArray('lb_approvals_data'),
+    fetchCollectionArray(LB_KEYS.PROPERTIES),
+    fetchCollectionArray(LB_KEYS.NEW_PROJECTS),
+    fetchCollectionArray(LB_KEYS.FARMLAND),
+    fetchCollectionArray(LB_KEYS.APPROVALS)
+  ];
+
+  let foundItem = null;
+  for (const list of collections) {
+    if (Array.isArray(list) && list.length > 0) {
+      foundItem = list.find(p => {
+        if (!p) return false;
+        if (p.id && (String(p.id) === String(projectIdentifier) || String(p.id) === String(displayTitle))) return true;
+        const t = (p.title || p.name || '').toLowerCase().trim();
+        const search = String(displayTitle).toLowerCase().trim();
+        return t === search || (t.length > 2 && search.includes(t)) || (search.length > 2 && t.includes(search));
+      });
+      if (foundItem) break;
+    }
+  }
+
+  let imagesList = [];
+  if (customImageUrl) {
+    imagesList = [customImageUrl];
+  } else if (foundItem) {
+    if (foundItem.title || foundItem.name) {
+      displayTitle = foundItem.title || foundItem.name;
+    }
+    if (Array.isArray(foundItem.images) && foundItem.images.length > 0) {
+      imagesList = foundItem.images.filter(x => typeof x === 'string' && x.trim().length > 0);
+    }
+    if (imagesList.length === 0) {
+      const single = foundItem.imageUrl || foundItem.image || foundItem.image_url || foundItem.layoutImage || foundItem.blueprintUrl;
+      if (single) imagesList.push(single);
+    }
+    if (foundItem.location) {
+      projectLocation = foundItem.location;
+    }
+    if (foundItem.approvalType || foundItem.badge) {
+      projectApproval = `${foundItem.approvalType || foundItem.badge} • Sanctioned Blueprint`;
+    }
+  }
+
+  if (imagesList.length === 0) {
+    imagesList = [projectImage || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop'];
+  }
+
+  // Ensure 3 slides if only 1 image exists without multi-images uploaded
+  if (imagesList.length === 1 && (!foundItem || !Array.isArray(foundItem.images) || foundItem.images.length <= 1)) {
+    imagesList.push('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop');
+    imagesList.push('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&auto=format&fit=crop');
+  }
+
+  const slideLabels = imagesList.map((_, idx) => {
+    if (idx === 0) return 'Image 1: Frontend Main Cover';
+    if (idx === 1) return 'Image 2: Master Layout / Blueprint';
+    if (idx === 2) return 'Image 3: Floor Plan / Site Map';
+    return `Image ${idx + 1}: Layout Detail View`;
+  });
+
+  window._masterPlanCarousel = {
+    images: imagesList,
+    labels: slideLabels,
+    currentIndex: 0,
+    projectTitle: displayTitle
+  };
+
   window.openModal('masterPlanModal');
   const content = document.getElementById('masterPlanModalContent');
   if (content) {
+    // Build thumbnail items
+    const thumbsHtml = imagesList.map((img, idx) => `
+      <div onclick="window.setMasterPlanSlide(${idx})" id="mpThumb_${idx}" style="cursor: pointer; width: 70px; height: 52px; border-radius: 8px; overflow: hidden; border: 2.5px solid ${idx === 0 ? '#10b981' : '#475569'}; opacity: ${idx === 0 ? '1' : '0.6'}; transition: all 0.2s ease; flex-shrink: 0; box-shadow: ${idx === 0 ? '0 0 12px rgba(16,185,129,0.6)' : 'none'};">
+        <img src="${img}" style="width: 100%; height: 100%; object-fit: cover;" alt="Thumbnail ${idx + 1}" />
+      </div>
+    `).join('');
+
     content.innerHTML = `
-      <div style="padding: 20px 24px; text-align: center;">
-        <h3 style="margin: 0 0 6px; font-size: 1.3rem; font-weight: 800; color: #0f172a;">${projectTitle} — Master Layout Plan</h3>
-        <p style="color: #64748b; font-size: 12.5px; margin: 0 0 14px;">DTCP & RERA Sanctioned Master Blueprint Architecture</p>
-        <div style="background: #0f172a; border-radius: 16px; padding: 10px; margin-bottom: 16px; height: 260px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #cbd5e1;">
-          <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop" alt="Master Layout Blueprint" style="max-height: 240px; width: 100%; object-fit: cover; object-position: center; border-radius: 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);" />
+      <div style="padding: 22px 24px; text-align: center; color: #0f172a; position: relative;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; text-align: left;">
+          <div>
+            <h3 style="margin: 0 0 4px; font-size: 1.3rem; font-weight: 800; color: #0f172a; line-height: 1.3;">${displayTitle} — Master Layout</h3>
+            <p style="color: #64748b; font-size: 13px; margin: 0;">${projectLocation ? `📍 ${projectLocation} • ` : ''}${projectApproval}</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #0f172a;">
+            <span id="mpSlideCounter">1 / ${imagesList.length}</span> Images
+          </div>
         </div>
+        
+        <!-- Main Slide Viewport -->
+        <div style="background: #090d16; border-radius: 16px; padding: 8px; margin-bottom: 14px; min-height: 320px; max-height: 480px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #1e293b; box-shadow: 0 12px 30px rgba(0,0,0,0.35); position: relative;">
+          
+          <img id="masterPlanSlideImg" src="${imagesList[0]}" alt="${displayTitle} Master Layout" style="max-height: 440px; width: 100%; object-fit: contain; border-radius: 10px; cursor: pointer; transition: opacity 0.25s ease, transform 0.2s ease;" onclick="window.open(window._masterPlanCarousel.images[window._masterPlanCarousel.currentIndex], '_blank')" title="Click to open full original resolution" />
+          
+          <!-- Top Label Badge -->
+          <div id="mpSlideBadge" style="position: absolute; top: 16px; left: 16px; background: rgba(15,23,42,0.88); color: #34d399; font-size: 11.5px; font-weight: 700; padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(52,211,153,0.4); backdrop-filter: blur(8px); display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 5;">
+            <span>📐 ${slideLabels[0]}</span>
+          </div>
+
+          <!-- Top Right Fullscreen Icon -->
+          <span onclick="window.open(window._masterPlanCarousel.images[window._masterPlanCarousel.currentIndex], '_blank')" style="position: absolute; top: 16px; right: 16px; background: rgba(15,23,42,0.85); color: #fff; font-size: 11.5px; font-weight: 700; padding: 5px 10px; border-radius: 8px; border: 1px solid #334155; backdrop-filter: blur(6px); cursor: pointer; z-index: 5;" title="Open original image">
+            🔍 Full Screen
+          </span>
+
+          <!-- Prev Slider Navigation Button [ < ] (Left Side) -->
+          <button type="button" onclick="window.changeMasterPlanSlide(-1)" aria-label="Previous image" id="mpPrevBtn" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%; background: rgba(15, 23, 42, 0.85); color: #ffffff; border: 2px solid rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.5); z-index: 10;" onmouseover="this.style.background='rgba(16,185,129,0.95)'; this.style.borderColor='#34d399'; this.style.transform='translateY(-50%) scale(1.12)'" onmouseout="this.style.background='rgba(15,23,42,0.85)'; this.style.borderColor='rgba(255,255,255,0.4)'; this.style.transform='translateY(-50%) scale(1)'">
+            &#10094;
+          </button>
+
+          <!-- Next Slider Navigation Button [ > ] (Right Side) -->
+          <button type="button" onclick="window.changeMasterPlanSlide(1)" aria-label="Next image" id="mpNextBtn" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%; background: rgba(15, 23, 42, 0.85); color: #ffffff; border: 2px solid rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.2s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.5); z-index: 10;" onmouseover="this.style.background='rgba(16,185,129,0.95)'; this.style.borderColor='#34d399'; this.style.transform='translateY(-50%) scale(1.12)'" onmouseout="this.style.background='rgba(15,23,42,0.85)'; this.style.borderColor='rgba(255,255,255,0.4)'; this.style.transform='translateY(-50%) scale(1)'">
+            &#10095;
+          </button>
+        </div>
+
+        <!-- Bottom Thumbnail Gallery Strip -->
+        <div style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-bottom: 16px; overflow-x: auto; padding: 4px 8px;">
+          ${thumbsHtml}
+        </div>
+
+        <!-- Actions -->
         <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-          <a href="layout-viewer.html?project=${encodeURIComponent(projectTitle)}" class="btn btn-primary" style="padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: 13px; text-decoration: none; background: #10b981; color: #fff; border: none;">Open Interactive Layout Viewer &rarr;</a>
-          <button type="button" class="btn btn-outline" onclick="window.closeAllModals()" style="padding: 10px 20px; border-radius: 10px; font-weight: 600; font-size: 13px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer;">Close Preview</button>
+          <a id="mpViewerLink" href="layout-viewer.html?project=${encodeURIComponent(displayTitle)}&img=${encodeURIComponent(imagesList[0])}" class="btn btn-primary" style="padding: 10px 22px; border-radius: 10px; font-weight: 700; font-size: 13px; text-decoration: none; background: #10b981; color: #fff; border: none; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(16,185,129,0.25);">
+            Open Interactive Layout Viewer &rarr;
+          </a>
+          <button type="button" class="btn btn-outline" onclick="window.open(window._masterPlanCarousel.images[window._masterPlanCarousel.currentIndex], '_blank')" style="padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 13px; border: 1px solid #cbd5e1; background: #fff; color: #334155; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+            🖼️ View Current Image Full Size
+          </button>
+          <button type="button" class="btn btn-outline" onclick="window.closeAllModals()" style="padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 13px; border: 1px solid #cbd5e1; background: #fff; color: #64748b; cursor: pointer;">
+            Close Preview
+          </button>
         </div>
       </div>
     `;
   }
 }
 window.openMasterPlanModal = openMasterPlanModal;
+
+// Slide Navigation Functions
+window.setMasterPlanSlide = function(index) {
+  if (!window._masterPlanCarousel || !window._masterPlanCarousel.images.length) return;
+  const count = window._masterPlanCarousel.images.length;
+  let newIdx = (index + count) % count;
+  window._masterPlanCarousel.currentIndex = newIdx;
+
+  const currentImg = window._masterPlanCarousel.images[newIdx];
+  const currentLabel = window._masterPlanCarousel.labels[newIdx] || `Image ${newIdx + 1}`;
+  
+  const imgElem = document.getElementById('masterPlanSlideImg');
+  if (imgElem) {
+    imgElem.style.opacity = '0.3';
+    setTimeout(() => {
+      imgElem.src = currentImg;
+      imgElem.style.opacity = '1';
+    }, 120);
+  }
+
+  const badgeElem = document.getElementById('mpSlideBadge');
+  if (badgeElem) {
+    badgeElem.innerHTML = `<span>📐 ${currentLabel}</span>`;
+  }
+
+  const counterElem = document.getElementById('mpSlideCounter');
+  if (counterElem) {
+    counterElem.textContent = `${newIdx + 1} / ${count}`;
+  }
+
+  const viewerLink = document.getElementById('mpViewerLink');
+  if (viewerLink) {
+    viewerLink.href = `layout-viewer.html?project=${encodeURIComponent(window._masterPlanCarousel.projectTitle)}&img=${encodeURIComponent(currentImg)}`;
+  }
+
+  // Update thumbnail styling
+  for (let i = 0; i < count; i++) {
+    const thumb = document.getElementById(`mpThumb_${i}`);
+    if (thumb) {
+      if (i === newIdx) {
+        thumb.style.borderColor = '#10b981';
+        thumb.style.opacity = '1';
+        thumb.style.boxShadow = '0 0 10px rgba(16,185,129,0.5)';
+      } else {
+        thumb.style.borderColor = '#475569';
+        thumb.style.opacity = '0.6';
+        thumb.style.boxShadow = 'none';
+      }
+    }
+  }
+};
+
+window.changeMasterPlanSlide = function(delta) {
+  if (!window._masterPlanCarousel) return;
+  window.setMasterPlanSlide(window._masterPlanCarousel.currentIndex + delta);
+};
+
+// Keyboard Arrow Support for Layout Slider
+document.addEventListener('keydown', function(e) {
+  const modal = document.getElementById('masterPlanModal');
+  if (!modal || modal.style.display === 'none' || (!modal.classList.contains('active') && !modal.classList.contains('open'))) {
+    if (!modal || modal.style.display === 'none' || modal.style.display === '') return;
+  }
+  if (e.key === 'ArrowLeft') {
+    window.changeMasterPlanSlide(-1);
+  } else if (e.key === 'ArrowRight') {
+    window.changeMasterPlanSlide(1);
+  } else if (e.key === 'Escape') {
+    window.closeAllModals();
+  }
+});
 
 
 // ==========================================================================
@@ -656,20 +892,6 @@ const COMPLETE_SEED_FARMLAND = [];
 // MASTER UNIFIED ORIGINAL DATASET (UNIFORM ACROSS ALL BROWSERS)
 const MASTER_UNIFIED_PROPERTIES = [
   {
-    id: 'prop_kozhi_pannai',
-    title: 'kozhi pannai',
-    builder: 'Pollachi Agro Estates',
-    location: 'pollachi',
-    category: 'Farmland',
-    price: '2 cr',
-    priceLabel: '2 cr',
-    metrics: '2,200 sq.ft 2,200 sq.ft - 3 BHK Villa - Gated Community',
-    status: 'Active',
-    approvalType: 'DTCP Approved',
-    imageUrl: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&auto=format&fit=crop',
-    createdAt: '2026-09-01T12:00:00.000Z'
-  },
-  {
     id: 'prop_daddy_home',
     title: 'daddy home',
     builder: 'Saravanampatti Promoters',
@@ -766,7 +988,10 @@ function purgeFakeDummyData() {
   try {
     let cleanProps = [];
     const rawProps = localStorage.getItem('lb_properties_data');
-    if (rawProps) {
+    if (!rawProps) {
+      cleanProps = [...MASTER_UNIFIED_PROPERTIES];
+      localStorage.setItem('lb_properties_data', JSON.stringify(cleanProps));
+    } else {
       const parsed = JSON.parse(rawProps);
       if (Array.isArray(parsed)) {
         cleanProps = parsed.filter(p => {
@@ -776,18 +1001,9 @@ function purgeFakeDummyData() {
           if (FAKE_SEED_TITLES.some(dummy => t.includes(dummy))) return false;
           return true;
         });
+        localStorage.setItem('lb_properties_data', JSON.stringify(cleanProps));
       }
     }
-
-    // Ensure all master properties exist in the browser's database
-    MASTER_UNIFIED_PROPERTIES.forEach(masterProp => {
-      const exists = cleanProps.some(cp => (cp.title || cp.name || '').toLowerCase().trim() === masterProp.title.toLowerCase().trim());
-      if (!exists) {
-        cleanProps.push(masterProp);
-      }
-    });
-
-    localStorage.setItem('lb_properties_data', JSON.stringify(cleanProps));
 
     // Clean Farmland
     const rawFarms = localStorage.getItem('lb_farmland_data');
@@ -1119,6 +1335,12 @@ if (lbSyncChannel) {
         if (msg.data.key && msg.data.data) {
           safeStorageSet(msg.data.key, JSON.stringify(msg.data.data));
         }
+        if (typeof renderFrontendProperties === 'function') renderFrontendProperties();
+        if (typeof renderNewProjects === 'function') renderNewProjects();
+        if (typeof renderProperties === 'function') renderProperties();
+        if (typeof renderFarmlandFastTrack === 'function') renderFarmlandFastTrack();
+        if (typeof renderFastTrackLand === 'function') renderFastTrackLand();
+        if (typeof renderLandShowcase === 'function') renderLandShowcase();
         await fetchServerDB();
       }
     };
@@ -1832,9 +2054,17 @@ function renderFrontendProperties(filterCategory = 'all') {
   const storedProps = (typeof getLBData === 'function' ? getLBData(LB_KEYS.PROPERTIES) : []) || [];
   const banned = ['grand aeropolis', 'aura emerald', 'skyline sovereign', 'mayflower grandeur', 'kongu valley'];
 
-  let combined = [...customLaunches, ...storedProps].filter(p => p && p.title && !banned.some(b => p.title.toLowerCase().includes(b)) && (p.status || 'Active').toLowerCase() !== 'archived');
+  let combined = [...storedProps, ...customLaunches].filter(p => p && p.title && !banned.some(b => p.title.toLowerCase().includes(b)) && (p.status || 'Active').toLowerCase() !== 'archived');
+  combined.sort((a, b) => new Date(b.createdAt || b.updatedAt || 0) - new Date(a.createdAt || a.updatedAt || 0));
 
-  if (filterCategory === 'villas-apartments') {
+  if (filterCategory === 'commercial') {
+    combined = combined.filter(p => {
+      const c = (p.category || '').toLowerCase();
+      const t = (p.title || '').toLowerCase();
+      const m = (p.metrics || '').toLowerCase();
+      return c.includes('commercial') || c.includes('office') || c.includes('retail') || c.includes('shop') || t.includes('commercial') || m.includes('commercial');
+    });
+  } else if (filterCategory === 'villas-apartments') {
     combined = combined.filter(p => {
       const c = (p.category || '').toLowerCase();
       return c.includes('villa') || c.includes('apartment') || c.includes('flat') || c.includes('high-rise');
@@ -2052,6 +2282,91 @@ function initHeroBackgroundSlider() {
 
   startTimer();
 }
+
+// --------------------------------------------------------------------------
+// 8.2 Customer Reviews & Testimonials Interactive Slider (Mobile & Desktop)
+// --------------------------------------------------------------------------
+function initTestimonialSlider() {
+  const cards = document.querySelectorAll('#testimonialsTrack .review-card');
+  const dots = document.querySelectorAll('#testimonialDots .dot-btn');
+  const prevBtn = document.getElementById('prevTestimonialBtn');
+  const nextBtn = document.getElementById('nextTestimonialBtn');
+  const track = document.getElementById('testimonialsTrack');
+
+  if (!cards.length) return;
+
+  let currentSlide = 0;
+  cards.forEach((card, i) => {
+    if (card.classList.contains('active')) currentSlide = i;
+  });
+
+  function showSlide(index) {
+    currentSlide = (index + cards.length) % cards.length;
+    cards.forEach((card, i) => {
+      card.classList.toggle('active', i === currentSlide);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+  }
+
+  // Expose global helper methods
+  window.slideTestimonial = function(direction) {
+    showSlide(currentSlide + direction);
+  };
+
+  window.goToTestimonialSlide = function(idx) {
+    showSlide(idx);
+  };
+
+  if (prevBtn) {
+    prevBtn.onclick = (e) => {
+      e.preventDefault();
+      showSlide(currentSlide - 1);
+    };
+  }
+
+  if (nextBtn) {
+    nextBtn.onclick = (e) => {
+      e.preventDefault();
+      showSlide(currentSlide + 1);
+    };
+  }
+
+  dots.forEach((dot) => {
+    dot.onclick = (e) => {
+      e.preventDefault();
+      const idx = parseInt(dot.getAttribute('data-index'), 10);
+      if (!isNaN(idx)) showSlide(idx);
+    };
+  });
+
+  // Mobile Touch Swipe Gesture Support
+  if (track) {
+    let startX = 0;
+    let endX = 0;
+
+    track.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', (e) => {
+      endX = e.changedTouches[0].clientX;
+      const diffX = endX - startX;
+      if (Math.abs(diffX) > 35) {
+        if (diffX < 0) {
+          showSlide(currentSlide + 1); // Swipe left: next
+        } else {
+          showSlide(currentSlide - 1); // Swipe right: previous
+        }
+      }
+    }, { passive: true });
+  }
+
+  // Synchronize initial state
+  showSlide(currentSlide);
+}
+window.initTestimonialSlider = initTestimonialSlider;
 
 // --------------------------------------------------------------------------
 // 8.5 Live Breaking News / Upcoming Launches Ticker Render Engine
@@ -2445,9 +2760,17 @@ function renderNewProjects(filter = 'all', searchTerm = '') {
   const storedProps = getLBData(LB_KEYS.PROPERTIES);
   const customLaunches = getLBData('lb_new_projects_data') || [];
   const banned = ['grand aeropolis', 'aura emerald', 'skyline sovereign', 'mayflower grandeur', 'kongu valley'];
-  let upcoming = [...customLaunches, ...storedProps].filter(p => p && p.title && !banned.some(b => p.title.toLowerCase().includes(b)) && (p.status || 'Active').toLowerCase() !== 'archived');
+  let upcoming = [...storedProps, ...customLaunches].filter(p => p && p.title && !banned.some(b => p.title.toLowerCase().includes(b)) && (p.status || 'Active').toLowerCase() !== 'archived');
+  upcoming.sort((a, b) => new Date(b.createdAt || b.updatedAt || 0) - new Date(a.createdAt || a.updatedAt || 0));
 
-  if (filter === 'villas-apartments') {
+  if (filter === 'commercial') {
+    upcoming = upcoming.filter(p => {
+      const c = (p.category || '').toLowerCase();
+      const t = (p.title || '').toLowerCase();
+      const m = (p.metrics || '').toLowerCase();
+      return c.includes('commercial') || c.includes('office') || c.includes('retail') || c.includes('shop') || t.includes('commercial') || m.includes('commercial');
+    });
+  } else if (filter === 'villas-apartments') {
     upcoming = upcoming.filter(p => {
       const c = (p.category || '').toLowerCase();
       return c.includes('villa') || c.includes('apartment') || c.includes('flat') || c.includes('high-rise');
@@ -2936,6 +3259,7 @@ function renderProperties() {
     const st = (p.status || 'Active').toLowerCase();
     return !st.includes('archived') && !st.includes('delete');
   });
+  activeProps.sort((a, b) => new Date(b.createdAt || b.updatedAt || 0) - new Date(a.createdAt || a.updatedAt || 0));
 
   const state = window.LB_PORTAL_STATE || { currentCategory: 'all', currentLocality: 'all', bhkFilter: 'all' };
 

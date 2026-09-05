@@ -11,6 +11,17 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script>
+    // Strict Authentication Guard: Direct access to dashboard is blocked without login
+    (function() {
+      const isAuth = sessionStorage.getItem('isAdminAuthenticated') === 'true' ||
+                     sessionStorage.getItem('isAdminAuth') === 'true' ||
+                     sessionStorage.getItem('isAdminLoggedIn') === 'true';
+      if (!isAuth) {
+        window.location.replace('admin.html');
+      }
+    })();
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -1227,7 +1238,7 @@
             <span class="nav-icon">🚀</span>
             <span>Upcoming Projects</span>
           </div>
-          <span class="pill-badge pill-badge-emerald" id="sidebarNewProjectsBadge">0</span>
+          <span class="pill-badge pill-badge-emerald" id="sidebarNewProjectsBadge">2</span>
         </button>
 
         <!-- Item 4: Farmland Corridors -->
@@ -1236,7 +1247,7 @@
             <span class="nav-icon">🌱</span>
             <span>Farmland Corridors</span>
           </div>
-          <span class="pill-badge pill-badge-emerald" id="sidebarFarmlandBadge">480 Ac</span>
+          <span class="pill-badge pill-badge-emerald" id="sidebarFarmlandBadge">1</span>
         </button>
 
         <!-- Item 5: Inquiries & Leads -->
@@ -1245,7 +1256,7 @@
             <span class="nav-icon">👤</span>
             <span>Inquiries &amp; Leads</span>
           </div>
-          <span class="pill-badge pill-badge-sky" id="sidebarLeadsBadge">85</span>
+          <span class="pill-badge pill-badge-sky" id="sidebarLeadsBadge">1</span>
         </button>
 
         <!-- Item 6: 3D Design Studio Leads -->
@@ -1354,7 +1365,7 @@
               <div class="kpi-icon-box">🏡</div>
               <span class="kpi-top-pill kpi-pill-emerald">▲ Live Inventory</span>
             </div>
-            <div class="kpi-value" id="kpiOverviewListings">1,254</div>
+            <div class="kpi-value" id="kpiOverviewListings">6</div>
             <div class="kpi-label">Total Listed Properties</div>
           </div>
 
@@ -1362,9 +1373,9 @@
           <div class="kpi-card">
             <div class="kpi-card-header">
               <div class="kpi-icon-box">🌾</div>
-              <span class="kpi-top-pill kpi-pill-blue">Sulur &amp; Annur</span>
+              <span class="kpi-top-pill kpi-pill-blue" id="kpiOverviewFarmlandBadge">Verified Parcels</span>
             </div>
-            <div class="kpi-value" id="kpiOverviewFarmland">480 Acres</div>
+            <div class="kpi-value" id="kpiOverviewFarmland">1 Parcel</div>
             <div class="kpi-label">Strategic Farmland Corridors</div>
           </div>
 
@@ -1372,9 +1383,9 @@
           <div class="kpi-card">
             <div class="kpi-card-header">
               <div class="kpi-icon-box">🛡️</div>
-              <span class="kpi-top-pill kpi-pill-amber" id="kpiOverviewPendingBadge">2 Requires Sign-off</span>
+              <span class="kpi-top-pill kpi-pill-emerald" id="kpiOverviewPendingBadge">All Audits Clear</span>
             </div>
-            <div class="kpi-value" id="kpiOverviewPending">2</div>
+            <div class="kpi-value" id="kpiOverviewPending">0</div>
             <div class="kpi-label">Pending Approvals</div>
           </div>
 
@@ -1384,7 +1395,7 @@
               <div class="kpi-icon-box">📋</div>
               <span class="kpi-top-pill kpi-pill-purple">🟢 Active Pipeline</span>
             </div>
-            <div class="kpi-value" id="kpiOverviewLeads">85</div>
+            <div class="kpi-value" id="kpiOverviewLeads">1</div>
             <div class="kpi-label">Site Inspection Inquiries</div>
           </div>
         </div>
@@ -1539,7 +1550,7 @@
         <div class="table-panel-card">
           <div class="table-panel-header">
             <h3>🌾 Active Agro &amp; Farmland Management Table</h3>
-            <span class="badge-status badge-verified">3 Active Prime Parcels (480 Acres Total)</span>
+            <span class="badge-status badge-verified">Active Prime Parcels</span>
           </div>
           <div class="table-responsive">
             <table class="admin-table">
@@ -1572,7 +1583,7 @@
 
         <div class="table-panel-card">
           <div class="table-panel-header">
-            <h3>📋 Customer Leads Pipeline (5 Recent Records)</h3>
+            <h3>📋 Customer Leads Pipeline</h3>
           </div>
           <div class="table-responsive">
             <table class="admin-table">
@@ -1826,28 +1837,20 @@
           <input type="text" id="add-prop-metrics" placeholder="e.g. 2,400 sq.ft • 30ft Blacktop Roads • 3-Phase EB" required style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 13.5px; box-sizing: border-box;" />
         </div>
 
-        <!-- 11. Property Image Asset: Dual Upload / URL Ingestion -->
-        <div style="background: #f8fafc; padding: 14px; border-radius: 12px; border: 1px solid #e2e8f0;">
-          <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">11. Property Image Asset (Choose Upload OR Paste URL)</label>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px;">
+        <!-- 11. Property & Layout Images (Multi-Image Asset Gallery) -->
+        <div style="background: #f8fafc; padding: 16px; border-radius: 14px; border: 1px solid #e2e8f0;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 10px;">
             <div>
-              <span style="font-size: 11px; color: #64748b; margin-bottom: 4px; display: block; font-weight: 500;">Option A: Local File Upload (Base64)</span>
-              <input type="file" id="add-prop-file" accept="image/*" onchange="handlePropFileSelect(event)" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px dashed #cbd5e1; background: #ffffff; font-size: 12px; box-sizing: border-box; cursor: pointer;" />
+              <label style="display: block; font-size: 13px; font-weight: 700; color: #1e293b; margin: 0 0 2px;">11. Property &amp; Master Layout Images (Multi-Image Gallery)</label>
+              <span style="font-size: 11.5px; color: #64748b;">⭐ <strong>Image 1</strong> is the Main Frontend Cover. <strong>Image 2, 3+</strong> show in the Master Layout Slide Viewer.</span>
             </div>
-            <div>
-              <span style="font-size: 11px; color: #64748b; margin-bottom: 4px; display: block; font-weight: 500;">Option B: Direct Image URL</span>
-              <input type="url" id="add-prop-url" oninput="handlePropUrlInput(event)" placeholder="https://images.unsplash.com/..." style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 13px; box-sizing: border-box;" />
-            </div>
+            <button type="button" onclick="addMorePropImageSlot('add')" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+              ➕ Add More Images
+            </button>
           </div>
           
-          <!-- Live Preview Thumbnail Container -->
-          <div id="add-prop-preview-container" style="display: none; align-items: center; gap: 12px; padding: 10px 14px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px;">
-            <img id="add-prop-preview-img" src="" alt="Preview" style="width: 56px; height: 56px; object-fit: cover; border-radius: 6px; border: 1px solid #10b981;" />
-            <div>
-              <span style="font-size: 12px; color: #059669; font-weight: 700; display: block;">✓ Image loaded ready for publish</span>
-              <span id="add-prop-preview-type" style="font-size: 11px; color: #047857;">Ready for sync</span>
-            </div>
-            <button type="button" onclick="clearPropImagePreview()" style="margin-left: auto; border: none; background: transparent; color: #dc2626; font-size: 12px; cursor: pointer; font-weight: 600;">✕ Remove</button>
+          <div id="add-prop-images-container" style="display: flex; flex-direction: column; gap: 10px;">
+             <!-- Dynamically initialized with Image 1, Image 2, Image 3 slots -->
           </div>
         </div>
 
@@ -1955,28 +1958,20 @@
           <input type="text" id="edit-prop-metrics" placeholder="e.g. 2,400 sq.ft • 30ft Blacktop Roads • 3-Phase EB" required style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 13.5px; box-sizing: border-box;" />
         </div>
 
-        <!-- 11. Property Image Asset: Dual Upload / URL Ingestion -->
-        <div style="background: #f8fafc; padding: 14px; border-radius: 12px; border: 1px solid #e2e8f0;">
-          <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">11. Property Image Asset (Choose Upload OR Paste URL)</label>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px;">
+        <!-- 11. Property & Layout Images (Multi-Image Asset Gallery) -->
+        <div style="background: #f8fafc; padding: 16px; border-radius: 14px; border: 1px solid #e2e8f0;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 10px;">
             <div>
-              <span style="font-size: 11px; color: #64748b; margin-bottom: 4px; display: block; font-weight: 500;">Option A: Local File Upload (Base64)</span>
-              <input type="file" id="edit-prop-file" accept="image/*" onchange="handleEditPropFileSelect(event)" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px dashed #cbd5e1; background: #ffffff; font-size: 12px; box-sizing: border-box; cursor: pointer;" />
+              <label style="display: block; font-size: 13px; font-weight: 700; color: #1e293b; margin: 0 0 2px;">11. Property &amp; Master Layout Images (Multi-Image Gallery)</label>
+              <span style="font-size: 11.5px; color: #64748b;">⭐ <strong>Image 1</strong> is the Main Frontend Cover. <strong>Image 2, 3+</strong> show in the Master Layout Slide Viewer.</span>
             </div>
-            <div>
-              <span style="font-size: 11px; color: #64748b; margin-bottom: 4px; display: block; font-weight: 500;">Option B: Direct Image URL</span>
-              <input type="url" id="edit-prop-url" oninput="handleEditPropUrlInput(event)" placeholder="https://images.unsplash.com/..." style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 13px; box-sizing: border-box;" />
-            </div>
+            <button type="button" onclick="addMorePropImageSlot('edit')" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+              ➕ Add More Images
+            </button>
           </div>
           
-          <!-- Live Preview Thumbnail Container -->
-          <div id="edit-prop-preview-container" style="display: none; align-items: center; gap: 12px; padding: 10px 14px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px;">
-            <img id="edit-prop-preview-img" src="" alt="Preview" style="width: 56px; height: 56px; object-fit: cover; border-radius: 6px; border: 1px solid #10b981;" />
-            <div>
-              <span style="font-size: 12px; color: #059669; font-weight: 700; display: block;">✓ Image loaded ready for save</span>
-              <span id="edit-prop-preview-type" style="font-size: 11px; color: #047857;">Ready for sync</span>
-            </div>
-            <button type="button" onclick="clearEditPropImagePreview()" style="margin-left: auto; border: none; background: transparent; color: #dc2626; font-size: 12px; cursor: pointer; font-weight: 600;">✕ Remove</button>
+          <div id="edit-prop-images-container" style="display: flex; flex-direction: column; gap: 10px;">
+             <!-- Dynamically populated with existing images or default slots -->
           </div>
         </div>
 
@@ -2068,28 +2063,24 @@
           <textarea id="upcoming-description" required rows="4" placeholder="Enter comprehensive project details, locality advantages, amenities, expected handover milestones, and pricing trends..." style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 13.5px; font-family: inherit; line-height: 1.5; box-sizing: border-box;"></textarea>
         </div>
 
-        <!-- Row 6: Image Upload & Preview -->
+        <!-- Row 6: Multi-Image Gallery Suite for Upcoming / Launch Project -->
         <div style="background: #f8fafc; padding: 14px; border-radius: 12px; border: 1px solid #e2e8f0;">
-          <label style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 6px;">Project Image Asset (Choose Upload OR Paste URL)</label>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
             <div>
-              <span style="font-size: 11px; color: #64748b; margin-bottom: 4px; display: block; font-weight: 500;">Option A: Local Image Upload (Auto Compressed)</span>
-              <input type="file" id="upcoming-file-input" accept="image/*" onchange="handleUpcomingFileSelect(event)" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px dashed #cbd5e1; background: #ffffff; font-size: 12px; box-sizing: border-box; cursor: pointer;" />
+              <label style="display: block; font-size: 13px; font-weight: 700; color: #1e293b; margin-bottom: 2px;">
+                🖼️ Upcoming Project &amp; Master Layout Images (Multi-Image Gallery)
+              </label>
+              <span style="font-size: 11px; color: #64748b;">
+                ⭐ <b>Image 1</b> is the Main Launch Card Cover. <b>Image 2, 3+</b> show in the Master Layout Slide Viewer.
+              </span>
             </div>
-            <div>
-              <span style="font-size: 11px; color: #64748b; margin-bottom: 4px; display: block; font-weight: 500;">Option B: Direct Image URL</span>
-              <input type="url" id="upcoming-url-input" oninput="handleUpcomingUrlInput(event)" placeholder="https://images.unsplash.com/..." style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 13px; box-sizing: border-box;" />
-            </div>
+            <button type="button" onclick="addMorePropImageSlot('upcoming')" style="border: none; background: #ecfdf5; color: #059669; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 8px; border: 1px solid #a7f3d0; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+              <span>➕ Add More Images</span>
+            </button>
           </div>
-          
-          <!-- Live Preview Thumbnail -->
-          <div id="upcoming-preview-container" style="display: none; align-items: center; gap: 12px; padding: 10px 14px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px;">
-            <img id="upcoming-preview-img" src="" alt="Preview" style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #10b981;" />
-            <div>
-              <span style="font-size: 12px; color: #059669; font-weight: 700; display: block;">✓ Image loaded ready for publish</span>
-              <span id="upcoming-preview-type" style="font-size: 11px; color: #047857;">Ready for sync</span>
-            </div>
-            <button type="button" onclick="clearUpcomingImagePreview()" style="margin-left: auto; border: none; background: transparent; color: #dc2626; font-size: 12px; cursor: pointer; font-weight: 600;">✕ Remove</button>
+
+          <div id="upcoming-prop-images-container" style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px;">
+            <!-- Rendered dynamically by initPropImageSlots('upcoming', ...) -->
           </div>
         </div>
 
@@ -2260,13 +2251,14 @@
       syncChannel = null;
     }
 
-    function broadcastChange(key) {
+    function broadcastChange(key, data) {
       try {
+        const payload = { type: 'STATE_UPDATE', key: key, data: data };
         if (syncChannel) {
-          syncChannel.postMessage({ type: 'STATE_UPDATE', key: key });
+          syncChannel.postMessage(payload);
         } else if (typeof BroadcastChannel !== 'undefined') {
           const bc = new BroadcastChannel('lb_sync_channel');
-          bc.postMessage({ type: 'STATE_UPDATE', key: key });
+          bc.postMessage(payload);
           bc.close();
         }
       } catch(e) {}
@@ -2415,19 +2407,46 @@
       }
     }
 
-    function setStoredData(key, data) {
+    async function setStoredData(key, data) {
       try {
         localStorage.setItem(key, JSON.stringify(data));
       } catch(e) {}
+      broadcastChange(key, data);
       try {
-        fetch('/api/data', {
+        const res = await fetch('/api/data', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ key: key, data: data })
-        }).catch(() => {});
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (json.supabaseSynced) {
+            console.log(`☁️ Simultaneously synced ${key} to Supabase Cloud`);
+          }
+        }
       } catch(e) {}
-      broadcastChange(key);
     }
+
+    function logAdminAudit(actionType, target, details) {
+      try {
+        let logs = getStoredData(LB_STORAGE_KEYS.AUDIT) || [];
+        if (!Array.isArray(logs)) logs = [];
+        const newLog = {
+          id: 'log-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+          actionType: (actionType || 'ACTIVITY').toUpperCase(),
+          target: target || 'Dashboard Record',
+          details: details || 'Updated in backend',
+          timestamp: new Date().toISOString()
+        };
+        logs.unshift(newLog);
+        if (logs.length > 80) logs = logs.slice(0, 80);
+        setStoredData(LB_STORAGE_KEYS.AUDIT, logs);
+        renderOverviewModule();
+      } catch(e) {
+        console.warn('Audit log recording error:', e);
+      }
+    }
+    window.logAdminAudit = logAdminAudit;
 
     async function fetchServerDB() {
       try {
@@ -2706,21 +2725,39 @@
       if (farmland.length > 0) {
         farmland.forEach(f => {
           const match = (f.metrics || f.pricePerAcre || f.acreage || f.area || '').match(/([0-9.]+)\s*Acres?/i);
-          totalFarmlandAcres += match ? parseFloat(match[1]) : 1;
+          totalFarmlandAcres += match ? parseFloat(match[1]) : 0;
         });
       }
 
       // Top KPI Cards (100% Dynamically Computed)
       const kpiListings = document.getElementById('kpiOverviewListings');
       const kpiFarmland = document.getElementById('kpiOverviewFarmland');
+      const kpiFarmlandBadge = document.getElementById('kpiOverviewFarmlandBadge');
       const kpiPending = document.getElementById('kpiOverviewPending');
       const kpiPendingBadge = document.getElementById('kpiOverviewPendingBadge');
       const kpiLeads = document.getElementById('kpiOverviewLeads');
 
       if (kpiListings) kpiListings.textContent = properties.length.toLocaleString();
-      if (kpiFarmland) kpiFarmland.textContent = farmland.length > 0 ? `${farmland.length} Parcel${farmland.length === 1 ? '' : 's'}` : '0 Parcels';
-      if (kpiPending) kpiPending.textContent = totalApprovalsCount;
-      if (kpiPendingBadge) kpiPendingBadge.textContent = `${totalApprovalsCount} Certified Properties`;
+      if (kpiFarmland) {
+        if (totalFarmlandAcres > 0) {
+          kpiFarmland.textContent = `${totalFarmlandAcres} Acres`;
+        } else {
+          kpiFarmland.textContent = `${farmland.length} Parcel${farmland.length === 1 ? '' : 's'}`;
+        }
+      }
+      if (kpiFarmlandBadge) {
+        kpiFarmlandBadge.textContent = farmland.length > 0 ? `${farmland.length} Active` : '0 Active';
+      }
+      if (kpiPending) kpiPending.textContent = approvals.length;
+      if (kpiPendingBadge) {
+        if (approvals.length > 0) {
+          kpiPendingBadge.textContent = `${approvals.length} Requires Sign-off`;
+          kpiPendingBadge.className = 'kpi-top-pill kpi-pill-amber';
+        } else {
+          kpiPendingBadge.textContent = 'All Audits Clear';
+          kpiPendingBadge.className = 'kpi-top-pill kpi-pill-emerald';
+        }
+      }
       if (kpiLeads) kpiLeads.textContent = siteTours.length;
 
       // Dynamic Sidebar Badges (100% Dynamically Computed)
@@ -2734,7 +2771,7 @@
 
       if (sidebarProp) sidebarProp.textContent = properties.length;
       if (sidebarNewProjects) sidebarNewProjects.textContent = newProjects.length;
-      if (sidebarPending) sidebarPending.textContent = totalApprovalsCount;
+      if (sidebarPending) sidebarPending.textContent = approvals.length;
       if (sidebarFarmland) sidebarFarmland.textContent = `${farmland.length}`;
       if (sidebarLeads) sidebarLeads.textContent = siteTours.length;
       if (badgeInteriors) badgeInteriors.textContent = interiors.length;
@@ -2795,16 +2832,47 @@
       if (auditTbody) {
         const logs = getStoredData(LB_STORAGE_KEYS.AUDIT);
         if (logs.length === 0) {
-          auditTbody.innerHTML = '<tr><td colspan="100%" style="text-align: center; padding: 30px; color: #94A3B8; font-size: 14px;">No administrative audit activity recorded.</td></tr>';
+          auditTbody.innerHTML = '<tr><td colspan="100%" style="text-align: center; padding: 36px; color: #94A3B8; font-size: 14px;">No administrative audit activity recorded yet. Edits, additions, and updates made in the dashboard will appear here with live timestamps.</td></tr>';
         } else {
-          auditTbody.innerHTML = logs.slice(0, 8).map(log => `
-            <tr>
-              <td><span class="badge-status badge-verified">${log.actionType || 'ACTIVITY'}</span></td>
-              <td><strong>${log.target}</strong></td>
-              <td>${log.details}</td>
-              <td><span style="color: var(--text-secondary); font-size: 0.76rem;">${log.timestamp ? new Date(log.timestamp).toLocaleTimeString() : 'Recently'}</span></td>
+          auditTbody.innerHTML = logs.slice(0, 15).map(log => {
+            const type = (log.actionType || 'ACTIVITY').toUpperCase();
+            let badgeStyle = 'background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0;';
+            let icon = '⚡';
+            if (type.includes('ADD') || type.includes('CREATE') || type.includes('PUBLISH')) {
+              badgeStyle = 'background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0;';
+              icon = '➕';
+            } else if (type.includes('EDIT') || type.includes('UPDATE')) {
+              badgeStyle = 'background: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE;';
+              icon = '✏️';
+            } else if (type.includes('DELETE') || type.includes('REMOVE') || type.includes('REJECT')) {
+              badgeStyle = 'background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA;';
+              icon = '🗑️';
+            } else if (type.includes('CONFIRM') || type.includes('VERIFY')) {
+              badgeStyle = 'background: #FDF4FF; color: #9333EA; border: 1px solid #F0ABFC;';
+              icon = '✓';
+            }
+            
+            const d = log.timestamp ? new Date(log.timestamp) : new Date();
+            const dateFormatted = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+            const timeFormatted = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+            return `
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="vertical-align: middle;">
+                <span class="badge-status" style="${badgeStyle} font-weight: 700; font-size: 0.74rem; padding: 4px 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 5px;">
+                  <span>${icon}</span>
+                  <span>${type}</span>
+                </span>
+              </td>
+              <td style="vertical-align: middle;"><strong style="color: #0F172A; font-size: 0.88rem;">${log.target || 'Dashboard Record'}</strong></td>
+              <td style="vertical-align: middle;"><span style="color: #475569; font-size: 0.82rem; line-height: 1.4;">${log.details || 'Updated in backend'}</span></td>
+              <td style="vertical-align: middle; white-space: nowrap;">
+                <div style="font-size: 0.82rem; font-weight: 600; color: #0F172A;">📅 ${dateFormatted}</div>
+                <div style="font-size: 0.74rem; color: #64748B; margin-top: 2px;">⏰ ${timeFormatted}</div>
+              </td>
             </tr>
-          `).join('');
+          `;
+          }).join('');
         }
       }
     }
@@ -3049,7 +3117,7 @@
     function openAddUpcomingProjectModal() {
       const form = document.getElementById('form-upcoming-project');
       if (form) form.reset();
-      clearUpcomingImagePreview();
+      initPropImageSlots('upcoming', []);
       document.getElementById('upcoming-id').value = '';
       document.getElementById('upcomingModalTitle').textContent = '🚀 Add New Upcoming Project / Launch';
       document.getElementById('upcoming-date').value = 'August 2026 • 3 min read';
@@ -3063,7 +3131,6 @@
       const item = items.find(p => p.id === id);
       if (!item) return;
 
-      clearUpcomingImagePreview();
       document.getElementById('upcoming-id').value = item.id;
       document.getElementById('upcomingModalTitle').textContent = '✏️ Edit Upcoming Project: ' + item.title;
       document.getElementById('upcoming-title').value = item.title || '';
@@ -3076,16 +3143,13 @@
       document.getElementById('upcoming-status').value = item.status || 'Active';
       document.getElementById('upcoming-description').value = item.description || item.summary || '';
 
-      const img = item.imageUrl || item.image || '';
-      if (img) {
-        if (img.startsWith('data:image')) {
-          upcomingCompressedBase64 = img;
-          showUpcomingImagePreview(img, 'Loaded Base64 Image');
-        } else {
-          document.getElementById('upcoming-url-input').value = img;
-          showUpcomingImagePreview(img, 'Loaded Direct Image URL');
-        }
+      let existingImgs = [];
+      if (Array.isArray(item.images) && item.images.length > 0) {
+        existingImgs = item.images;
+      } else if (item.imageUrl || item.image) {
+        existingImgs = [item.imageUrl || item.image];
       }
+      initPropImageSlots('upcoming', existingImgs);
 
       document.getElementById('upcomingProjectModal').classList.add('open');
     }
@@ -3096,7 +3160,7 @@
     }
     window.closeUpcomingProjectModal = closeUpcomingProjectModal;
 
-    function handleUpcomingProjectSubmit(e) {
+    async function handleUpcomingProjectSubmit(e) {
       e.preventDefault();
       const id = document.getElementById('upcoming-id').value.trim();
       const title = document.getElementById('upcoming-title').value.trim();
@@ -3108,12 +3172,13 @@
       const badge = document.getElementById('upcoming-badge').value.trim();
       const status = document.getElementById('upcoming-status').value;
       const description = document.getElementById('upcoming-description').value.trim();
-      const urlInput = document.getElementById('upcoming-url-input').value.trim();
 
-      let finalImage = upcomingCompressedBase64 || urlInput;
-      if (!finalImage) {
-        finalImage = 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80';
+      // Collect all images from multi-image slots in upcoming modal
+      let collectedImages = collectPropImages('upcoming');
+      if (collectedImages.length === 0) {
+        collectedImages = ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80'];
       }
+      const finalMainImage = collectedImages[0];
 
       let items = getStoredData(LB_STORAGE_KEYS.NEW_PROJECTS) || [];
 
@@ -3135,10 +3200,12 @@
             status,
             description,
             summary: description,
-            image: finalImage,
-            imageUrl: finalImage,
+            image: finalMainImage,
+            imageUrl: finalMainImage,
+            images: collectedImages,
             updatedAt: new Date().toISOString()
           };
+          logAdminAudit('EDIT', title, `Edited upcoming project in ${location} (Starting: ${price}, Status: ${status})`);
         }
       } else {
         // Add New
@@ -3156,29 +3223,35 @@
           status,
           description,
           summary: description,
-          image: finalImage,
-          imageUrl: finalImage,
+          image: finalMainImage,
+          imageUrl: finalMainImage,
+          images: collectedImages,
           createdAt: new Date().toISOString()
         };
         items.unshift(newProject);
+        logAdminAudit('ADD', title, `Published new upcoming launch in ${location} (Starting: ${price}) by ${builder}`);
       }
 
-      setStoredData(LB_STORAGE_KEYS.NEW_PROJECTS, items);
+      await setStoredData(LB_STORAGE_KEYS.NEW_PROJECTS, items);
       closeUpcomingProjectModal();
       renderNewProjectsModule();
       renderOverviewModule();
 
-      alert(`✅ Upcoming Project "${title}" Published Successfully!\n\nThis project will now instantly appear under "Market Insights & Upcoming Launches" on your frontend website.`);
+      alert(`✅ Upcoming Project "${title}" Published Successfully!\n\nSimultaneously synced to Supabase Cloud PostgreSQL and instantly live on your frontend website!`);
     }
     window.handleUpcomingProjectSubmit = handleUpcomingProjectSubmit;
 
     function handleUpcomingProjectDelete(id) {
-      if (!confirm('Are you sure you want to delete this upcoming project launch?')) return;
       let items = getStoredData(LB_STORAGE_KEYS.NEW_PROJECTS) || [];
+      const item = items.find(p => p.id === id);
+      const title = item ? item.title : 'Upcoming Project';
+      if (!confirm(`Are you sure you want to delete upcoming project "${title}"?`)) return;
       items = items.filter(p => p.id !== id);
       setStoredData(LB_STORAGE_KEYS.NEW_PROJECTS, items);
+      logAdminAudit('DELETE', title, `Removed upcoming project launch from database`);
       renderNewProjectsModule();
       renderOverviewModule();
+      showAdminToast(`🗑️ Deleted upcoming project "${title}"`);
     }
     window.handleUpcomingProjectDelete = handleUpcomingProjectDelete;
 
@@ -3452,11 +3525,84 @@
             <div class="action-btn-group">
               <button class="btn-table-action emerald btn-confirm-tour" onclick="toggleLeadQuick('${item.id}')">${item.status === 'Confirmed' ? 'Completed' : 'Confirm Tour'}</button>
               <button class="btn-table-action btn-call-lead" style="color: #2563EB; border-color: #BFDBFE;" onclick="window.location.href='tel:${(item.contact || item.phone || '').replace(/[^0-9+]/g, '')}'">📞 Call</button>
+              <button class="btn-table-action rose" onclick="deleteLead('${item.id}')" title="Delete Inquiry">🗑️</button>
             </div>
           </td>
         </tr>
       `).join('');
     }
+
+    function toggleLeadQuick(id) {
+      let siteTours = getStoredData(LB_STORAGE_KEYS.SITE_TOURS) || [];
+      const lead = siteTours.find(l => l.id === id);
+      if (!lead) return;
+      const oldStatus = lead.status || 'Pending';
+      const newStatus = (oldStatus === 'Confirmed' ? 'Completed' : 'Confirmed');
+      lead.status = newStatus;
+      setStoredData(LB_STORAGE_KEYS.SITE_TOURS, siteTours);
+      logAdminAudit(
+        newStatus === 'Confirmed' ? 'CONFIRM' : 'UPDATE',
+        lead.customerName || lead.name || 'Customer Lead',
+        `Site tour inquiry status updated from "${oldStatus}" to "${newStatus}" for "${lead.propertyRequested || lead.propertyTitle || 'Property'}"`
+      );
+      renderOverviewModule();
+      renderLeadsModule();
+      showAdminToast(`✓ Lead for "${lead.customerName || lead.name}" marked as ${newStatus}`);
+    }
+    window.toggleLeadQuick = toggleLeadQuick;
+
+    function deleteLead(id) {
+      let siteTours = getStoredData(LB_STORAGE_KEYS.SITE_TOURS) || [];
+      const lead = siteTours.find(l => l.id === id);
+      const name = lead ? (lead.customerName || lead.name) : 'Lead';
+      if (!confirm(`Are you sure you want to delete the lead for "${name}"?`)) return;
+      siteTours = siteTours.filter(l => l.id !== id);
+      setStoredData(LB_STORAGE_KEYS.SITE_TOURS, siteTours);
+      logAdminAudit('DELETE', name, `Removed buyer site tour inquiry for "${lead ? (lead.propertyRequested || lead.propertyTitle) : 'Property'}"`);
+      renderOverviewModule();
+      renderLeadsModule();
+      showAdminToast(`🗑️ Deleted lead for "${name}"`);
+    }
+    window.deleteLead = deleteLead;
+
+    function reviewAndVerifyQuick(id) {
+      let approvals = getStoredData(LB_STORAGE_KEYS.APPROVALS) || [];
+      const item = approvals.find(a => a.id === id);
+      const name = item ? (item.projectName || item.name || item.title) : 'Property Approval';
+      approvals = approvals.filter(a => a.id !== id);
+      setStoredData(LB_STORAGE_KEYS.APPROVALS, approvals);
+      logAdminAudit('VERIFY', name, `Audited and approved regulatory compliance certificate`);
+      renderOverviewModule();
+      showAdminToast(`✓ Verified & certified "${name}"`);
+    }
+    window.reviewAndVerifyQuick = reviewAndVerifyQuick;
+
+    function rejectPendingQuick(id) {
+      let approvals = getStoredData(LB_STORAGE_KEYS.APPROVALS) || [];
+      const item = approvals.find(a => a.id === id);
+      const name = item ? (item.projectName || item.name || item.title) : 'Property Approval';
+      if (!confirm(`Are you sure you want to reject compliance audit for "${name}"?`)) return;
+      approvals = approvals.filter(a => a.id !== id);
+      setStoredData(LB_STORAGE_KEYS.APPROVALS, approvals);
+      logAdminAudit('REJECT', name, `Rejected pending compliance audit`);
+      renderOverviewModule();
+      showAdminToast(`✕ Rejected pending audit for "${name}"`);
+    }
+    window.rejectPendingQuick = rejectPendingQuick;
+
+    function deletePoojaBooking(id) {
+      let poojas = getStoredData(LB_STORAGE_KEYS.GRIHA_PRAVESH) || [];
+      const item = poojas.find(p => p.id === id);
+      const name = item ? (item.customerName || item.name) : 'Booking';
+      if (!confirm(`Are you sure you want to delete booking for "${name}"?`)) return;
+      poojas = poojas.filter(p => p.id !== id);
+      setStoredData(LB_STORAGE_KEYS.GRIHA_PRAVESH, poojas);
+      logAdminAudit('DELETE', name, `Deleted Griha Pravesh consultation booking`);
+      renderOverviewModule();
+      renderGrihaPraveshModule();
+      showAdminToast(`🗑️ Deleted booking for "${name}"`);
+    }
+    window.deletePoojaBooking = deletePoojaBooking;
 
     // --------------------------------------------------------------------------
     // 6. RENDER 3D INTERIORS MODULE
@@ -3565,12 +3711,180 @@
     // --------------------------------------------------------------------------
     // 8. ADD NEW LISTING & CRUD CONTROLLERS
     // --------------------------------------------------------------------------
-    function openAddPropertyModal() {
+    // --------------------------------------------------------------------------
+    // 8. ADD NEW LISTING & CRUD CONTROLLERS (MULTI-IMAGE ASSET ENGINE)
+    // --------------------------------------------------------------------------
+    const propImageSlotsState = {
+      add: [],
+      edit: []
+    };
+
+    function initPropImageSlots(mode = 'add', initialImages = []) {
+      const container = document.getElementById(`${mode}-prop-images-container`);
+      if (!container) return;
+      container.innerHTML = '';
+      propImageSlotsState[mode] = [];
+
+      const count = Math.max(3, initialImages.length);
+      for (let i = 0; i < count; i++) {
+        const initialVal = initialImages[i] || '';
+        renderPropImageSlot(mode, i, initialVal);
+      }
+    }
+    window.initPropImageSlots = initPropImageSlots;
+
+    function addMorePropImageSlot(mode = 'add') {
+      const currentCount = propImageSlotsState[mode].length;
+      renderPropImageSlot(mode, currentCount, '');
+    }
+    window.addMorePropImageSlot = addMorePropImageSlot;
+
+    function renderPropImageSlot(mode, index, initialVal = '') {
+      const container = document.getElementById(`${mode}-prop-images-container`);
+      if (!container) return;
+
+      propImageSlotsState[mode][index] = initialVal || '';
+
+      const slotNumber = index + 1;
+      let slotLabel = `📸 Image ${slotNumber} (Additional Layout / Angle)`;
+      let slotBadge = `<span style="font-size: 11px; background: #f1f5f9; color: #475569; font-weight: 700; padding: 2px 8px; border-radius: 6px; border: 1px solid #cbd5e1;">Layout View ${slotNumber}</span>`;
+      if (index === 0) {
+        slotLabel = `🖼️ Image 1 (Frontend Main Cover Image)`;
+        slotBadge = `<span style="font-size: 11px; background: #ecfdf5; color: #059669; font-weight: 700; padding: 2px 8px; border-radius: 6px; border: 1px solid #a7f3d0;">⭐ Primary Main Card Image</span>`;
+      } else if (index === 1) {
+        slotLabel = `📐 Image 2 (Master Layout Blueprint Plan)`;
+        slotBadge = `<span style="font-size: 11px; background: #eff6ff; color: #2563eb; font-weight: 700; padding: 2px 8px; border-radius: 6px; border: 1px solid #bfdbfe;">Master Blueprint Layout</span>`;
+      } else if (index === 2) {
+        slotLabel = `🗺️ Image 3 (Floor Plan / Site Map Layout)`;
+        slotBadge = `<span style="font-size: 11px; background: #fdf4ff; color: #9333ea; font-weight: 700; padding: 2px 8px; border-radius: 6px; border: 1px solid #f0abfc;">Floor Plan / Site Geometry</span>`;
+      }
+
+      const slotDiv = document.createElement('div');
+      slotDiv.id = `slot-wrap-${mode}-${index}`;
+      slotDiv.style.cssText = 'background: #ffffff; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);';
+
+      const hasInitial = Boolean(initialVal);
+      const isBase64 = String(initialVal).startsWith('data:image');
+
+      slotDiv.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+          <label style="font-size: 12.5px; font-weight: 700; color: #1e293b; margin: 0; display: flex; align-items: center; gap: 8px;">
+            ${slotLabel}
+            ${slotBadge}
+          </label>
+          ${index >= 3 ? `<button type="button" onclick="removePropImageSlot('${mode}', ${index})" style="border: none; background: #fee2e2; color: #dc2626; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; cursor: pointer;">✕ Delete Slot</button>` : ''}
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div>
+            <span style="font-size: 11px; color: #64748b; margin-bottom: 3px; display: block; font-weight: 500;">Option A: Local File Upload</span>
+            <input type="file" id="${mode}-file-slot-${index}" accept="image/*" onchange="handlePropSlotFileSelect(event, '${mode}', ${index})" style="width: 100%; padding: 6px 8px; border-radius: 6px; border: 1px dashed #cbd5e1; background: #f8fafc; font-size: 11.5px; box-sizing: border-box; cursor: pointer;" />
+          </div>
+          <div>
+            <span style="font-size: 11px; color: #64748b; margin-bottom: 3px; display: block; font-weight: 500;">Option B: Direct Image URL</span>
+            <input type="url" id="${mode}-url-slot-${index}" oninput="handlePropSlotUrlInput(event, '${mode}', ${index})" value="${!isBase64 ? initialVal : ''}" placeholder="https://images.unsplash.com/..." style="width: 100%; padding: 7px 10px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 12px; box-sizing: border-box;" />
+          </div>
+        </div>
+        <div id="${mode}-preview-slot-${index}" style="display: ${hasInitial ? 'flex' : 'none'}; align-items: center; gap: 10px; padding: 6px 10px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 6px;">
+          <img id="${mode}-preview-img-${index}" src="${initialVal}" alt="Preview" style="width: 44px; height: 44px; object-fit: cover; border-radius: 4px; border: 1px solid #10b981;" />
+          <div style="font-size: 11.5px; color: #059669; font-weight: 600;">
+            <span id="${mode}-status-slot-${index}">✓ Ready: ${isBase64 ? 'Compressed File' : 'URL Link'}</span>
+          </div>
+          <button type="button" onclick="clearPropSlot('${mode}', ${index})" style="margin-left: auto; border: none; background: transparent; color: #dc2626; font-size: 11.5px; cursor: pointer; font-weight: 700;">✕ Clear</button>
+        </div>
+      `;
+
+      container.appendChild(slotDiv);
+    }
+    window.renderPropImageSlot = renderPropImageSlot;
+
+    async function handlePropSlotFileSelect(event, mode, index) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const previewBox = document.getElementById(`${mode}-preview-slot-${index}`);
+      const previewImg = document.getElementById(`${mode}-preview-img-${index}`);
+      const statusText = document.getElementById(`${mode}-status-slot-${index}`);
+      const urlInput = document.getElementById(`${mode}-url-slot-${index}`);
+
+      if (statusText) statusText.textContent = '⏳ Compressing image...';
+      if (previewBox) previewBox.style.display = 'flex';
+
+      try {
+        const base64 = await compressImage(file, 900, 0.72);
+        propImageSlotsState[mode][index] = base64;
+        if (urlInput) urlInput.value = '';
+        if (previewImg) previewImg.src = base64;
+        const approxKb = (base64.length * 0.75 / 1024).toFixed(1);
+        if (statusText) statusText.textContent = `✓ Loaded: ${file.name} (~${approxKb} KB)`;
+      } catch (err) {
+        console.warn('Compression err:', err);
+      }
+    }
+    window.handlePropSlotFileSelect = handlePropSlotFileSelect;
+
+    function handlePropSlotUrlInput(event, mode, index) {
+      const url = event.target.value.trim();
+      const previewBox = document.getElementById(`${mode}-preview-slot-${index}`);
+      const previewImg = document.getElementById(`${mode}-preview-img-${index}`);
+      const statusText = document.getElementById(`${mode}-status-slot-${index}`);
+      const fileInput = document.getElementById(`${mode}-file-slot-${index}`);
+
+      if (url) {
+        propImageSlotsState[mode][index] = url;
+        if (fileInput) fileInput.value = '';
+        if (previewImg) previewImg.src = url;
+        if (statusText) statusText.textContent = '✓ Web Image URL Set';
+        if (previewBox) previewBox.style.display = 'flex';
+      } else {
+        propImageSlotsState[mode][index] = '';
+        if (previewBox) previewBox.style.display = 'none';
+      }
+    }
+    window.handlePropSlotUrlInput = handlePropSlotUrlInput;
+
+    function clearPropSlot(mode, index) {
+      propImageSlotsState[mode][index] = '';
+      const fileInput = document.getElementById(`${mode}-file-slot-${index}`);
+      const urlInput = document.getElementById(`${mode}-url-slot-${index}`);
+      const previewBox = document.getElementById(`${mode}-preview-slot-${index}`);
+      const previewImg = document.getElementById(`${mode}-preview-img-${index}`);
+
+      if (fileInput) fileInput.value = '';
+      if (urlInput) urlInput.value = '';
+      if (previewImg) previewImg.src = '';
+      if (previewBox) previewBox.style.display = 'none';
+    }
+    window.clearPropSlot = clearPropSlot;
+
+    function removePropImageSlot(mode, index) {
+      const el = document.getElementById(`slot-wrap-${mode}-${index}`);
+      if (el) el.remove();
+      propImageSlotsState[mode][index] = null;
+    }
+    window.removePropImageSlot = removePropImageSlot;
+
+    function collectPropImages(mode) {
+      const results = [];
+      const slots = propImageSlotsState[mode] || [];
+      slots.forEach((val, idx) => {
+        const urlInput = document.getElementById(`${mode}-url-slot-${idx}`);
+        const currentVal = val || (urlInput ? urlInput.value.trim() : '');
+        if (currentVal) results.push(currentVal);
+      });
+      return results;
+    }
+    window.collectPropImages = collectPropImages;
+
+    function openAddPropertyModal(defaultCategory) {
+      initPropImageSlots('add', []);
       const modal = document.getElementById('addPropertyModal');
       if (modal) {
         modal.classList.add('open');
         modal.style.setProperty('display', 'flex', 'important');
         document.body.style.overflow = 'hidden';
+      }
+      if (defaultCategory) {
+        const catSelect = document.getElementById('add-prop-category');
+        if (catSelect) catSelect.value = defaultCategory;
       }
     }
     window.openAddPropertyModal = openAddPropertyModal;
@@ -3588,8 +3902,6 @@
     // --------------------------------------------------------------------------
     // AUTOMATIC HTML5 CANVAS IMAGE COMPRESSION PIPELINE (UNDER 80KB)
     // --------------------------------------------------------------------------
-    let currentCompressedBase64 = '';
-
     function compressImage(file, maxWidth = 900, quality = 0.7) {
       return new Promise((resolve) => {
         if (!file || !file.type.startsWith('image/')) {
@@ -3622,66 +3934,8 @@
       });
     }
 
-    async function handlePropFileSelect(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const previewContainer = document.getElementById('add-prop-preview-container');
-      const previewImg = document.getElementById('add-prop-preview-img');
-      const previewType = document.getElementById('add-prop-preview-type');
-      const urlInput = document.getElementById('add-prop-url');
-
-      if (previewType) previewType.textContent = '⏳ Compressing image for local storage...';
-      if (previewContainer) previewContainer.style.display = 'flex';
-
-      try {
-        currentCompressedBase64 = await compressImage(file, 900, 0.72);
-        if (urlInput) urlInput.value = '';
-        if (previewImg) previewImg.src = currentCompressedBase64;
-        const approxKb = (currentCompressedBase64.length * 0.75 / 1024).toFixed(1);
-        if (previewType) previewType.textContent = `✓ File Compressed: ${file.name} (~${approxKb} KB)`;
-      } catch (err) {
-        console.warn('Compression error:', err);
-        if (previewType) previewType.textContent = `✓ File Loaded: ${file.name}`;
-      }
-    }
-    window.handlePropFileSelect = handlePropFileSelect;
-
-    function handlePropUrlInput(event) {
-      const url = event.target.value.trim();
-      const previewContainer = document.getElementById('add-prop-preview-container');
-      const previewImg = document.getElementById('add-prop-preview-img');
-      const previewType = document.getElementById('add-prop-preview-type');
-      const fileInput = document.getElementById('add-prop-file');
-
-      if (url) {
-        currentCompressedBase64 = '';
-        if (fileInput) fileInput.value = '';
-        if (previewImg) previewImg.src = url;
-        if (previewType) previewType.textContent = 'External Web URL Image';
-        if (previewContainer) previewContainer.style.display = 'flex';
-      } else {
-        if (!currentCompressedBase64 && previewContainer) previewContainer.style.display = 'none';
-      }
-    }
-    window.handlePropUrlInput = handlePropUrlInput;
-
-    function clearPropImagePreview() {
-      currentCompressedBase64 = '';
-      const fileInput = document.getElementById('add-prop-file');
-      const urlInput = document.getElementById('add-prop-url');
-      const previewContainer = document.getElementById('add-prop-preview-container');
-      const previewImg = document.getElementById('add-prop-preview-img');
-
-      if (fileInput) fileInput.value = '';
-      if (urlInput) urlInput.value = '';
-      if (previewImg) previewImg.src = '';
-      if (previewContainer) previewContainer.style.display = 'none';
-    }
-    window.clearPropImagePreview = clearPropImagePreview;
-
     // --------------------------------------------------------------------------
-    // ROBUST FORM SUBMIT WITH VISUAL FEEDBACK & QUOTA PROTECTION
+    // ROBUST FORM SUBMIT WITH VISUAL FEEDBACK & MULTI-IMAGE INGESTION
     // --------------------------------------------------------------------------
     async function handleAddPropertySubmit(e) {
       if (e) e.preventDefault();
@@ -3705,7 +3959,6 @@
         const status = document.getElementById('add-prop-status')?.value || 'Active';
         const area = (document.getElementById('add-prop-area')?.value || '').trim() || '2,400 sq.ft';
         const metrics = (document.getElementById('add-prop-metrics')?.value || '').trim() || `${area} • ${approvalType}`;
-        const urlInput = (document.getElementById('add-prop-url')?.value || '').trim();
 
         if (!title || !price || !location) {
           alert('Please fill in all required fields (Title, Location, Rate/Pricing).');
@@ -3716,14 +3969,12 @@
           return;
         }
 
-        // If file input has a file but not compressed yet, compress now
-        const fileInput = document.getElementById('add-prop-file');
-        if (fileInput && fileInput.files && fileInput.files[0] && !currentCompressedBase64) {
-          currentCompressedBase64 = await compressImage(fileInput.files[0], 900, 0.72);
+        // Collect all images from multi-image slots
+        let collectedImages = collectPropImages('add');
+        if (collectedImages.length === 0) {
+          collectedImages.push('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop');
         }
-
-        // Final Image Resolution
-        const finalImage = currentCompressedBase64 || urlInput || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop';
+        const finalMainImage = collectedImages[0];
 
         const newProperty = {
           id: 'prop_' + Date.now(),
@@ -3743,8 +3994,9 @@
           metrics,
           bhk: category === 'Residential Plots' ? 'Villa Plot' : (category === 'Farmland' ? 'Agro Parcel' : '3 BHK'),
           facing: 'North-East',
-          imageUrl: finalImage,
-          image: finalImage,
+          imageUrl: finalMainImage,
+          image: finalMainImage,
+          images: collectedImages,
           badge: approvalType,
           featureBadge: approvalType,
           featured: true,
@@ -3759,13 +4011,9 @@
         properties.unshift(newProperty);
 
         try {
-          setStoredData(LB_STORAGE_KEYS.PROPERTIES, properties);
+          await setStoredData(LB_STORAGE_KEYS.PROPERTIES, properties);
         } catch (quotaErr) {
-          console.warn('Quota exceeded, pruning older items or using fallback image:', quotaErr);
-          newProperty.imageUrl = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop';
-          newProperty.image = newProperty.imageUrl;
-          properties[0] = newProperty;
-          setStoredData(LB_STORAGE_KEYS.PROPERTIES, properties);
+          console.warn('Quota warning:', quotaErr);
         }
 
         // Add to Audit Log
@@ -3774,7 +4022,7 @@
           id: 'log-' + Date.now(),
           actionType: 'ADD',
           target: title,
-          details: `Published ${category} in ${location} by ${builder}`,
+          details: `Published ${category} with ${collectedImages.length} images in ${location} by ${builder}`,
           timestamp: new Date().toISOString()
         });
         setStoredData(LB_STORAGE_KEYS.AUDIT, logs);
@@ -3782,11 +4030,10 @@
         // Reset UI & Close Modal
         closeAddPropertyModal();
         document.getElementById('form-add-property')?.reset();
-        clearPropImagePreview();
 
         renderPropertiesModule(currentCategoryFilter);
         renderOverviewModule();
-        showAdminToast(`✓ Successfully published listing "${title}" live!`);
+        showAdminToast(`✓ Successfully published listing "${title}" with ${collectedImages.length} images!`);
 
       } catch (error) {
         console.error('Error publishing property:', error);
@@ -3815,77 +4062,15 @@
     window.closeAllPoojaModals = closeAllModals;
     window.closeServiceDetailsModal = closeAllModals;
 
-    // --------------------------------------------------------------------------
-    // EDIT PROPERTY MODAL IMAGE HANDLERS
-    // --------------------------------------------------------------------------
-    let currentEditCompressedBase64 = '';
-
-    async function handleEditPropFileSelect(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const previewContainer = document.getElementById('edit-prop-preview-container');
-      const previewImg = document.getElementById('edit-prop-preview-img');
-      const previewType = document.getElementById('edit-prop-preview-type');
-      const urlInput = document.getElementById('edit-prop-url');
-
-      if (previewType) previewType.textContent = '⏳ Compressing image for local storage...';
-      if (previewContainer) previewContainer.style.display = 'flex';
-
-      try {
-        currentEditCompressedBase64 = await compressImage(file, 900, 0.72);
-        if (urlInput) urlInput.value = '';
-        if (previewImg) previewImg.src = currentEditCompressedBase64;
-        const approxKb = (currentEditCompressedBase64.length * 0.75 / 1024).toFixed(1);
-        if (previewType) previewType.textContent = `✓ File Compressed: ${file.name} (~${approxKb} KB)`;
-      } catch (err) {
-        console.warn('Compression error:', err);
-        if (previewType) previewType.textContent = `✓ File Loaded: ${file.name}`;
-      }
-    }
-    window.handleEditPropFileSelect = handleEditPropFileSelect;
-
-    function handleEditPropUrlInput(event) {
-      const url = event.target.value.trim();
-      const previewContainer = document.getElementById('edit-prop-preview-container');
-      const previewImg = document.getElementById('edit-prop-preview-img');
-      const previewType = document.getElementById('edit-prop-preview-type');
-      const fileInput = document.getElementById('edit-prop-file');
-
-      if (url) {
-        currentEditCompressedBase64 = '';
-        if (fileInput) fileInput.value = '';
-        if (previewImg) previewImg.src = url;
-        if (previewType) previewType.textContent = 'External Web URL Image';
-        if (previewContainer) previewContainer.style.display = 'flex';
-      } else {
-        if (!currentEditCompressedBase64 && previewContainer) previewContainer.style.display = 'none';
-      }
-    }
-    window.handleEditPropUrlInput = handleEditPropUrlInput;
-
-    function clearEditPropImagePreview() {
-      currentEditCompressedBase64 = '';
-      const fileInput = document.getElementById('edit-prop-file');
-      const urlInput = document.getElementById('edit-prop-url');
-      const previewContainer = document.getElementById('edit-prop-preview-container');
-      const previewImg = document.getElementById('edit-prop-preview-img');
-
-      if (fileInput) fileInput.value = '';
-      if (urlInput) urlInput.value = '';
-      if (previewImg) previewImg.src = '';
-      if (previewContainer) previewContainer.style.display = 'none';
-    }
-    window.clearEditPropImagePreview = clearEditPropImagePreview;
-
     // Property Edit Modal
     function openPropertyEditModal(id) {
-      let properties = getStoredData(LB_STORAGE_KEYS.PROPERTIES);
-      const prop = properties.find(p => p.id === id) || properties[0];
+      let properties = getStoredData(LB_STORAGE_KEYS.PROPERTIES) || [];
+      let farmland = getStoredData(LB_STORAGE_KEYS.FARMLAND) || [];
+      const prop = properties.find(p => p.id === id) || farmland.find(f => f.id === id) || properties[0];
       if (!prop) return;
 
       document.getElementById('edit-prop-id').value = prop.id;
-      document.getElementById('edit-prop-title').value = prop.title || '';
+      document.getElementById('edit-prop-title').value = prop.title || prop.name || '';
       document.getElementById('edit-prop-location').value = prop.location || '';
       document.getElementById('edit-prop-builder').value = prop.builder || '';
       document.getElementById('edit-prop-price').value = prop.price || prop.priceLabel || '';
@@ -3904,33 +4089,14 @@
       const statusSelect = document.getElementById('edit-prop-status');
       if (statusSelect && prop.status) statusSelect.value = prop.status;
 
-      // Handle Image Previews
-      currentEditCompressedBase64 = '';
-      const fileInput = document.getElementById('edit-prop-file');
-      const urlInput = document.getElementById('edit-prop-url');
-      const previewContainer = document.getElementById('edit-prop-preview-container');
-      const previewImg = document.getElementById('edit-prop-preview-img');
-      const previewType = document.getElementById('edit-prop-preview-type');
-
-      if (fileInput) fileInput.value = '';
-      const existingImg = prop.imageUrl || prop.image || '';
-
-      if (existingImg) {
-        if (previewImg) previewImg.src = existingImg;
-        if (previewContainer) previewContainer.style.display = 'flex';
-
-        if (existingImg.startsWith('data:image')) {
-          currentEditCompressedBase64 = existingImg;
-          if (urlInput) urlInput.value = '';
-          if (previewType) previewType.textContent = '✓ Saved Image Asset (Base64)';
-        } else {
-          if (urlInput) urlInput.value = existingImg;
-          if (previewType) previewType.textContent = '✓ Current Web URL Image';
-        }
-      } else {
-        if (urlInput) urlInput.value = '';
-        if (previewContainer) previewContainer.style.display = 'none';
+      // Handle Multi-Image Slots in Edit Modal
+      let existingImgs = [];
+      if (Array.isArray(prop.images) && prop.images.length > 0) {
+        existingImgs = prop.images;
+      } else if (prop.imageUrl || prop.image) {
+        existingImgs = [prop.imageUrl || prop.image];
       }
+      initPropImageSlots('edit', existingImgs);
 
       const modal = document.getElementById('edit-property-modal');
       if (modal) {
@@ -3941,17 +4107,31 @@
     }
     window.openPropertyEditModal = openPropertyEditModal;
 
-    function handlePropertyDelete(id) {
-      let properties = getStoredData(LB_STORAGE_KEYS.PROPERTIES);
-      const item = properties.find(p => p.id === id);
-      const name = item ? item.title : 'this property';
+    async function handlePropertyDelete(id) {
+      let properties = getStoredData(LB_STORAGE_KEYS.PROPERTIES) || [];
+      let farmland = getStoredData(LB_STORAGE_KEYS.FARMLAND) || [];
+      const item = properties.find(p => p && p.id === id) || farmland.find(f => f && f.id === id);
+      const name = item ? (item.title || item.name) : 'this property';
 
       if (!confirm(`Are you sure you want to delete "${name}"?`)) return;
 
-      properties = properties.filter(p => p.id !== id);
-      setStoredData(LB_STORAGE_KEYS.PROPERTIES, properties);
+      properties = properties.filter(p => p && p.id !== id && (p.title || p.name || '').trim().toLowerCase() !== name.trim().toLowerCase());
+      await setStoredData(LB_STORAGE_KEYS.PROPERTIES, properties);
 
-      const row = document.getElementById(`row-prop-${id}`);
+      if (Array.isArray(farmland) && farmland.length > 0) {
+        farmland = farmland.filter(f => f && f.id !== id && (f.title || f.name || '').trim().toLowerCase() !== name.trim().toLowerCase());
+        await setStoredData(LB_STORAGE_KEYS.FARMLAND, farmland);
+      }
+
+      try {
+        await fetch('/api/property/' + encodeURIComponent(id), { method: 'DELETE' });
+      } catch(e) {}
+
+      logAdminAudit('DELETE', name, `Deleted property listing (${item ? item.category : 'Property'} in ${item ? item.location : 'Coimbatore'})`);
+
+      const row = document.getElementById(`row-prop-${id}`) || 
+                  document.getElementById(`row-farm-${id}`) || 
+                  document.getElementById(`row-project-${id}`);
       if (row) {
         row.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
         row.style.opacity = '0';
@@ -3959,10 +4139,14 @@
         setTimeout(() => {
           row.remove();
           renderPropertiesModule(currentCategoryFilter);
+          renderFarmlandModule();
+          renderNewProjectsModule();
           renderOverviewModule();
         }, 300);
       } else {
         renderPropertiesModule(currentCategoryFilter);
+        renderFarmlandModule();
+        renderNewProjectsModule();
         renderOverviewModule();
       }
 
@@ -4115,17 +4299,19 @@
           return;
         }
 
-        // If file input has a file but not compressed yet, compress now
-        const fileInput = document.getElementById('edit-prop-file');
-        if (fileInput && fileInput.files && fileInput.files[0] && !currentEditCompressedBase64) {
-          currentEditCompressedBase64 = await compressImage(fileInput.files[0], 900, 0.72);
-        }
-
+        // Collect all images from multi-image slots in edit modal
+        let collectedImages = collectPropImages('edit');
         let properties = getStoredData(LB_STORAGE_KEYS.PROPERTIES);
         let item = properties.find(p => p.id === id);
 
-        const existingImg = item ? (item.imageUrl || item.image || '') : '';
-        const finalImage = currentEditCompressedBase64 || urlInput || existingImg || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop';
+        if (collectedImages.length === 0) {
+          if (item && (item.imageUrl || item.image)) {
+            collectedImages = Array.isArray(item.images) && item.images.length > 0 ? item.images : [item.imageUrl || item.image];
+          } else {
+            collectedImages = ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop'];
+          }
+        }
+        const finalImage = collectedImages[0];
 
         if (item) {
           item.title = title;
@@ -4146,6 +4332,7 @@
           item.metrics = metrics;
           item.imageUrl = finalImage;
           item.image = finalImage;
+          item.images = collectedImages;
           item.updatedAt = new Date().toISOString();
         } else {
           item = {
@@ -4168,18 +4355,16 @@
             metrics,
             imageUrl: finalImage,
             image: finalImage,
+            images: collectedImages,
             createdAt: new Date().toISOString()
           };
           properties.unshift(item);
         }
 
         try {
-          setStoredData(LB_STORAGE_KEYS.PROPERTIES, properties);
+          await setStoredData(LB_STORAGE_KEYS.PROPERTIES, properties);
         } catch (quotaErr) {
-          console.warn('Quota exceeded on edit:', quotaErr);
-          item.imageUrl = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop';
-          item.image = item.imageUrl;
-          setStoredData(LB_STORAGE_KEYS.PROPERTIES, properties);
+          console.warn('Quota error on edit:', quotaErr);
         }
 
         // Add to Audit Log

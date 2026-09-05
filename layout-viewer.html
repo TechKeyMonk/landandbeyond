@@ -29,7 +29,26 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const pName = params.get('project') || 'Grand Aeropolis Smart Township';
-    document.getElementById('layoutTitle').textContent = decodeURIComponent(pName) + ' — Master Layout';
+    const decodedName = decodeURIComponent(pName);
+    document.getElementById('layoutTitle').textContent = decodedName + ' — Master Layout';
+
+    let imgUrl = params.get('img');
+    if (!imgUrl) {
+      const keys = ['lb_new_projects_data', 'lb_properties_data', 'lb_farmland_data', 'lb_approvals_data'];
+      for (const k of keys) {
+        try {
+          const arr = JSON.parse(localStorage.getItem(k) || '[]');
+          const item = arr.find(p => (p.title || p.name || '').toLowerCase().trim() === decodedName.toLowerCase().trim() || p.id === pName);
+          if (item && (item.imageUrl || item.image || item.image_url)) {
+            imgUrl = item.imageUrl || item.image || item.image_url;
+            break;
+          }
+        } catch(e) {}
+      }
+    }
+    if (imgUrl) {
+      document.getElementById('layoutImg').src = imgUrl;
+    }
   </script>
 </body>
 </html>

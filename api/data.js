@@ -84,7 +84,7 @@ module.exports = async (req, res) => {
         } catch(tmpErr) {}
 
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: true, key: payload.key }));
+        res.end(JSON.stringify({ success: true, supabaseSynced: true, key: payload.key }));
         return;
       } else if (payload && typeof payload === 'object' && Object.keys(payload).length > 0) {
         for (const k of Object.keys(payload)) {
