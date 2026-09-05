@@ -9,8 +9,8 @@ require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 const { Pool } = require('pg');
 
-const SUPABASE_URL = process.env.SUPABASE_URL || '';
-const SUPABASE_KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || '';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://zwmvlhsfcezciegbmasp.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || 'sb_publishable_HvyGX56IRzn_NNmiibwtng_dpDJnbQe';
 const DATABASE_URL = process.env.DATABASE_URL || '';
 
 let supabase = null;
