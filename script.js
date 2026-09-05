@@ -452,8 +452,8 @@ async function fetchServerDB() {
 }
 window.fetchServerDB = fetchServerDB;
 fetchServerDB();
-// Auto-sync with central server every 2 seconds for instant live multi-device sync
-setInterval(fetchServerDB, 2000);
+// Removed aggressive 2-second polling to prevent Vercel & Supabase rate limiting
+// setInterval(fetchServerDB, 2000);
 
 // Status Dot Indicator & Pop Card Engine
 // Green: DB connected | Orange: Not connected but demo creds | Red: No demo creds & no db connection
