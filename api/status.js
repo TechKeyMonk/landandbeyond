@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { getDbStatus } = require('../supabase-client');
+const { getDbStatus, fetchFullSupabaseDB } = require('../supabase-client');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -16,6 +16,13 @@ module.exports = async (req, res) => {
     const dbPath = path.join(process.cwd(), 'data', 'db.json');
     if (fs.existsSync(dbPath)) {
       db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+    }
+  } catch(e) {}
+
+  try {
+    const sbData = await fetchFullSupabaseDB();
+    if (sbData) {
+      db = { ...db, ...sbData };
     }
   } catch(e) {}
 
@@ -38,7 +45,7 @@ module.exports = async (req, res) => {
     supabase: {
       configured: dbStatus.supabaseConfigured,
       connected: dbStatus.supabaseConnected,
-      url: process.env.SUPABASE_URL || 'Not configured'
+      url: process.env.SUPABASE_URL || 'https://zwmvlhsfcezciegbmasp.supabase.co'
     },
     postgresql: {
       configured: dbStatus.pgConfigured,
@@ -57,3 +64,4 @@ module.exports = async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(statusData, null, 2));
 };
+

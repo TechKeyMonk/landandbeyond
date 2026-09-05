@@ -373,21 +373,6 @@ const server = http.createServer((req, res) => {
             };
             const dbKey = mapKey[payload.key] || payload.key;
 
-            // Detect deleted items and remove from Supabase
-            const oldList = Array.isArray(db[dbKey]) ? db[dbKey] : [];
-            const newList = Array.isArray(payload.data) ? payload.data : [];
-            if (oldList.length > newList.length) {
-              const newIds = new Set(newList.map(x => x.id));
-              const deletedItems = oldList.filter(x => x && x.id && !newIds.has(x.id));
-              for (const del of deletedItems) {
-                await deleteFromSupabase(dbKey, del.id).catch(() => {});
-                if (dbKey === 'properties' || dbKey === 'farmland') {
-                  await deleteFromSupabase('properties', del.id).catch(() => {});
-                  await deleteFromSupabase('farmland', del.id).catch(() => {});
-                }
-              }
-            }
-
             db[dbKey] = payload.data;
             db[payload.key] = payload.data; // Store under original key as well for 100% compatibility
             writeDB(db);

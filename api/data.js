@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { syncToSupabase, getSupabase } = require('../supabase-client');
+const { syncToSupabase, deleteFromSupabase, fetchFromSupabase, getSupabase } = require('../supabase-client');
 
 function parseBody(req) {
   return new Promise((resolve, reject) => {
@@ -32,7 +32,6 @@ module.exports = async (req, res) => {
   }
 
   if (req.method === 'GET') {
-    // Redirect to or serve db
     const dbHandler = require('./db');
     return dbHandler(req, res);
   }
@@ -54,10 +53,12 @@ module.exports = async (req, res) => {
 
       if (payload && payload.key && payload.data !== undefined) {
         const dbKey = mapKey[payload.key] || payload.key;
+        let isSupabaseSynced = false;
         
         // Auto-sync into Supabase Cloud
         try {
-          await syncToSupabase(dbKey, payload.data);
+          const res = await syncToSupabase(dbKey, payload.data);
+          isSupabaseSynced = Boolean(res);
           if (dbKey === 'properties' && Array.isArray(payload.data)) {
             const farmItems = payload.data.filter(p => {
               const cat = (p.category || '').toLowerCase();
@@ -72,7 +73,7 @@ module.exports = async (req, res) => {
           console.warn('Vercel Supabase sync notice:', syncErr.message);
         }
 
-        // Cache in /tmp/db.json if possible
+        // Cache in /tmp/db.json if available
         try {
           const tmpPath = path.join('/tmp', 'db.json');
           let currentTmp = {};
@@ -80,11 +81,12 @@ module.exports = async (req, res) => {
             try { currentTmp = JSON.parse(fs.readFileSync(tmpPath, 'utf8')); } catch(e) {}
           }
           currentTmp[dbKey] = payload.data;
+          currentTmp[payload.key] = payload.data;
           fs.writeFileSync(tmpPath, JSON.stringify(currentTmp, null, 2), 'utf8');
         } catch(tmpErr) {}
 
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: true, supabaseSynced: true, key: payload.key }));
+        res.end(JSON.stringify({ success: true, supabaseSynced: isSupabaseSynced, key: payload.key }));
         return;
       } else if (payload && typeof payload === 'object' && Object.keys(payload).length > 0) {
         for (const k of Object.keys(payload)) {
@@ -93,7 +95,7 @@ module.exports = async (req, res) => {
           } catch(e) {}
         }
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: true }));
+        res.end(JSON.stringify({ success: true, supabaseSynced: true }));
         return;
       }
 

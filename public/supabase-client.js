@@ -136,7 +136,6 @@ async function syncToSupabase(tableName, items) {
           id: id,
           title: title,
           name: String(item.name || title),
-          builder: String(item.builder || item.developer || ''),
           developer: String(item.developer || item.builder || ''),
           location: item.location || '',
           category: item.category || 'New Launch',
