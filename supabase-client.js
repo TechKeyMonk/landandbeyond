@@ -294,7 +294,25 @@ async function fetchFullSupabaseDB() {
     }
 
     if (fRes && fRes.data) {
-      result.farmland = fRes.data.map(r => r.data || r);
+      result.farmland = fRes.data.map(r => {
+        const d = r.data || {};
+        return {
+          id: r.id,
+          title: r.title || d.title || d.name || 'Untitled Farmland',
+          location: r.location || d.location || '',
+          category: r.category || d.category || 'Farmland',
+          acres: r.acres || d.acres || d.acreCount || '',
+          acreCount: r.acres || d.acreCount || d.acres || '',
+          soilType: r.soil_type || d.soilType || d.soil_type || '',
+          soil_type: r.soil_type || d.soilType || '',
+          price: r.price || d.price || '',
+          status: r.status || d.status || 'Active',
+          imageUrl: r.image_url || d.imageUrl || d.image || '',
+          image: r.image_url || d.imageUrl || d.image || '',
+          createdAt: r.created_at || d.createdAt || new Date().toISOString(),
+          ...d
+        };
+      });
     }
 
     if (tRes && tRes.data) {

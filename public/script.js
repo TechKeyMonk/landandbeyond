@@ -397,7 +397,14 @@ function safeStorageSet(key, val) {
 
 async function fetchServerDB() {
   try {
-    const res = await fetch('/api/db');
+    const res = await fetch('/api/db?_t=' + Date.now(), { 
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    });
     if (res.ok) {
       const db = await res.json();
       const pickArr = (k1, k2) => {
