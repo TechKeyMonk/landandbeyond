@@ -7,6 +7,7 @@
     "test:api": "node tests/api_db_auth.test.js",
     "test:e2e": "node tests/playwright_e2e.test.js",
     "test:all": "npm test && node tests/api_db_auth.test.js && node tests/playwright_e2e.test.js",
+    "build": "node -e \"['supabase-client.js', 'server.js', 'api/data.js', 'api/db.js', 'api/property.js', 'api/status.js'].forEach(f => { new (require('vm')).Script(require('fs').readFileSync(f, 'utf8'), { filename: f }); }); console.log('BUILD: PASS');\"",
     "start": "node server.js"
   },
   "keywords": [],
