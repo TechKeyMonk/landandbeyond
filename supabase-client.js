@@ -564,41 +564,6 @@ async function fetchFullSupabaseDB() {
   }
 }
 
-async function deleteFromSupabase(tableName, id) {
-  if (!supabase || !id) return false;
-  const tableMap = {
-    'properties': 'properties',
-    'lb_properties_data': 'properties',
-    'newProjects': 'new_projects',
-    'lb_new_projects_data': 'new_projects',
-    'new_projects': 'new_projects',
-    'farmland': 'farmland',
-    'lb_farmland_data': 'farmland',
-    'siteTours': 'site_tours',
-    'site_tours': 'site_tours',
-    'lb_site_tours_data': 'site_tours',
-    'interiors': 'interiors',
-    'lb_interiors_data': 'interiors',
-    'lb_interior_consultations': 'interiors',
-    'poojas': 'poojas',
-    'lb_poojas_data': 'poojas',
-    'lb_griha_pravesh_bookings': 'poojas'
-  };
-  const targetTable = tableMap[tableName] || tableName;
-  try {
-    const { error } = await supabase.from(targetTable).delete().eq('id', String(id));
-    if (error) {
-      console.warn(`⚠️ Supabase delete notice for ${targetTable}: ${error.message}`);
-      return false;
-    }
-    console.log(`🗑️ Deleted record ${id} from Supabase table ${targetTable}`);
-    return true;
-  } catch (err) {
-    console.warn(`⚠️ Supabase delete exception: ${err.message}`);
-    return false;
-  }
-}
-
 /**
  * Migration helper to migrate all existing Base64 images from db.json into Supabase Storage
  */
