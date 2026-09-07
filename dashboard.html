@@ -3118,7 +3118,7 @@
           <td style="padding: 14px 16px; text-align: right; vertical-align: middle;">
             <div class="action-btn-group" style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 6px;">
               <button class="btn-edit-listing" style="border: 1px solid #10b981; color: #059669; padding: 5px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 600; background: #ffffff; cursor: pointer;" onclick="openUpcomingProjectEditModal('${p.id}')">Edit</button>
-              <button class="btn-table-action rose" style="padding: 5px 8px; border-radius: 6px; cursor: pointer;" onclick="handleUpcomingProjectDelete('${p.id}')"></button>
+              <button class="btn-table-action rose" style="padding: 5px 8px; border-radius: 6px; cursor: pointer;" onclick="handleUpcomingProjectDelete('${p.id}')">Delete</button>
             </div>
           </td>
         </tr>
@@ -3538,7 +3538,7 @@
             <div class="action-btn-group">
               <button class="btn-table-action emerald btn-confirm-tour" onclick="toggleLeadQuick('${item.id}')">${item.status === 'Confirmed' ? 'Completed' : 'Confirm Tour'}</button>
               <button class="btn-table-action btn-call-lead" style="color: #2563EB; border-color: #BFDBFE;" onclick="window.location.href='tel:${(item.contact || item.phone || '').replace(/[^0-9+]/g, '')}'">Call</button>
-              <button class="btn-table-action rose" onclick="deleteLead('${item.id}')" title="Delete Inquiry"></button>
+              <button class="btn-table-action rose" onclick="deleteLead('${item.id}')" title="Delete Inquiry">Delete</button>
             </div>
           </td>
         </tr>
@@ -3674,7 +3674,7 @@
           <td style="padding: 16px 18px; text-align: right; vertical-align: middle;">
             <div class="action-btn-group" style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 6px;">
               <button class="btn-table-action emerald btn-view-moodboard" style="padding: 5px 12px; font-size: 12.5px; white-space: nowrap; border-radius: 6px; cursor: pointer;" onclick="openInteriorLeadModal('${item.id}')">View Details</button>
-              <button class="btn-table-action rose" style="padding: 5px 8px; border-radius: 6px; cursor: pointer;" onclick="deleteInteriorLead('${item.id}')"></button>
+              <button class="btn-table-action rose" style="padding: 5px 8px; border-radius: 6px; cursor: pointer;" onclick="deleteInteriorLead('${item.id}')">Delete</button>
             </div>
           </td>
         </tr>
@@ -3714,7 +3714,7 @@
             <div class="action-btn-group">
               <button class="btn-table-action emerald view-slip-btn" onclick="openPoojaSlipModal('${item.id}')">View Slip</button>
               <button class="btn-table-action" onclick="openPoojaEditModal('${item.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></button>
-              <button class="btn-table-action rose delete-pooja-btn" onclick="deletePoojaBooking('${item.id}')"></button>
+              <button class="btn-table-action rose delete-pooja-btn" onclick="deletePoojaBooking('${item.id}')">Delete</button>
             </div>
           </td>
         </tr>
