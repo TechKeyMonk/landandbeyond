@@ -459,8 +459,8 @@ async function fetchServerDB() {
 }
 window.fetchServerDB = fetchServerDB;
 fetchServerDB();
-// Removed aggressive 2-second polling to prevent Vercel & Supabase rate limiting
-// setInterval(fetchServerDB, 2000);
+// 30-second background polling keeps frontend synchronized with Supabase without overwhelming server
+setInterval(fetchServerDB, 30000);
 
 // Status Dot Indicator & Pop Card Engine
 // Green: DB connected | Orange: Not connected but demo creds | Red: No demo creds & no db connection

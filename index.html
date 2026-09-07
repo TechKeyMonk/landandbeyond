@@ -335,7 +335,10 @@
       .main-nav {
         position: fixed !important;
         top: 0 !important;
-        right: -340px !important;
+        right: 0 !important;
+        transform: translateX(105%) !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
         width: 320px !important;
         max-width: 85vw !important;
         height: 100vh !important;
@@ -348,14 +351,21 @@
         align-items: stretch !important;
         padding: 24px 20px 36px !important;
         z-index: 2010 !important;
-        transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
         box-sizing: border-box !important;
       }
 
+      .main-nav:not(.open) {
+        display: none !important;
+      }
+
       .main-nav.open {
-        right: 0 !important;
+        transform: translateX(0) !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        display: flex !important;
       }
 
       .main-nav .nav-link {
@@ -536,6 +546,26 @@
       .site-header .compare-nav-pill,
       #btn-navbar-auth {
         display: none !important;
+      }
+
+      @media (max-width: 420px) {
+        .site-header .city-selector-wrap {
+          display: none !important;
+        }
+        .site-header .brand-tagline-text {
+          display: none !important;
+        }
+        .site-header .brand-part-dark,
+        .site-header .brand-part-emerald {
+          font-size: 0.98rem !important;
+        }
+        .header-container {
+          padding: 0 6px !important;
+        }
+        .site-header .nav-tools.nav-actions {
+          margin-left: auto !important;
+          gap: 6px !important;
+        }
       }
 
       .mobile-toggle {
@@ -1001,7 +1031,6 @@
         <button class="proj-tab-btn" data-proj-filter="dtcp-plots" role="tab" aria-selected="false" onclick="filterUpcomingProjects('dtcp-plots', this)">DTCP/RERA Approved Plots</button>
         <button class="proj-tab-btn" data-proj-filter="commercial" role="tab" aria-selected="false" onclick="filterUpcomingProjects('commercial', this)">🏬 Commercial &amp; Land</button>
         <button class="proj-tab-btn" data-proj-filter="dry-land" role="tab" aria-selected="false" onclick="filterUpcomingProjects('dry-land', this)">Agricultural / Dry Land Launches</button>
-        <button class="proj-tab-btn" data-proj-filter="pre-launch" role="tab" aria-selected="false" onclick="filterUpcomingProjects('pre-launch', this)">Under Construction / Pre-Launch</button>
       </div>
 
       <!-- 2. Featured Mega Banner (Hero Project of the Month) -->

@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Land & Beyond Real Estate Platform",
   "scripts": {
-    "test": "vitest run",
+    "test": "vitest run tests/integration.test.js",
+    "test:api": "node tests/api_db_auth.test.js",
+    "test:e2e": "node tests/playwright_e2e.test.js",
+    "test:all": "npm test && node tests/api_db_auth.test.js && node tests/playwright_e2e.test.js",
     "start": "node server.js"
   },
   "keywords": [],
@@ -16,6 +19,7 @@
     "pg": "^8.23.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "vitest": "^5.0.0"
   }
 }

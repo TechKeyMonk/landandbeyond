@@ -154,7 +154,7 @@ const MIME_TYPES = {
   '.webp': 'image/webp'
 };
 
-const { getSupabase, getPgPool, getDbStatus, syncToSupabase, deleteFromSupabase, fetchFromSupabase, fetchFullSupabaseDB } = require('./supabase-client');
+const { getSupabase, getPgPool, getDbStatus, syncToSupabase, deleteFromSupabase, fetchFromSupabase, fetchFullSupabaseDB, uploadBase64ImageToSupabase } = require('./supabase-client');
 
 // Auto-sync initial data from Supabase Cloud on server boot across ALL modules
 async function loadSupabaseOnStartup() {
@@ -169,7 +169,7 @@ async function loadSupabaseOnStartup() {
     if (Array.isArray(sbData.newProjects) && sbData.newProjects.length > 0) {
       const currentNP = Array.isArray(db.newProjects) ? db.newProjects : [];
       sbData.newProjects.forEach(item => {
-        const idx = currentNP.findIndex(p => p.id === item.id || (p.title && item.title && p.title.toLowerCase().trim() === item.title.toLowerCase().trim()));
+        const idx = currentNP.findIndex(p => p.id === item.id);
         if (idx !== -1) {
           currentNP[idx] = { ...currentNP[idx], ...item };
         } else {
@@ -186,7 +186,7 @@ async function loadSupabaseOnStartup() {
     if (Array.isArray(sbData.properties) && sbData.properties.length > 0) {
       const currentP = Array.isArray(db.properties) ? db.properties : [];
       sbData.properties.forEach(item => {
-        const idx = currentP.findIndex(p => p.id === item.id || (p.title && item.title && p.title.toLowerCase().trim() === item.title.toLowerCase().trim()));
+        const idx = currentP.findIndex(p => p.id === item.id);
         if (idx !== -1) {
           currentP[idx] = { ...currentP[idx], ...item };
         } else {
@@ -203,7 +203,10 @@ async function loadSupabaseOnStartup() {
     if (Array.isArray(sbData.farmland) && sbData.farmland.length > 0) {
       const currentF = Array.isArray(db.farmland) ? db.farmland : [];
       sbData.farmland.forEach(item => {
-        if (!currentF.some(f => f.id === item.id || (f.title && item.title && f.title.toLowerCase().trim() === item.title.toLowerCase().trim()))) {
+        const idx = currentF.findIndex(f => f.id === item.id);
+        if (idx !== -1) {
+          currentF[idx] = { ...currentF[idx], ...item };
+        } else {
           currentF.push(item);
         }
       });
@@ -251,7 +254,7 @@ async function loadSupabaseOnStartup() {
 }
 setTimeout(loadSupabaseOnStartup, 1000);
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   // CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -316,17 +319,17 @@ const server = http.createServer((req, res) => {
     const id = decodeURIComponent(pathname.split('/').pop());
     const db = readDB();
     
-    // Remove from all property lists
+    // Remove strictly by primary identifier ID
     if (Array.isArray(db.properties)) {
-      db.properties = db.properties.filter(p => p.id !== id && (p.title || p.name || '').toLowerCase().trim() !== id.toLowerCase().trim());
+      db.properties = db.properties.filter(p => p.id !== id);
       db.lb_properties_data = db.properties;
     }
     if (Array.isArray(db.farmland)) {
-      db.farmland = db.farmland.filter(f => f.id !== id && (f.title || f.name || '').toLowerCase().trim() !== id.toLowerCase().trim());
+      db.farmland = db.farmland.filter(f => f.id !== id);
       db.lb_farmland_data = db.farmland;
     }
     if (Array.isArray(db.newProjects)) {
-      db.newProjects = db.newProjects.filter(np => np.id !== id && (np.title || np.name || '').toLowerCase().trim() !== id.toLowerCase().trim());
+      db.newProjects = db.newProjects.filter(np => np.id !== id);
       db.lb_new_projects_data = db.newProjects;
     }
     if (Array.isArray(db.siteTours)) {
@@ -336,10 +339,12 @@ const server = http.createServer((req, res) => {
     writeDB(db);
 
     // Delete directly from Supabase Cloud
-    deleteFromSupabase('properties', id).catch(() => {});
-    deleteFromSupabase('farmland', id).catch(() => {});
-    deleteFromSupabase('new_projects', id).catch(() => {});
-    deleteFromSupabase('site_tours', id).catch(() => {});
+    await Promise.allSettled([
+      deleteFromSupabase('properties', id),
+      deleteFromSupabase('farmland', id),
+      deleteFromSupabase('new_projects', id),
+      deleteFromSupabase('site_tours', id)
+    ]);
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ success: true, deletedId: id, db: readDB() }));
@@ -349,7 +354,58 @@ const server = http.createServer((req, res) => {
   // REST API Endpoints
   if (pathname === '/api/db' || pathname === '/api/data') {
     if (req.method === 'GET') {
-      const db = readDB();
+      let db = readDB(); // Disk database baseline & fallback
+      try {
+        const sbData = await fetchFullSupabaseDB();
+        if (sbData) {
+          // Supabase is the Master Source of Truth for cloud-synced collections
+          if (Array.isArray(sbData.properties)) {
+            db.properties = sbData.properties;
+            db.lb_properties_data = sbData.properties;
+          }
+
+          if (Array.isArray(sbData.newProjects)) {
+            db.newProjects = sbData.newProjects;
+            db.lb_new_projects_data = sbData.newProjects;
+          }
+
+          if (Array.isArray(sbData.farmland)) {
+            db.farmland = sbData.farmland;
+            db.lb_farmland_data = sbData.farmland;
+          }
+
+          if (Array.isArray(sbData.siteTours)) {
+            db.siteTours = sbData.siteTours;
+            db.lb_site_tours_data = sbData.siteTours;
+          }
+
+          if (Array.isArray(sbData.interiors) && sbData.interiors.length > 0) {
+            db.interiors = sbData.interiors;
+            db.lb_interior_consultations = sbData.interiors;
+          }
+
+          if (Array.isArray(sbData.poojas) && sbData.poojas.length > 0) {
+            db.poojas = sbData.poojas;
+            db.lb_griha_pravesh_bookings = sbData.poojas;
+          }
+
+          // Approvals and auditLogs are preserved from disk db.json
+          writeDB(db);
+        }
+      } catch (err) {
+        console.warn('⚠️ Supabase /api/db live fetch warning (falling back to disk):', err.message);
+      }
+
+      // Ensure dual-key compatibility across client and server conventions
+      db.lb_properties_data = db.properties || [];
+      db.lb_new_projects_data = db.newProjects || [];
+      db.lb_farmland_data = db.farmland || [];
+      db.lb_site_tours_data = db.siteTours || [];
+      db.lb_approvals_data = db.approvals || [];
+      db.lb_interior_consultations = db.interiors || [];
+      db.lb_griha_pravesh_bookings = db.poojas || [];
+      db.lb_admin_audit_logs = db.auditLogs || [];
+
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(db));
       return;
@@ -360,31 +416,72 @@ const server = http.createServer((req, res) => {
       req.on('data', chunk => body += chunk);
       req.on('end', async () => {
         try {
+          if (!body || !body.trim()) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Empty payload provided' }));
+            return;
+          }
           const payload = JSON.parse(body);
           const db = readDB();
           let isSupabaseSynced = false;
+
+          const mapKey = {
+            'lb_properties_data': 'properties',
+            'lb_new_projects_data': 'newProjects',
+            'lb_farmland_data': 'farmland',
+            'lb_site_tours_data': 'siteTours',
+            'lb_approvals_data': 'approvals',
+            'lb_interior_consultations': 'interiors',
+            'lb_griha_pravesh_bookings': 'poojas',
+            'lb_admin_audit_logs': 'auditLogs'
+          };
+
           if (payload.key && payload.data !== undefined) {
-            // Mapping localStorage key to db property
-            const mapKey = {
-              'lb_properties_data': 'properties',
-              'lb_new_projects_data': 'newProjects',
-              'lb_farmland_data': 'farmland',
-              'lb_site_tours_data': 'siteTours',
-              'lb_approvals_data': 'approvals',
-              'lb_interior_consultations': 'interiors',
-              'lb_griha_pravesh_bookings': 'poojas',
-              'lb_admin_audit_logs': 'auditLogs'
-            };
             const dbKey = mapKey[payload.key] || payload.key;
 
+            // Detect any deleted items from array and propagate deletion to Supabase
+            const oldList = db[dbKey] || [];
+            if (Array.isArray(oldList) && Array.isArray(payload.data)) {
+              const newIdSet = new Set(payload.data.map(item => item && item.id).filter(Boolean));
+              for (const oldItem of oldList) {
+                if (oldItem && oldItem.id && !newIdSet.has(oldItem.id)) {
+                  console.log(`🗑️ Auto-purging deleted record ${oldItem.id} from Supabase ${dbKey}`);
+                  await deleteFromSupabase(dbKey, oldItem.id).catch(() => {});
+                }
+              }
+            }
+
+            // Intercept and migrate any Base64 images before saving
+            if (Array.isArray(payload.data)) {
+              for (let i = 0; i < payload.data.length; i++) {
+                const item = payload.data[i];
+                if (item && typeof item === 'object') {
+                  const img = item.imageUrl || item.image || item.image_url;
+                  if (typeof img === 'string' && img.startsWith('data:image/')) {
+                    try {
+                      const publicUrl = await uploadBase64ImageToSupabase(img, `${dbKey}_${item.id || Date.now()}`);
+                      if (publicUrl && !publicUrl.startsWith('data:')) {
+                        item.imageUrl = publicUrl;
+                        item.image = publicUrl;
+                        item.image_url = publicUrl;
+                      }
+                    } catch (uploadErr) {
+                      console.warn('⚠️ Image upload notice on save:', uploadErr.message);
+                    }
+                  }
+                }
+              }
+            }
+
             db[dbKey] = payload.data;
-            db[payload.key] = payload.data; // Store under original key as well for 100% compatibility
+            db[payload.key] = payload.data;
             writeDB(db);
+
             // Real-time Simultaneous Sync to Supabase Cloud
             try {
-              const res = await syncToSupabase(dbKey, payload.data);
-              isSupabaseSynced = Boolean(res);
-              if (res) console.log(`☁️ Synced ${payload.data.length} records of ${dbKey} simultaneously to Supabase Cloud`);
+              const syncRes = await syncToSupabase(dbKey, payload.data);
+              isSupabaseSynced = Boolean(syncRes);
+              if (syncRes) console.log(`☁️ Synced ${payload.data.length} records of ${dbKey} simultaneously to Supabase Cloud`);
             } catch (err) {
               console.warn(`⚠️ Supabase sync warning for ${dbKey}:`, err.message);
             }
@@ -407,9 +504,11 @@ const server = http.createServer((req, res) => {
             }
             isSupabaseSynced = true;
           }
+
           res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: true, supabaseSynced: isSupabaseSynced, db: readDB() }));
+          res.end(JSON.stringify({ success: true, supabaseSynced: isSupabaseSynced, key: payload.key, db: readDB() }));
         } catch (e) {
+          console.error('API /api/data error:', e.message);
           res.writeHead(400, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ error: e.message }));
         }

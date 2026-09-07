@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { getSupabase, fetchFullSupabaseDB } = require('../supabase-client');
+const { fetchFullSupabaseDB } = require('../supabase-client');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
   res.setHeader('Surrogate-Control', 'no-store');
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
+
   if (req.method === 'OPTIONS') {
     res.writeHead(200).end();
     return;
@@ -26,7 +27,7 @@ module.exports = async (req, res) => {
     poojas: []
   };
 
-  // 1. Try reading local seed file / tmp fallback
+  // 1. Try reading local seed file / disk baseline
   try {
     const dbPath = path.join(process.cwd(), 'data', 'db.json');
     if (fs.existsSync(dbPath)) {
@@ -39,15 +40,15 @@ module.exports = async (req, res) => {
   try {
     const sbData = await fetchFullSupabaseDB();
     if (sbData) {
-      if (Array.isArray(sbData.properties) && sbData.properties.length > 0) db.properties = sbData.properties;
-      if (Array.isArray(sbData.newProjects) && sbData.newProjects.length > 0) db.newProjects = sbData.newProjects;
-      if (Array.isArray(sbData.farmland) && sbData.farmland.length > 0) db.farmland = sbData.farmland;
-      if (Array.isArray(sbData.siteTours) && sbData.siteTours.length > 0) db.siteTours = sbData.siteTours;
+      if (Array.isArray(sbData.properties)) db.properties = sbData.properties;
+      if (Array.isArray(sbData.newProjects)) db.newProjects = sbData.newProjects;
+      if (Array.isArray(sbData.farmland)) db.farmland = sbData.farmland;
+      if (Array.isArray(sbData.siteTours)) db.siteTours = sbData.siteTours;
       if (Array.isArray(sbData.interiors) && sbData.interiors.length > 0) db.interiors = sbData.interiors;
       if (Array.isArray(sbData.poojas) && sbData.poojas.length > 0) db.poojas = sbData.poojas;
     }
   } catch(err) {
-    console.warn('Vercel Supabase fetch notice:', err.message);
+    console.warn('API /api/db Supabase fetch notice:', err.message);
   }
 
   // Dual-key symmetry for 100% frontend and client backward compatibility
@@ -63,4 +64,3 @@ module.exports = async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(db));
 };
-

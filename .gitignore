@@ -5,3 +5,5 @@ node_modules/
 .venv/
 coverage/
 *.log
+mcp_test.pdf
+tests/screenshots/
