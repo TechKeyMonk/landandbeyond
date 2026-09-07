@@ -40,75 +40,6 @@
       "approvalNumber": "TN approved"
     },
     {
-      "id": "prop_1788602589461",
-      "title": "lulu",
-      "builder": "jegan",
-      "location": "ukkadam",
-      "category": "Farmland",
-      "price": "1.50 cr",
-      "priceLabel": "1.50 cr",
-      "metrics": "apartment",
-      "status": "Active",
-      "approvalType": "DTCP Approved",
-      "createdAt": "2026-09-05T10:03:09.461Z",
-      "bhk": "Agro Parcel",
-      "area": "1 acre",
-      "badge": "DTCP Approved",
-      "image": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "facing": "North-East",
-      "images": [
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_1_1788764021169_4mxcu.jpg",
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_2_1788764021986_rq9nz.jpg"
-      ],
-      "legalNo": "TN approved",
-      "parking": "Yes",
-      "approval": "DTCP Approved",
-      "featured": true,
-      "imageUrl": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "image_url": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "updatedAt": "2026-09-07T09:47:35.418Z",
-      "assessment": "Good Value",
-      "livability": {
-        "retail": 9.4,
-        "schools": 9.1,
-        "transit": 9.2,
-        "composite": 9.3,
-        "hospitals": 9
-      },
-      "legalStatus": "DTCP Approved",
-      "ratePerSqft": "Market Benchmarked",
-      "featureBadge": "DTCP Approved",
-      "approvalNumber": "TN approved"
-    },
-    {
-      "id": "prop_rasul",
-      "title": "rasul",
-      "builder": "Skyline Infra",
-      "location": "Saravanampatti, Coimbatore",
-      "category": "Apartments",
-      "price": "1.40 cr",
-      "priceLabel": "1.40 cr",
-      "metrics": "1,850 sq.ft - 3 BHK Luxury Apartment",
-      "status": "Active",
-      "approvalType": "DTCP Approved",
-      "createdAt": "2026-09-01T12:10:00.000Z",
-      "area": "2,200 sq.ft2,200 sq.ft",
-      "badge": "DTCP Approved",
-      "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
-      "images": [
-        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop"
-      ],
-      "legalNo": "TN/11",
-      "approval": "DTCP Approved",
-      "imageUrl": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
-      "image_url": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
-      "updatedAt": "2026-09-05T08:24:04.700Z",
-      "legalStatus": "DTCP Approved",
-      "featureBadge": "DTCP Approved",
-      "approvalNumber": "TN/11"
-    },
-    {
       "id": "prop_shyam_homes",
       "title": "shyam homes",
       "builder": "Shyam Constructions",
@@ -168,6 +99,33 @@
       "image": "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&auto=format&fit=crop",
       "imageUrl": "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&auto=format&fit=crop",
       "image_url": "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&auto=format&fit=crop"
+    },
+    {
+      "id": "prop_rasul",
+      "title": "rasul",
+      "builder": "Skyline Infra",
+      "location": "Saravanampatti, Coimbatore",
+      "category": "Apartments",
+      "price": "1.40 cr",
+      "priceLabel": "1.40 cr",
+      "metrics": "1,850 sq.ft - 3 BHK Luxury Apartment",
+      "status": "Active",
+      "approvalType": "DTCP Approved",
+      "createdAt": "2026-09-01T12:10:00.000Z",
+      "area": "2,200 sq.ft2,200 sq.ft",
+      "badge": "DTCP Approved",
+      "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
+      "images": [
+        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop"
+      ],
+      "legalNo": "TN/11",
+      "approval": "DTCP Approved",
+      "imageUrl": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
+      "updatedAt": "2026-09-05T08:24:04.700Z",
+      "legalStatus": "DTCP Approved",
+      "featureBadge": "DTCP Approved",
+      "approvalNumber": "TN/11"
     }
   ],
   "newProjects": [
@@ -237,52 +195,6 @@
     }
   ],
   "farmland": [
-    {
-      "id": "prop_1788602589461",
-      "title": "lulu",
-      "location": "ukkadam",
-      "category": "Farmland",
-      "acres": "1 acre",
-      "acreCount": "1 acre",
-      "soilType": "",
-      "soil_type": "",
-      "price": "1.50 cr",
-      "priceLabel": "1.50 cr",
-      "status": "Active",
-      "createdAt": "2026-09-05T10:03:09.461Z",
-      "bhk": "Agro Parcel",
-      "area": "1 acre",
-      "badge": "DTCP Approved",
-      "image": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "facing": "North-East",
-      "images": [
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_1_1788764021169_4mxcu.jpg",
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_2_1788764021986_rq9nz.jpg"
-      ],
-      "builder": "jegan",
-      "legalNo": "TN approved",
-      "metrics": "apartment",
-      "parking": "Yes",
-      "approval": "DTCP Approved",
-      "featured": true,
-      "imageUrl": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "image_url": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "updatedAt": "2026-09-07T09:47:35.418Z",
-      "assessment": "Good Value",
-      "livability": {
-        "retail": 9.4,
-        "schools": 9.1,
-        "transit": 9.2,
-        "composite": 9.3,
-        "hospitals": 9
-      },
-      "legalStatus": "DTCP Approved",
-      "ratePerSqft": "Market Benchmarked",
-      "approvalType": "DTCP Approved",
-      "featureBadge": "DTCP Approved",
-      "approvalNumber": "TN approved"
-    },
     {
       "id": "prop_1788415813270",
       "title": "chicken farm",
@@ -366,22 +278,21 @@
   ],
   "siteTours": [
     {
-      "id": "test_qa_lead_1788764128012",
-      "name": "QA Automated Test User",
-      "customerName": "QA Automated Test User",
-      "phone": "+91 9999988888",
-      "contact": "+91 9999988888",
+      "id": "inq_1788781574969",
+      "name": "sai",
+      "customerName": "sai",
+      "phone": "+91 1236459874",
+      "contact": "+91 1236459874",
       "email": "",
-      "date": "2026-10-01",
-      "preferredDate": "2026-10-01",
-      "timeSlot": "Morning 10:00 AM",
-      "status": "Test Verified",
-      "propertyTitle": "QA Test Automated Inspection",
-      "propertyRequested": "QA Test Automated Inspection",
-      "pickupNeeded": false,
-      "pickupAddress": "Coimbatore Airport QA Zone",
-      "createdAt": "2026-09-07T06:55:31.361Z",
-      "slot": "Morning 10:00 AM"
+      "date": "2026-11-02",
+      "preferredDate": "2026-11-02 (Morning)",
+      "timeSlot": "Morning (09:30 AM - 12:00 PM)",
+      "status": "New Lead",
+      "propertyTitle": "india",
+      "propertyRequested": "india",
+      "pickupNeeded": true,
+      "pickupAddress": "rs puram",
+      "createdAt": "2026-09-07T11:46:14.969Z"
     },
     {
       "id": "inq_1788593681901",
@@ -486,23 +397,6 @@
       "createdAt": "2026-09-04T10:06:39.525Z"
     },
     {
-      "id": "inq_1788344731996",
-      "name": "althaf",
-      "customerName": "althaf",
-      "phone": "+91 8122987747",
-      "contact": "+91 8122987747",
-      "email": "",
-      "date": "2026-09-03",
-      "preferredDate": "2026-09-03 (Evening)",
-      "timeSlot": "Evening (04:30 PM - 06:30 PM)",
-      "status": "New Lead",
-      "propertyTitle": "pollachi",
-      "propertyRequested": "pollachi",
-      "pickupNeeded": true,
-      "pickupAddress": "ukkadam",
-      "createdAt": "2026-09-02T10:25:31.996Z"
-    },
-    {
       "id": "inq_1788415431663",
       "name": "faizal",
       "customerName": "faizal",
@@ -518,6 +412,23 @@
       "pickupNeeded": true,
       "pickupAddress": "gm nagar",
       "createdAt": "2026-09-03T06:03:51.663Z"
+    },
+    {
+      "id": "inq_1788344731996",
+      "name": "althaf",
+      "customerName": "althaf",
+      "phone": "+91 8122987747",
+      "contact": "+91 8122987747",
+      "email": "",
+      "date": "2026-09-03",
+      "preferredDate": "2026-09-03 (Evening)",
+      "timeSlot": "Evening (04:30 PM - 06:30 PM)",
+      "status": "New Lead",
+      "propertyTitle": "pollachi",
+      "propertyRequested": "pollachi",
+      "pickupNeeded": true,
+      "pickupAddress": "ukkadam",
+      "createdAt": "2026-09-02T10:25:31.996Z"
     },
     {
       "id": "inq_1788344521349",
@@ -539,6 +450,13 @@
   ],
   "approvals": [],
   "auditLogs": [
+    {
+      "id": "log-1788783944382-482",
+      "actionType": "DELETE",
+      "target": "india",
+      "details": "Deleted property listing (Residential Plots in saravanampatti)",
+      "timestamp": "2026-09-07T12:25:44.382Z"
+    },
     {
       "id": "log-1788774455886",
       "actionType": "EDIT",
@@ -1118,75 +1036,6 @@
       "approvalNumber": "TN approved"
     },
     {
-      "id": "prop_1788602589461",
-      "title": "lulu",
-      "builder": "jegan",
-      "location": "ukkadam",
-      "category": "Farmland",
-      "price": "1.50 cr",
-      "priceLabel": "1.50 cr",
-      "metrics": "apartment",
-      "status": "Active",
-      "approvalType": "DTCP Approved",
-      "createdAt": "2026-09-05T10:03:09.461Z",
-      "bhk": "Agro Parcel",
-      "area": "1 acre",
-      "badge": "DTCP Approved",
-      "image": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "facing": "North-East",
-      "images": [
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_1_1788764021169_4mxcu.jpg",
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_2_1788764021986_rq9nz.jpg"
-      ],
-      "legalNo": "TN approved",
-      "parking": "Yes",
-      "approval": "DTCP Approved",
-      "featured": true,
-      "imageUrl": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "image_url": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "updatedAt": "2026-09-07T09:47:35.418Z",
-      "assessment": "Good Value",
-      "livability": {
-        "retail": 9.4,
-        "schools": 9.1,
-        "transit": 9.2,
-        "composite": 9.3,
-        "hospitals": 9
-      },
-      "legalStatus": "DTCP Approved",
-      "ratePerSqft": "Market Benchmarked",
-      "featureBadge": "DTCP Approved",
-      "approvalNumber": "TN approved"
-    },
-    {
-      "id": "prop_rasul",
-      "title": "rasul",
-      "builder": "Skyline Infra",
-      "location": "Saravanampatti, Coimbatore",
-      "category": "Apartments",
-      "price": "1.40 cr",
-      "priceLabel": "1.40 cr",
-      "metrics": "1,850 sq.ft - 3 BHK Luxury Apartment",
-      "status": "Active",
-      "approvalType": "DTCP Approved",
-      "createdAt": "2026-09-01T12:10:00.000Z",
-      "area": "2,200 sq.ft2,200 sq.ft",
-      "badge": "DTCP Approved",
-      "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
-      "images": [
-        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop"
-      ],
-      "legalNo": "TN/11",
-      "approval": "DTCP Approved",
-      "imageUrl": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
-      "image_url": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
-      "updatedAt": "2026-09-05T08:24:04.700Z",
-      "legalStatus": "DTCP Approved",
-      "featureBadge": "DTCP Approved",
-      "approvalNumber": "TN/11"
-    },
-    {
       "id": "prop_shyam_homes",
       "title": "shyam homes",
       "builder": "Shyam Constructions",
@@ -1246,55 +1095,36 @@
       "image": "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&auto=format&fit=crop",
       "imageUrl": "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&auto=format&fit=crop",
       "image_url": "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&auto=format&fit=crop"
+    },
+    {
+      "id": "prop_rasul",
+      "title": "rasul",
+      "builder": "Skyline Infra",
+      "location": "Saravanampatti, Coimbatore",
+      "category": "Apartments",
+      "price": "1.40 cr",
+      "priceLabel": "1.40 cr",
+      "metrics": "1,850 sq.ft - 3 BHK Luxury Apartment",
+      "status": "Active",
+      "approvalType": "DTCP Approved",
+      "createdAt": "2026-09-01T12:10:00.000Z",
+      "area": "2,200 sq.ft2,200 sq.ft",
+      "badge": "DTCP Approved",
+      "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
+      "images": [
+        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop"
+      ],
+      "legalNo": "TN/11",
+      "approval": "DTCP Approved",
+      "imageUrl": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
+      "image_url": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&auto=format&fit=crop",
+      "updatedAt": "2026-09-05T08:24:04.700Z",
+      "legalStatus": "DTCP Approved",
+      "featureBadge": "DTCP Approved",
+      "approvalNumber": "TN/11"
     }
   ],
   "lb_farmland_data": [
-    {
-      "id": "prop_1788602589461",
-      "title": "lulu",
-      "location": "ukkadam",
-      "category": "Farmland",
-      "acres": "1 acre",
-      "acreCount": "1 acre",
-      "soilType": "",
-      "soil_type": "",
-      "price": "1.50 cr",
-      "priceLabel": "1.50 cr",
-      "status": "Active",
-      "createdAt": "2026-09-05T10:03:09.461Z",
-      "bhk": "Agro Parcel",
-      "area": "1 acre",
-      "badge": "DTCP Approved",
-      "image": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "facing": "North-East",
-      "images": [
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_1_1788764021169_4mxcu.jpg",
-        "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_2_1788764021986_rq9nz.jpg"
-      ],
-      "builder": "jegan",
-      "legalNo": "TN approved",
-      "metrics": "apartment",
-      "parking": "Yes",
-      "approval": "DTCP Approved",
-      "featured": true,
-      "imageUrl": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "image_url": "https://zwmvlhsfcezciegbmasp.supabase.co/storage/v1/object/public/property-images/properties_prop_1788602589461_gallery_0_1788764019932_3bvkd.jpg",
-      "updatedAt": "2026-09-07T09:47:35.418Z",
-      "assessment": "Good Value",
-      "livability": {
-        "retail": 9.4,
-        "schools": 9.1,
-        "transit": 9.2,
-        "composite": 9.3,
-        "hospitals": 9
-      },
-      "legalStatus": "DTCP Approved",
-      "ratePerSqft": "Market Benchmarked",
-      "approvalType": "DTCP Approved",
-      "featureBadge": "DTCP Approved",
-      "approvalNumber": "TN approved"
-    },
     {
       "id": "prop_1788415813270",
       "title": "chicken farm",
@@ -1378,22 +1208,21 @@
   ],
   "lb_site_tours_data": [
     {
-      "id": "test_qa_lead_1788764128012",
-      "name": "QA Automated Test User",
-      "customerName": "QA Automated Test User",
-      "phone": "+91 9999988888",
-      "contact": "+91 9999988888",
+      "id": "inq_1788781574969",
+      "name": "sai",
+      "customerName": "sai",
+      "phone": "+91 1236459874",
+      "contact": "+91 1236459874",
       "email": "",
-      "date": "2026-10-01",
-      "preferredDate": "2026-10-01",
-      "timeSlot": "Morning 10:00 AM",
-      "status": "Test Verified",
-      "propertyTitle": "QA Test Automated Inspection",
-      "propertyRequested": "QA Test Automated Inspection",
-      "pickupNeeded": false,
-      "pickupAddress": "Coimbatore Airport QA Zone",
-      "createdAt": "2026-09-07T06:55:31.361Z",
-      "slot": "Morning 10:00 AM"
+      "date": "2026-11-02",
+      "preferredDate": "2026-11-02 (Morning)",
+      "timeSlot": "Morning (09:30 AM - 12:00 PM)",
+      "status": "New Lead",
+      "propertyTitle": "india",
+      "propertyRequested": "india",
+      "pickupNeeded": true,
+      "pickupAddress": "rs puram",
+      "createdAt": "2026-09-07T11:46:14.969Z"
     },
     {
       "id": "inq_1788593681901",
@@ -1498,23 +1327,6 @@
       "createdAt": "2026-09-04T10:06:39.525Z"
     },
     {
-      "id": "inq_1788344731996",
-      "name": "althaf",
-      "customerName": "althaf",
-      "phone": "+91 8122987747",
-      "contact": "+91 8122987747",
-      "email": "",
-      "date": "2026-09-03",
-      "preferredDate": "2026-09-03 (Evening)",
-      "timeSlot": "Evening (04:30 PM - 06:30 PM)",
-      "status": "New Lead",
-      "propertyTitle": "pollachi",
-      "propertyRequested": "pollachi",
-      "pickupNeeded": true,
-      "pickupAddress": "ukkadam",
-      "createdAt": "2026-09-02T10:25:31.996Z"
-    },
-    {
       "id": "inq_1788415431663",
       "name": "faizal",
       "customerName": "faizal",
@@ -1530,6 +1342,23 @@
       "pickupNeeded": true,
       "pickupAddress": "gm nagar",
       "createdAt": "2026-09-03T06:03:51.663Z"
+    },
+    {
+      "id": "inq_1788344731996",
+      "name": "althaf",
+      "customerName": "althaf",
+      "phone": "+91 8122987747",
+      "contact": "+91 8122987747",
+      "email": "",
+      "date": "2026-09-03",
+      "preferredDate": "2026-09-03 (Evening)",
+      "timeSlot": "Evening (04:30 PM - 06:30 PM)",
+      "status": "New Lead",
+      "propertyTitle": "pollachi",
+      "propertyRequested": "pollachi",
+      "pickupNeeded": true,
+      "pickupAddress": "ukkadam",
+      "createdAt": "2026-09-02T10:25:31.996Z"
     },
     {
       "id": "inq_1788344521349",
@@ -1679,6 +1508,13 @@
     }
   ],
   "lb_admin_audit_logs": [
+    {
+      "id": "log-1788783944382-482",
+      "actionType": "DELETE",
+      "target": "india",
+      "details": "Deleted property listing (Residential Plots in saravanampatti)",
+      "timestamp": "2026-09-07T12:25:44.382Z"
+    },
     {
       "id": "log-1788774455886",
       "actionType": "EDIT",
@@ -2024,7 +1860,5 @@
     }
   ],
   "lb_compare_list": [],
-  "lb_user_favorites": [
-    "prop_1788602589461"
-  ]
+  "lb_user_favorites": []
 }
