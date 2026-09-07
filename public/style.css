@@ -3884,7 +3884,7 @@ input[type="range"].calc-range::-webkit-slider-thumb:hover {
 }
 
 .article-takeaways-box li::before {
-  content: '✓ ';
+  content: '\2713 ';
   color: var(--emerald-600);
   font-weight: 800;
 }
@@ -6403,6 +6403,228 @@ img, video, canvas, svg {
     font-size: 0.72rem !important;
     white-space: normal !important;
     word-break: break-word !important;
+  }
+}
+
+/* ==========================================================================
+   MODERN VECTOR SVG ICONS & NATIVE APP MOBILE STYLES
+   ========================================================================== */
+
+/* Universal SVG Icon Helpers */
+.svg-icon {
+  display: inline-block;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, stroke 0.2s ease, fill 0.2s ease;
+}
+
+.tab-btn .svg-icon,
+.proj-tab-btn .svg-icon {
+  margin-right: 6px;
+}
+
+.badge-status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.badge-status-dot.orange {
+  background: #f59e0b;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+}
+
+.badge-status-dot.blue {
+  background: #3b82f6;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.5);
+}
+
+/* Native App Mobile Bottom Navigation Bar */
+.mobile-app-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Offset page content so bottom bar doesn't cover footer or buttons */
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 10px)) !important;
+  }
+
+  .mobile-app-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(58px + env(safe-area-inset-bottom, 8px));
+    padding-bottom: env(safe-area-inset-bottom, 8px);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+    z-index: 9998;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
+  }
+
+  .mobile-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition: color 0.15s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  .mobile-nav-item:active {
+    transform: scale(0.92);
+  }
+
+  .mobile-nav-item.active {
+    color: #059669;
+  }
+
+  .mobile-nav-item .nav-icon {
+    stroke-width: 2.2;
+    transition: transform 0.2s ease, stroke 0.2s ease;
+  }
+
+  .mobile-nav-item.active .nav-icon {
+    stroke: #059669;
+    transform: translateY(-1px);
+  }
+
+  .mobile-compare-badge {
+    position: absolute;
+    top: -4px;
+    right: -7px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 0.62rem;
+    font-weight: 800;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    padding: 0 4px;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.35);
+  }
+
+  /* Horizontal touch scrolling for category tabs & project filters */
+  .category-tabs,
+  .project-pill-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    padding: 6px 4px !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .category-tabs::-webkit-scrollbar,
+  .project-pill-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .tab-btn,
+  .proj-tab-btn {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 8px 14px !important;
+    border-radius: 9999px !important;
+    font-size: 0.8rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  .tab-btn:active,
+  .proj-tab-btn:active {
+    transform: scale(0.95) !important;
+  }
+
+  /* App-Style Bottom Sheets for Modals */
+  .modal-backdrop,
+  #auth-modal,
+  #preApprovalModal,
+  #siteVisitModal,
+  #masterPlanModal {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  .modal-container,
+  .auth-modal-card,
+  .admin-modal-card,
+  .modal-service-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 24px 24px 0 0 !important;
+    padding: 24px 20px calc(28px + env(safe-area-inset-bottom, 12px)) !important;
+    max-height: 88vh !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    animation: modal-sheet-up 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .modal-container::before,
+  .auth-modal-card::before,
+  .admin-modal-card::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 4px;
+    border-radius: 999px;
+    background: #cbd5e1;
+    margin: 0 auto 16px;
+  }
+
+  @keyframes modal-sheet-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0.8;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* App-like Touch Target Ergonomics */
+  button, a, input, select {
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  .btn:active {
+    transform: scale(0.97) !important;
   }
 }
 

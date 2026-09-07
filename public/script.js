@@ -1,3 +1,61 @@
+/**
+ * Modern SVG Vector Icon Helper for Land & Beyond
+ * Replaces unicode emojis with crisp, lightweight inline SVG icons.
+ */
+function uiIcon(name, options = {}) {
+  const size = options.size || 16;
+  const cls = options.className ? (" class=\"svg-icon " + options.className + "\"") : " class=\"svg-icon\"";
+  const style = options.style ? (" style=\"" + options.style + "\"") : "";
+  const stroke = options.stroke || "currentColor";
+  const strokeWidth = options.strokeWidth || 2;
+  const fill = options.fill || "none";
+
+  const icons = {
+    "map-pin": "<path d=\"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>",
+    "ruler": "<path d=\"M21.3 8.7 8.7 21.3c-.4.4-1 .4-1.4 0l-4.6-4.6c-.4-.4-.4-1 0-1.4L15.3 2.7c.4-.4 1-.4 1.4 0l4.6 4.6c.4.4.4 1 0 1.4Z\"/><path d=\"m7.5 10.5 2 2\"/><path d=\"m10.5 7.5 2 2\"/><path d=\"m13.5 4.5 2 2\"/><path d=\"m4.5 13.5 2 2\"/>",
+    "scale": "<path d=\"m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z\"/><path d=\"m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z\"/><path d=\"M7 21h10\"/><path d=\"M12 3v18\"/><path d=\"M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2\"/>",
+    "heart": "<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/>",
+    "heart-fill": "<path fill=\"currentColor\" stroke=\"none\" d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/>",
+    "car": "<path d=\"M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2\"/><circle cx=\"7\" cy=\"17\" r=\"2\"/><path d=\"M9 17h6\"/><circle cx=\"17\" cy=\"17\" r=\"2\"/>",
+    "leaf": "<path d=\"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z\"/><path d=\"M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12\"/>",
+    "sprout": "<path d=\"M7 20h10\"/><path d=\"M10 20c5.5-2.5.8-6.4 3-10\"/><path d=\"M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4.1 5.5.8Z\"/><path d=\"M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2Z\"/>",
+    "droplet": "<path d=\"M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7Z\"/>",
+    "check": "<polyline points=\"20 6 9 17 4 12\"/>",
+    "check-circle": "<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/>",
+    "bolt": "<polygon points=\"13 2 3 14 12 14 11 22 21 10 12 10 13 2\"/>",
+    "building": "<rect width=\"16\" height=\"20\" x=\"4\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M9 22v-4h6v4\"/><path d=\"M8 6h.01\"/><path d=\"M16 6h.01\"/><path d=\"M12 6h.01\"/><path d=\"M12 10h.01\"/><path d=\"M12 14h.01\"/><path d=\"M16 10h.01\"/><path d=\"M16 14h.01\"/><path d=\"M8 10h.01\"/><path d=\"M8 14h.01\"/>",
+    "home": "<path d=\"m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><polyline points=\"9 22 9 12 15 12 15 22\"/>",
+    "tag": "<path d=\"M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z\"/><circle cx=\"7\" cy=\"7\" r=\".5\" fill=\"currentColor\"/>",
+    "rocket": "<path d=\"M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z\"/><path d=\"m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z\"/><path d=\"M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0\"/><path d=\"M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5\"/>",
+    "calendar": "<rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\" ry=\"2\"/><line x1=\"16\" x2=\"16\" y1=\"2\" y2=\"6\"/><line x1=\"8\" x2=\"8\" y1=\"2\" y2=\"6\"/><line x1=\"3\" x2=\"21\" y1=\"10\" y2=\"10\"/>",
+    "search": "<circle cx=\"11\" cy=\"11\" r=\"8\"/><line x1=\"21\" x2=\"16.65\" y1=\"21\" y2=\"16.65\"/>",
+    "file-text": "<path d=\"M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z\"/><polyline points=\"14 2 14 8 20 8\"/><line x1=\"16\" x2=\"8\" y1=\"13\" y2=\"13\"/><line x1=\"16\" x2=\"8\" y1=\"17\" y2=\"17\"/><line x1=\"10\" x2=\"8\" y1=\"9\" y2=\"9\"/>",
+    "link": "<path d=\"M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71\"/><path d=\"M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71\"/>",
+    "user": "<circle cx=\"12\" cy=\"7\" r=\"4\"/><path d=\"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\"/>",
+    "shield": "<path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"/>",
+    "shield-check": "<path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"/><path d=\"m9 12 2 2 4-4\"/>",
+    "lock": "<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\"/><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"/>",
+    "eye": "<path d=\"M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>",
+    "eye-off": "<path d=\"M9.88 9.88a3 3 0 1 0 4.24 4.24\"/><path d=\"M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68\"/><path d=\"M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61\"/><line x1=\"2\" x2=\"22\" y1=\"2\" y2=\"22\"/>",
+    "star": "<polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"/>",
+    "star-fill": "<polygon fill=\"currentColor\" stroke=\"none\" points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"/>",
+    "store": "<path d=\"m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7\"/><path d=\"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8\"/><path d=\"M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4\"/><path d=\"M2 7h20\"/>",
+    "phone": "<path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z\"/>",
+    "plus": "<line x1=\"12\" x2=\"12\" y1=\"5\" y2=\"19\"/><line x1=\"5\" x2=\"19\" y1=\"12\" y2=\"12\"/>",
+    "x": "<line x1=\"18\" x2=\"6\" y1=\"6\" y2=\"18\"/><line x1=\"6\" x2=\"18\" y1=\"6\" y2=\"18\"/>",
+    "trash": "<path d=\"M3 6h18\"/><path d=\"M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6\"/><path d=\"M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2\"/>",
+    "arrow-right": "<path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/>",
+    "sun": "<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>",
+    "sparkles": "<path d=\"m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z\"/>",
+    "clipboard": "<path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\"/><rect x=\"8\" y=\"2\" width=\"8\" height=\"4\" rx=\"1\" ry=\"1\"/>",
+  };
+
+  const inner = icons[name] || "<circle cx=\"12\" cy=\"12\" r=\"8\"/>";
+  return "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"" + size + "\" height=\"" + size + "\" viewBox=\"0 0 24 24\" fill=\"" + fill + "\" stroke=\"" + stroke + "\" stroke-width=\"" + strokeWidth + "\" stroke-linecap=\"round\" stroke-linejoin=\"round\"" + cls + style + ">" + inner + "</svg>";
+}
+window.uiIcon = uiIcon;
+
+
 
 window.closeAllModals = function() {
   const modals = document.querySelectorAll('.modal-backdrop, .admin-modal-overlay, #auth-modal, #siteVisitModal, #masterPlanModal, #compareModal, #propertyModal, #interiorModal, #poojaModal, #loanModal, #newsArticleModal, #legalDocsModal, [id^="modal-"]');
@@ -211,7 +269,7 @@ function openMasterPlanModal(projectIdentifier = 'Grand Aeropolis Smart Township
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; text-align: left;">
           <div>
             <h3 style="margin: 0 0 4px; font-size: 1.3rem; font-weight: 800; color: #0f172a; line-height: 1.3;">${displayTitle} — Master Layout</h3>
-            <p style="color: #64748b; font-size: 13px; margin: 0;">${projectLocation ? `📍 ${projectLocation} • ` : ''}${projectApproval}</p>
+            <p style="color: #64748b; font-size: 13px; margin: 0;">${projectLocation ? (uiIcon("map-pin", { size: 12, style: "color:#10b981; vertical-align:-1px; margin-right:3px;" }) + " " + projectLocation + " • ") : ""}${projectApproval}</p>
           </div>
           <div style="display: flex; align-items: center; gap: 6px; background: #f1f5f9; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #0f172a;">
             <span id="mpSlideCounter">1 / ${imagesList.length}</span> Images
@@ -225,12 +283,12 @@ function openMasterPlanModal(projectIdentifier = 'Grand Aeropolis Smart Township
           
           <!-- Top Label Badge -->
           <div id="mpSlideBadge" style="position: absolute; top: 16px; left: 16px; background: rgba(15,23,42,0.88); color: #34d399; font-size: 11.5px; font-weight: 700; padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(52,211,153,0.4); backdrop-filter: blur(8px); display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 5;">
-            <span>📐 ${slideLabels[0]}</span>
+            <span>${uiIcon("ruler", { size: 12, style: "vertical-align:-1px; margin-right:3px;" })} ${slideLabels[0]}</span>
           </div>
 
           <!-- Top Right Fullscreen Icon -->
           <span onclick="window.open(window._masterPlanCarousel.images[window._masterPlanCarousel.currentIndex], '_blank')" style="position: absolute; top: 16px; right: 16px; background: rgba(15,23,42,0.85); color: #fff; font-size: 11.5px; font-weight: 700; padding: 5px 10px; border-radius: 8px; border: 1px solid #334155; backdrop-filter: blur(6px); cursor: pointer; z-index: 5;" title="Open original image">
-            🔍 Full Screen
+            ${uiIcon("search", { size: 12, style: "vertical-align:-1px; margin-right:3px;" })} Full Screen
           </span>
 
           <!-- Prev Slider Navigation Button [ < ] (Left Side) -->
@@ -255,7 +313,7 @@ function openMasterPlanModal(projectIdentifier = 'Grand Aeropolis Smart Township
             Open Interactive Layout Viewer &rarr;
           </a>
           <button type="button" class="btn btn-outline" onclick="window.open(window._masterPlanCarousel.images[window._masterPlanCarousel.currentIndex], '_blank')" style="padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 13px; border: 1px solid #cbd5e1; background: #fff; color: #334155; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-            🖼️ View Current Image Full Size
+            ${uiIcon("search", { size: 13, style: "vertical-align:-1px; margin-right:4px;" })} View Current Image Full Size
           </button>
           <button type="button" class="btn btn-outline" onclick="window.closeAllModals()" style="padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 13px; border: 1px solid #cbd5e1; background: #fff; color: #64748b; cursor: pointer;">
             Close Preview
@@ -288,7 +346,7 @@ window.setMasterPlanSlide = function(index) {
 
   const badgeElem = document.getElementById('mpSlideBadge');
   if (badgeElem) {
-    badgeElem.innerHTML = `<span>📐 ${currentLabel}</span>`;
+    badgeElem.innerHTML = `<span>${uiIcon("ruler", { size: 12, style: "vertical-align:-1px; margin-right:3px;" })} ${currentLabel}</span>`;
   }
 
   const counterElem = document.getElementById('mpSlideCounter');
@@ -486,18 +544,18 @@ function showDbStatusPopup(data) {
 
   let title = 'Database Connected';
   let message = data.primaryStorage || 'Cloud Database Sync Active';
-  let icon = '🟢';
+  let icon = '<span class="status-dot status-dot-green"></span>';
   let borderColor = '#10b981';
 
   if (!isConnected && hasCreds) {
     title = 'Demo Database Active';
     message = 'Local High-Speed Storage (Demo Configured)';
-    icon = '🟠';
+    icon = '<span class="status-dot status-dot-yellow"></span>';
     borderColor = '#f59e0b';
   } else if (!isConnected && !hasCreds) {
     title = 'Database Offline';
     message = 'Local Storage Active';
-    icon = '🔴';
+    icon = '<span class="status-dot status-dot-red"></span>';
     borderColor = '#ef4444';
   }
 
@@ -691,7 +749,7 @@ const COMPLETE_SEED_PROPERTIES = [
     approvalType: 'DTCP / RERA Sanctioned',
     legalNo: 'TN/11/Building/0192/2026',
     status: 'Active',
-    badge: '★ Pre-Launch Offer',
+    badge: 'Pre-Launch Offer',
     featureBadge: 'Project of the Month',
     featured: true,
     highlights: [
@@ -1318,7 +1376,7 @@ function getStoredProperties() {
 // 1. Cross-Tab Live Storage Event Listener
 window.addEventListener('storage', function(e) {
   if (!e.key || Object.values(LB_STORAGE_KEYS).includes(e.key) || e.key === 'lb_new_projects_data' || e.key === 'lb_properties_data' || e.key === 'lb_farmland_data') {
-    console.log('🔄 Live Sync: Received Storage Event -> Re-rendering frontend...');
+    console.log('[Live Sync] Received Storage Event -> Re-rendering frontend...');
     if (typeof renderFrontendProperties === 'function') renderFrontendProperties();
     if (typeof renderProperties === 'function') renderProperties();
     if (typeof renderNewProjects === 'function') renderNewProjects();
@@ -1336,7 +1394,7 @@ if (lbSyncChannel) {
   try {
     lbSyncChannel.onmessage = async function(msg) {
       if (msg && msg.data) {
-        console.log('⚡ Live Sync: BroadcastChannel Message Received -> Updating frontend UI immediately...');
+        console.log('[Live Sync] BroadcastChannel Message Received -> Updating frontend UI immediately...');
         if (msg.data.key && msg.data.data) {
           safeStorageSet(msg.data.key, JSON.stringify(msg.data.data));
         }
@@ -2033,9 +2091,9 @@ function showToast(message, type = 'success') {
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
   
-  let icon = '✓';
-  if (type === 'warning') icon = '⚠';
-  if (type === 'error') icon = '✕';
+  let icon = uiIcon('check-circle', { size: 16, style: 'color:#10b981; vertical-align:-2px; margin-right:6px;' });
+  if (type === 'warning') icon = uiIcon('shield', { size: 16, style: 'color:#f59e0b; vertical-align:-2px; margin-right:6px;' });
+  if (type === 'error') icon = uiIcon('x', { size: 16, style: 'color:#ef4444; vertical-align:-2px; margin-right:6px;' });
 
   toast.innerHTML = `
     <span class="toast-icon">${icon}</span>
@@ -2119,7 +2177,7 @@ function renderFrontendProperties(filterCategory = 'all') {
   const builder = heroProject.builder || 'Verified Land & Infra Developer';
   const rate = heroProject.metrics || heroProject.summary || heroProject.description || 'Smart Gated Community Master Plan';
   const img = heroProject.imageUrl || heroProject.image || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1500&q=80';
-  const badge = heroProject.badge || heroProject.approvalType || '★ Pre-Launch Offer';
+  const badge = heroProject.badge || heroProject.approvalType || 'Pre-Launch Offer';
 
   if (heroTitle) heroTitle.textContent = title;
   if (heroPrice) heroPrice.innerHTML = `${price} <small>onwards</small>`;
@@ -2130,10 +2188,10 @@ function renderFrontendProperties(filterCategory = 'all') {
   if (heroBadge) heroBadge.textContent = badge;
   if (heroHighlights) {
     heroHighlights.innerHTML = `
-      <li><span class="check-icon">✓</span> <strong>100% Clear Legal Title</strong> &amp; Government Approvals</li>
-      <li><span class="check-icon">✓</span> <strong>Prime Corridor Location</strong> with Wide Road Infrastructure</li>
-      <li><span class="check-icon">✓</span> <strong>Bank Loan Pre-Approved</strong> (Up to 85% Sanction)</li>
-      <li><span class="check-icon">✓</span> <strong>24/7 Security</strong> &amp; Ready Utilities Connected</li>
+      <li><span class="check-icon">${uiIcon("check", { size: 13, strokeWidth: 2.5 })}</span> <strong>100% Clear Legal Title</strong> &amp; Government Approvals</li>
+      <li><span class="check-icon">${uiIcon("check", { size: 13, strokeWidth: 2.5 })}</span> <strong>Prime Corridor Location</strong> with Wide Road Infrastructure</li>
+      <li><span class="check-icon">${uiIcon("check", { size: 13, strokeWidth: 2.5 })}</span> <strong>Bank Loan Pre-Approved</strong> (Up to 85% Sanction)</li>
+      <li><span class="check-icon">${uiIcon("check", { size: 13, strokeWidth: 2.5 })}</span> <strong>24/7 Security</strong> &amp; Ready Utilities Connected</li>
     `;
   }
   if (heroVisitBtn) heroVisitBtn.onclick = () => openSiteVisitModal(title);
@@ -2384,14 +2442,14 @@ function renderLiveNewsTicker() {
 
   if (customLaunches.length === 0) {
     tickerTrack.innerHTML = `
-      <div class="ticker-item">⚡ <strong>🚀 Upcoming Launches Hub:</strong> Publish new pre-launch residential projects in the Admin Portal to broadcast live price &amp; offer alerts here.</div>
-      <div class="ticker-item">⚡ <strong>Coimbatore Metro Corridor:</strong> 10.1 km Avinashi Road Elevated Expressway boosts Saravanampatti &amp; Peelamedu land valuation by +14% YoY.</div>
-      <div class="ticker-item">⚡ <strong>Concessional Stamp Duty:</strong> TN Government offers concessional 4% registration duty for verified first-time buyers up to ₹ 50 Lakhs.</div>
-      <div class="ticker-item">⚡ <strong>DTCP &amp; Patta Fast-Track:</strong> 100% Subdivided Revenue Patta &amp; DTCP layout sanctions verified across Coimbatore &amp; Tiruppur belts.</div>
-      <div class="ticker-item">⚡ <strong>🚀 Upcoming Launches Hub:</strong> Publish new pre-launch residential projects in the Admin Portal to broadcast live price &amp; offer alerts here.</div>
-      <div class="ticker-item">⚡ <strong>Coimbatore Metro Corridor:</strong> 10.1 km Avinashi Road Elevated Expressway boosts Saravanampatti &amp; Peelamedu land valuation by +14% YoY.</div>
-      <div class="ticker-item">⚡ <strong>Concessional Stamp Duty:</strong> TN Government offers concessional 4% registration duty for verified first-time buyers up to ₹ 50 Lakhs.</div>
-      <div class="ticker-item">⚡ <strong>DTCP &amp; Patta Fast-Track:</strong> 100% Subdivided Revenue Patta &amp; DTCP layout sanctions verified across Coimbatore &amp; Tiruppur belts.</div>
+      <div class="ticker-item">${uiIcon("bolt", { size: 13, style: "color:#f59e0b; vertical-align:-2px; margin-right:4px;" })} <strong>Upcoming Launches Hub:</strong> Publish new pre-launch residential projects in the Admin Portal to broadcast live price &amp; offer alerts here.</div>
+      <div class="ticker-item">${uiIcon("bolt", { size: 13, style: "color:#f59e0b; vertical-align:-2px; margin-right:4px;" })} <strong>Coimbatore Metro Corridor:</strong> 10.1 km Avinashi Road Elevated Expressway boosts Saravanampatti &amp; Peelamedu land valuation by +14% YoY.</div>
+      <div class="ticker-item">${uiIcon("bolt", { size: 13, style: "color:#f59e0b; vertical-align:-2px; margin-right:4px;" })} <strong>Concessional Stamp Duty:</strong> TN Government offers concessional 4% registration duty for verified first-time buyers up to ₹ 50 Lakhs.</div>
+      <div class="ticker-item">${uiIcon("bolt", { size: 13, style: "color:#f59e0b; vertical-align:-2px; margin-right:4px;" })} <strong>DTCP &amp; Patta Fast-Track:</strong> 100% Subdivided Revenue Patta &amp; DTCP layout sanctions verified across Coimbatore &amp; Tiruppur belts.</div>
+      <div class="ticker-item">${uiIcon("bolt", { size: 13, style: "color:#f59e0b; vertical-align:-2px; margin-right:4px;" })} <strong>Upcoming Launches Hub:</strong> Publish new pre-launch residential projects in the Admin Portal to broadcast live price &amp; offer alerts here.</div>
+      <div class="ticker-item">${uiIcon("bolt", { size: 13, style: "color:#f59e0b; vertical-align:-2px; margin-right:4px;" })} <strong>Coimbatore Metro Corridor:</strong> 10.1 km Avinashi Road Elevated Expressway boosts Saravanampatti &amp; Peelamedu land valuation by +14% YoY.</div>
+      <div class="ticker-item">${uiIcon("bolt", { size: 13, style: "color:#f59e0b; vertical-align:-2px; margin-right:4px;" })} <strong>Concessional Stamp Duty:</strong> TN Government offers concessional 4% registration duty for verified first-time buyers up to ₹ 50 Lakhs.</div>
+      <div class="ticker-item">${uiIcon("bolt", { size: 13, style: "color:#f59e0b; vertical-align:-2px; margin-right:4px;" })} <strong>DTCP &amp; Patta Fast-Track:</strong> 100% Subdivided Revenue Patta &amp; DTCP layout sanctions verified across Coimbatore &amp; Tiruppur belts.</div>
     `;
     return;
   }
@@ -2399,11 +2457,11 @@ function renderLiveNewsTicker() {
   const items = customLaunches.map(p => {
     const title = p.title || 'Upcoming Project Launch';
     const price = p.price || p.startingPrice || 'Price on Request';
-    const loc = p.location ? `📍 ${p.location}` : 'Coimbatore';
-    const badge = p.badge ? `🏷️ ${p.badge}` : '★ Pre-Launch Offer';
+    const loc = p.location ? `${uiIcon('map-pin', { size: 13, style: 'color:#10b981; vertical-align:-2px; margin-right:3px;' })} ${p.location}` : 'Coimbatore';
+    const badge = p.badge ? (uiIcon('tag', { size: 12, style: 'vertical-align:-1px; margin-right:3px;' }) + ' ' + p.badge) : 'Pre-Launch Offer';
     const cat = p.category ? `[${p.category}]` : '';
 
-    return `<div class="ticker-item">⚡ <strong>Upcoming Project: ${title}</strong> — ${cat ? `<span style="color: #34d399; font-weight: 700;">${cat}</span> ` : ''}${loc ? `${loc} • ` : ''}Budget: <span style="color: #6ee7b7; font-weight: 800;">${price}</span>${badge ? ` • <span style="color: #fcd34d; font-weight: 700;">${badge}</span>` : ''}</div>`;
+    return `<div class="ticker-item">${uiIcon("bolt", { size: 13, style: "color:#f59e0b; vertical-align:-2px; margin-right:4px;" })} <strong>Upcoming Project: ${title}</strong> — ${cat ? `<span style="color: #34d399; font-weight: 700;">${cat}</span> ` : ''}${loc ? `${loc} • ` : ''}Budget: <span style="color: #6ee7b7; font-weight: 800;">${price}</span>${badge ? ` • <span style="color: #fcd34d; font-weight: 700;">${badge}</span>` : ''}</div>`;
   });
 
   // Duplicate items to ensure smooth infinite ticker slide
@@ -2431,11 +2489,11 @@ function renderNewsArticles() {
   if (articlesToRender.length === 0) {
     grid.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 48px 24px; background: #f8fafc; border-radius: 16px; border: 1px dashed #cbd5e1;">
-        <div style="font-size: 32px; margin-bottom: 8px;">🚀</div>
+        <div style="margin-bottom: 8px; display: flex; justify-content: center;">${uiIcon("rocket", { size: 36, style: "color:#10b981;" })}</div>
         <h4 style="color: #0f172a; margin: 0 0 6px; font-size: 17px; font-weight: 700;">No Upcoming Launches Published Yet</h4>
         <p style="color: #64748b; font-size: 13.5px; margin: 0 0 16px;">New launches and upcoming residential projects published from your Backend Dashboard will appear here in real time.</p>
         <a href="dashboard.html#newprojects" class="btn btn-primary btn-sm" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
-          <span>➕ Add Upcoming Project in Dashboard &rarr;</span>
+          <span>${uiIcon("plus", { size: 14, style: "margin-right:4px;" })} Add Upcoming Project in Dashboard &rarr;</span>
         </a>
       </div>
     `;
@@ -2502,9 +2560,9 @@ window.openNewsModal = (articleId) => {
           <span class="news-cat-pill" style="margin-bottom: 8px; display: inline-block; background: #10b981; color: #fff; font-weight: 700; font-size: 11.5px; padding: 4px 10px; border-radius: 9999px;">${category}</span>
           <h2 style="font-size: 1.45rem; font-weight: 800; line-height: 1.3; margin: 0 0 6px; color: #ffffff;">${article.title}</h2>
           <div style="font-size: 0.8rem; opacity: 0.95; display: flex; gap: 12px; flex-wrap: wrap;">
-            <span>📅 Published: ${dateText}</span>
+            <span>${uiIcon("calendar", { size: 13, style: "vertical-align:-2px; margin-right:4px;" })} Published: ${dateText}</span>
             <span>⏱️ Estimated: ${readTime}</span>
-            ${article.location ? `<span>📍 ${article.location}</span>` : ''}
+            ${article.location ? `<span>${uiIcon('map-pin', { size: 12, style: 'vertical-align:-1px; margin-right:3px;' })} ${article.location}</span>` : ''}
           </div>
         </div>
       </div>
@@ -2524,7 +2582,7 @@ window.openNewsModal = (articleId) => {
         <span style="font-size: 0.8rem; color: #64748b;">Source: Land And Beyond Intelligence Desk</span>
         <div style="display: flex; gap: 8px;">
           <a href="book-visit.html?property=${encodeURIComponent(article.title)}" class="btn btn-primary btn-sm" style="padding: 8px 16px; font-size: 13px; font-weight: 600; text-decoration: none; border-radius: 8px; background: #10b981; color: #ffffff; display: inline-flex; align-items: center; gap: 6px;">
-            <span>🚗 Book VIP Site Visit &rarr;</span>
+            <span>${uiIcon("car", { size: 14, style: "margin-right:4px;" })} Book VIP Site Visit &rarr;</span>
           </a>
         </div>
       </div>
@@ -2564,11 +2622,11 @@ function renderApprovedProjects() {
 
       <div class="approval-stamp-row">
         <div class="approval-stamp">
-          <span class="stamp-icon">✓</span>
+          <span class="stamp-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
           <div>${escapeHTML(proj.approvalStamp)}: <span class="stamp-num">${escapeHTML(proj.dtcpNo)}</span></div>
         </div>
         <div class="approval-stamp">
-          <span class="stamp-icon">✓</span>
+          <span class="stamp-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
           <div>TN RERA Registered: <span class="stamp-num">${escapeHTML(proj.reraNo)}</span></div>
         </div>
       </div>
@@ -2631,27 +2689,27 @@ window.openLegalDocsModal = (projId) => {
           <tr>
             <td><strong>${escapeHTML(proj.approvalStamp)}</strong></td>
             <td>${escapeHTML(proj.dtcpNo)}</td>
-            <td class="status-verified-cell"><span>✓</span> Verified &amp; Signed</td>
+            <td class="status-verified-cell"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Verified &amp; Signed</td>
           </tr>
           <tr>
             <td><strong>TN RERA Registration</strong></td>
             <td>${escapeHTML(proj.reraNo)}</td>
-            <td class="status-verified-cell"><span>✓</span> Active on TNRERA Portal</td>
+            <td class="status-verified-cell"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Active on TNRERA Portal</td>
           </tr>
           <tr>
             <td><strong>Revenue Patta Status</strong></td>
             <td>${escapeHTML(proj.pattaStatus)}</td>
-            <td class="status-verified-cell"><span>✓</span> 100% Subdivided Patta</td>
+            <td class="status-verified-cell"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> 100% Subdivided Patta</td>
           </tr>
           <tr>
             <td><strong>Encumbrance Certificate (EC)</strong></td>
             <td>Nil Encumbrance (Past 30 Years)</td>
-            <td class="status-verified-cell"><span>✓</span> Certified by Legal Counsel</td>
+            <td class="status-verified-cell"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Certified by Legal Counsel</td>
           </tr>
           <tr>
             <td><strong>Pre-Approved Banks</strong></td>
             <td>${escapeHTML(proj.bankApproved)}</td>
-            <td class="status-verified-cell"><span>✓</span> Instant Sanction Eligible</td>
+            <td class="status-verified-cell"><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> Instant Sanction Eligible</td>
           </tr>
         </tbody>
       </table>
@@ -2847,14 +2905,14 @@ function renderNewProjects(filter = 'all', searchTerm = '') {
                 style="position: absolute; top: 14px; right: 54px; width: 34px; height: 34px; border-radius: 50%; background: ${isCompared ? '#10b981' : '#ffffff'}; color: ${isCompared ? '#ffffff' : '#0f172a'}; border: 1px solid ${isCompared ? '#10b981' : '#e2e8f0'}; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);"
                 title="${isCompared ? 'Remove from Compare' : 'Add to Compare'}"
                 onclick="toggleCompareProperty('${propId}', this, event)">
-          ${isCompared ? '✓' : '⚖️'}
+          ${isCompared ? uiIcon('check', { size: 14 }) : uiIcon('scale', { size: 14 })}
         </button>
 
         <!-- Favorite Action Button Overlay -->
         <button type="button" class="card-fav-btn" 
                 style="position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%; background: ${isFav ? '#fef2f2' : '#ffffff'}; color: ${isFav ? '#ef4444' : '#64748b'}; border: 1px solid ${isFav ? '#fca5a5' : '#e2e8f0'}; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);"
                 onclick="toggleFavoriteProperty('${propId}', this)">
-          ${isFav ? '❤️' : '🤍'}
+          ${isFav ? uiIcon('heart-fill', { size: 16, style: 'color:#ef4444;' }) : uiIcon('heart', { size: 16, style: 'color:#64748b;' })}
         </button>
 
         <!-- High-Contrast Prominent Solid Price Badge (Image 2 style) -->
@@ -2866,7 +2924,7 @@ function renderNewProjects(filter = 'all', searchTerm = '') {
       <div style="padding: 20px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; gap: 12px;">
         <div>
           <h3 style="margin: 0 0 4px; font-size: 1.15rem; font-weight: 700; color: #0f172a;" class="card-title">${p.title}</h3>
-          <div style="font-size: 13px; color: #64748b;">📍 ${p.location} ${p.builder ? `• By ${p.builder}` : ''}</div>
+          <div style="font-size: 13px; color: #64748b;">${uiIcon('map-pin', { size: 13, style: 'color:#10b981; vertical-align:-2px; margin-right:3px;' })} ${p.location} ${p.builder ? `• By ${p.builder}` : ''}</div>
         </div>
 
         <div style="background: #f8fafc; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; color: #334155; line-height: 1.4;">
@@ -2879,14 +2937,14 @@ function renderNewProjects(filter = 'all', searchTerm = '') {
           </p>
         ` : ''}
 
-        ${p.proximity ? `<div style="font-size: 12px; color: #059669; font-weight: 600;">🚗 ${p.proximity}</div>` : ''}
+        ${p.proximity ? `<div style="font-size: 12px; color: #059669; font-weight: 600;">${uiIcon('car', { size: 14, style: 'color:#059669; vertical-align:-2px; margin-right:4px;' })} ${p.proximity}</div>` : ''}
 
         <div style="display: flex; gap: 8px; margin-top: 4px; align-items: center;">
           <button type="button" class="btn btn-outline" onclick="toggleCompareProperty('${propId}', this, event)" style="flex: 1; padding: 10px; font-size: 12.5px; border-radius: 10px; border: 1px solid #cbd5e1; background: #fff; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 4px;">
-            ⚖️ Compare
+            ${uiIcon("scale", { size: 13, style: "margin-right:4px;" })} Compare
           </button>
           <button type="button" class="btn btn-outline btn-master-layout" onclick="openMasterPlanModal('${p.title.replace(/'/g, "\'")}')" style="flex: 1; padding: 10px; font-size: 12.5px; border-radius: 10px; border: 1px solid #cbd5e1; background: #fff; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 4px;">
-            📐 Layout
+            ${uiIcon("ruler", { size: 13, style: "margin-right:4px;" })} Layout
           </button>
           <button type="button" class="btn btn-primary" onclick="openSiteVisitModal('${p.title.replace(/'/g, "\'")}')" style="flex: 1.2; padding: 10px; font-size: 12.5px; border-radius: 10px; background: #10b981; color: #fff; font-weight: 700; cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);">
             Book Visit
@@ -2953,7 +3011,7 @@ function renderFarmlandFastTrack() {
   if (farms.length === 0) {
     grid.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 48px 20px; background: #ffffff; border-radius: 16px; border: 1px dashed #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-        <span style="font-size: 36px; display: block; margin-bottom: 10px;">🌾</span>
+        <div style="margin-bottom: 10px; display: flex; justify-content: center;">${uiIcon("sprout", { size: 40, style: "color:#10b981;" })}</div>
         <h4 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0 0 6px 0;">No Farmland Corridor Listings Registered</h4>
         <p style="font-size: 13.5px; color: #64748b; margin: 0; max-width: 480px; margin: 0 auto;">Agricultural parcels and strategic farmland listings added from the Admin Dashboard will appear here live in real time.</p>
       </div>
@@ -2962,11 +3020,12 @@ function renderFarmlandFastTrack() {
   }
 
   grid.innerHTML = farms.map(f => {
-    let rawBadge = f.approvalType || f.badge || f.statusTag || '🟢 100% Patta';
-    if (rawBadge.includes('DTCP')) rawBadge = '🛡️ DTCP Approved';
-    else if (rawBadge.includes('Patta')) rawBadge = '🟢 100% Patta';
-    else if (rawBadge.includes('RERA')) rawBadge = '🏛️ RERA Verified';
-    else if (rawBadge.includes('High Yield') || rawBadge.includes('Pre-Launch') || rawBadge.includes('Discount')) rawBadge = '★ Pre-Launch Farmland';
+    let rawBadge = f.approvalType || f.badge || f.statusTag || '100% Patta';
+    if (rawBadge.includes('DTCP')) rawBadge = uiIcon('shield-check', { size: 12, style: 'margin-right:4px;' }) + ' DTCP Approved';
+    else if (rawBadge.includes('Patta')) rawBadge = uiIcon('check-circle', { size: 12, style: 'margin-right:4px;' }) + ' 100% Patta';
+    else if (rawBadge.includes('RERA')) rawBadge = uiIcon('shield', { size: 12, style: 'margin-right:4px;' }) + ' RERA Verified';
+    else if (rawBadge.includes('High Yield') || rawBadge.includes('Pre-Launch') || rawBadge.includes('Discount')) rawBadge = uiIcon('bolt', { size: 12, style: 'margin-right:4px;' }) + ' Pre-Launch Farmland';
+    else rawBadge = uiIcon('check-circle', { size: 12, style: 'margin-right:4px;' }) + ' ' + rawBadge;
 
     const rawAcrePrice = (f.price || f.priceLabel || f.startingPrice || f.pricePerAcre || f.acreRate || 'Price on Request').toString().trim();
     let acrePrice = rawAcrePrice.startsWith('₹') ? rawAcrePrice : `₹ ${rawAcrePrice}`;
@@ -2999,13 +3058,13 @@ function renderFarmlandFastTrack() {
             ${rawBadge}
           </span>
           <span style="background: rgba(15,23,42,0.88); backdrop-filter: blur(8px); color: #38bdf8; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(56,189,248,0.3); flex-shrink: 0; display: inline-flex; align-items: center; gap: 4px;">
-            🏷️ ${acreageDisplay}
+            ${uiIcon('tag', { size: 12, style: 'margin-right:4px;' })} ${acreageDisplay}
           </span>
         </div>
 
         <div style="position: absolute; bottom: 14px; left: 14px; right: 14px; z-index: 2;">
           <h3 style="margin: 0 0 2px; font-size: 1.25rem; font-weight: 800; color: #ffffff; text-shadow: 0 2px 4px rgba(0,0,0,0.7);">${f.title || f.name}</h3>
-          <span style="font-size: 13px; opacity: 0.95; color: #e2e8f0; text-shadow: 0 1px 2px rgba(0,0,0,0.7);">📍 ${f.location}</span>
+          <span style="font-size: 13px; opacity: 0.95; color: #e2e8f0; text-shadow: 0 1px 2px rgba(0,0,0,0.7);">${uiIcon('map-pin', { size: 13, style: 'color:#38bdf8; vertical-align:-2px; margin-right:3px;' })} ${f.location}</span>
         </div>
       </div>
       <div style="padding: 20px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; gap: 14px;">
@@ -3021,15 +3080,15 @@ function renderFarmlandFastTrack() {
         </div>
         <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: #334155;">
           <div style="display: flex; align-items: center; gap: 8px; font-weight: 500;">
-            <span style="color: #059669;">🌱</span> <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%;">${soil}</span>
+            ${uiIcon('leaf', { size: 14, style: 'color:#059669; flex-shrink:0;' })} <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%;">${soil}</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: #0284c7;">
-            <span>💧</span> <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%;">${water}</span>
+            ${uiIcon('droplet', { size: 14, style: 'color:#0284c7; flex-shrink:0;' })} <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%;">${water}</span>
           </div>
         </div>
         <div style="display: flex; gap: 10px; margin-top: 4px;">
           <button type="button" class="btn btn-outline" onclick="openMasterPlanModal('${(f.title || f.name).replace(/'/g, "\\'")}')" style="flex: 1; padding: 11px 14px; font-size: 13px; border-radius: 10px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 4px;">
-            📐 View Land
+            ${uiIcon("ruler", { size: 13, style: "margin-right:4px;" })} View Land
           </button>
           <button type="button" class="btn btn-primary" onclick="openSiteVisitModal('${(f.title || f.name).replace(/'/g, "\\'")}')" style="flex: 1.2; padding: 11px 14px; font-size: 13px; border-radius: 10px; background: #10b981; color: #ffffff; font-weight: 700; cursor: pointer; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 4px; box-shadow: 0 4px 12px rgba(16,185,129,0.25);">
             Book Site Visit
@@ -3321,16 +3380,16 @@ function renderProperties() {
     const catLabel = state.currentCategory && state.currentCategory !== 'all' ? state.currentCategory : 'All Categories';
     const locLabel = state.currentLocality && state.currentLocality !== 'all' ? state.currentLocality : 'All Localities';
     activeTagsContainer.innerHTML = `
-      <span class="meta-chip active" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; padding: 4px 10px; border-radius: 9999px; font-size: 12px; font-weight: 600;">📁 ${catLabel}</span>
-      <span class="meta-chip active" style="background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd; padding: 4px 10px; border-radius: 9999px; font-size: 12px; font-weight: 600;">📍 ${locLabel}</span>
-      <span class="meta-chip" style="background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; padding: 4px 10px; border-radius: 9999px; font-size: 12px;">🔍 ${activeProps.length} Matched Listings</span>
+      <span class="meta-chip active" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; padding: 4px 10px; border-radius: 9999px; font-size: 12px; font-weight: 600;">${uiIcon("tag", { size: 12, style: "margin-right:3px;" })} ${catLabel}</span>
+      <span class="meta-chip active" style="background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd; padding: 4px 10px; border-radius: 9999px; font-size: 12px; font-weight: 600;">${uiIcon("map-pin", { size: 12, style: "margin-right:3px;" })} ${locLabel}</span>
+      <span class="meta-chip" style="background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; padding: 4px 10px; border-radius: 9999px; font-size: 12px;">${uiIcon("search", { size: 12, style: "margin-right:3px;" })} ${activeProps.length} Matched Listings</span>
     `;
   }
 
   if (activeProps.length === 0) {
     grid.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 48px 24px; background: #ffffff; border-radius: 20px; border: 1px dashed #cbd5e1;">
-        <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
+        <div style="margin-bottom: 8px; display: flex; justify-content: center;">${uiIcon("search", { size: 36, style: "color:#94a3b8;" })}</div>
         <h3 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin: 0 0 6px;">No Matching Properties Found</h3>
         <p style="font-size: 13.5px; color: #64748b; margin: 0 0 16px;">Try adjusting your location, category, or budget slider filters above.</p>
         <button type="button" class="btn btn-outline" onclick="if(typeof window.initSmartMatcher==='function') window.initSmartMatcher();" style="padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer;">
@@ -3365,14 +3424,14 @@ function renderProperties() {
                 style="position: absolute; top: 12px; right: 52px; width: 34px; height: 34px; border-radius: 50%; background: ${isCompared ? '#10b981' : '#ffffff'}; color: ${isCompared ? '#ffffff' : '#0f172a'}; border: 1px solid ${isCompared ? '#10b981' : '#e2e8f0'}; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
                 title="${isCompared ? 'Remove from Compare' : 'Add to Compare'}"
                 onclick="toggleCompareProperty('${propId}', this, event)">
-          ${isCompared ? '✓' : '⚖️'}
+          ${isCompared ? uiIcon('check', { size: 14 }) : uiIcon('scale', { size: 14 })}
         </button>
 
         <!-- Favorite Action Button Overlay -->
         <button type="button" class="card-fav-btn" 
                 style="position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; background: ${isFav ? '#fef2f2' : '#ffffff'}; color: ${isFav ? '#ef4444' : '#64748b'}; border: 1px solid ${isFav ? '#fca5a5' : '#e2e8f0'}; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 15px;"
                 onclick="toggleFavoriteProperty('${propId}', this)">
-          ${isFav ? '❤️' : '🤍'}
+          ${isFav ? uiIcon('heart-fill', { size: 16, style: 'color:#ef4444;' }) : uiIcon('heart', { size: 16, style: 'color:#64748b;' })}
         </button>
 
         <span style="position: absolute; bottom: 12px; right: 12px; background: #0f172a; color: #ffffff; font-size: 13.5px; font-weight: 800; padding: 4px 12px; border-radius: 8px;" class="card-price">
@@ -3382,18 +3441,18 @@ function renderProperties() {
       <div style="padding: 20px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; gap: 12px;">
         <div>
           <h3 style="margin: 0 0 4px; font-size: 1.15rem; font-weight: 700; color: #0f172a;" class="card-title">${p.title}</h3>
-          <div style="font-size: 13px; color: #64748b;">📍 ${p.location} ${p.builder ? `• By ${p.builder}` : ''}</div>
+          <div style="font-size: 13px; color: #64748b;">${uiIcon('map-pin', { size: 13, style: 'color:#10b981; vertical-align:-2px; margin-right:3px;' })} ${p.location} ${p.builder ? `• By ${p.builder}` : ''}</div>
         </div>
         <div style="background: #f8fafc; padding: 10px 12px; border-radius: 10px; font-size: 12.5px; color: #334155; line-height: 1.4;">
           ${p.metrics || p.area || '2,400 sq.ft • DTCP & RERA Approved'}
         </div>
-        ${p.proximity ? `<div style="font-size: 12px; color: #059669; font-weight: 600;">🚗 ${p.proximity}</div>` : ''}
+        ${p.proximity ? `<div style="font-size: 12px; color: #059669; font-weight: 600;">${uiIcon('car', { size: 14, style: 'color:#059669; vertical-align:-2px; margin-right:4px;' })} ${p.proximity}</div>` : ''}
         <div style="display: flex; gap: 8px; margin-top: 4px;">
           <button type="button" class="btn btn-outline" onclick="toggleCompareProperty('${propId}', this, event)" style="flex: 1; padding: 9px; font-size: 12px; border-radius: 10px; border: 1px solid ${isCompared ? '#10b981' : '#cbd5e1'}; background: ${isCompared ? '#ecfdf5' : '#ffffff'}; color: ${isCompared ? '#059669' : '#334155'}; font-weight: 700; cursor: pointer;">
-            ${isCompared ? '✓ Compared' : '⚖️ Compare'}
+            ${isCompared ? (uiIcon('check', { size: 13 }) + ' Compared') : (uiIcon('scale', { size: 13 }) + ' Compare')}
           </button>
-          <button type="button" class="btn btn-outline btn-master-layout" onclick="openMasterPlanModal('${p.title.replace(/'/g, "\\'")}')" style="flex: 1; padding: 9px; font-size: 12px; border-radius: 10px; border: 1px solid #cbd5e1; background: #fff; font-weight: 600; cursor: pointer;">
-            📐 Layout
+          <button type="button" class="btn btn-outline btn-master-layout" onclick="openMasterPlanModal('${p.title.replace(/'/g, "\\'")}')" style="flex: 1; padding: 9px; font-size: 12px; border-radius: 10px; border: 1px solid #cbd5e1; background: #fff; font-weight: 600; cursor: pointer; display:inline-flex; align-items:center; justify-content:center; gap:4px;">
+            ${uiIcon("ruler", { size: 13 })} Layout
           </button>
           <button type="button" class="btn btn-primary" onclick="openSiteVisitModal('${p.title.replace(/'/g, "\\'")}')" style="flex: 1.2; padding: 9px; font-size: 12px; border-radius: 10px; background: #10b981; color: #fff; font-weight: 700; cursor: pointer; border: none;">
             Book Visit
@@ -3425,7 +3484,7 @@ function resetAllPropertyFilters() {
   if (localitySelect) localitySelect.value = 'all';
 
   renderProperties();
-  showToast('✓ All property filters have been reset');
+  showToast('All property filters have been reset');
 }
 window.resetAllPropertyFilters = resetAllPropertyFilters;
 
@@ -3439,7 +3498,7 @@ function toggleFavoriteProperty(propId, btn) {
     showToast('Removed from Saved Shortlist', 'warning');
   } else {
     favs.push(propId);
-    showToast('❤️ Added property to your Saved Shortlist');
+    showToast('Added property to your Saved Shortlist');
   }
 
   setLBData(LB_KEYS.FAVORITES, favs);
@@ -3458,11 +3517,11 @@ function toggleCompareProperty(propId, btnOrEvent, event) {
 
   if (!compared.includes(propId)) {
     if (compared.length >= 3) {
-      showToast('⚠️ Maximum 3 properties can be compared simultaneously', 'warning');
+      showToast('Maximum 3 properties can be compared simultaneously', 'warning');
       return;
     }
     compared.push(propId);
-    showToast(`⚖️ Property added to side-by-side comparison (${compared.length}/3)`);
+    showToast(`Property added to side-by-side comparison (${compared.length}/3)`);
   } else {
     compared = compared.filter(id => id !== propId);
     showToast('Removed property from comparison');
@@ -3500,7 +3559,7 @@ function updateCompareBadge() {
         thumbnailsWrap.innerHTML = comparedProps.map((p, idx) => `
           <div style="position: relative; display: inline-block;">
             <img src="${p.imageUrl || p.image || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400'}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover; border: 2px solid #10b981;" title="${p.title}" />
-            <button type="button" onclick="removeFromCompare('${p.id || `prop_${idx}`}')" style="position: absolute; top: -6px; right: -6px; background: #ef4444; color: #fff; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;">✕</button>
+            <button type="button" onclick="removeFromCompare('${p.id || `prop_${idx}`}')" style="position: absolute; top: -6px; right: -6px; background: #ef4444; color: #fff; border: none; border-radius: 50%; width: 18px; height: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
           </div>
         `).join('');
       }
@@ -3524,10 +3583,10 @@ function openCompareDrawer() {
   if (comparedProps.length === 0) {
     tableWrap.innerHTML = `
       <div style="text-align: center; padding: 48px 20px; background: #f8fafc; border-radius: 16px; border: 2px dashed #cbd5e1;">
-        <div style="font-size: 42px; margin-bottom: 12px;">⚖️</div>
+        <div style="margin-bottom: 12px; display: flex; justify-content: center;">${uiIcon("scale", { size: 44, style: "color:#10b981;" })}</div>
         <h3 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin: 0 0 6px;">No Properties Selected for Comparison</h3>
         <p style="font-size: 13.5px; color: #64748b; margin: 0 0 20px; max-width: 460px; margin-left: auto; margin-right: auto;">
-          Select 2 or 3 properties using the "⚖️ Compare" button on any property card to view side-by-side specs, prices, livability index &amp; ROI.
+          Select 2 or 3 properties using the "Compare" button on any property card to view side-by-side specs, prices, livability index &amp; ROI.
         </p>
         <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
           ${allProps.slice(0, 3).map((p, idx) => `
@@ -3548,7 +3607,7 @@ function openCompareDrawer() {
               <th style="padding: 16px; background: #ffffff; text-align: center; border-bottom: 2px solid #e2e8f0; ${idx === comparedProps.length - 1 ? 'border-top-right-radius: 12px;' : ''}">
                 <div style="position: relative; margin-bottom: 10px;">
                   <img src="${p.imageUrl || p.image || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600'}" style="width: 100%; height: 130px; object-fit: cover; border-radius: 12px;" />
-                  <button type="button" onclick="removeFromCompare('${p.id || `prop_${idx}`}')" style="position: absolute; top: 8px; right: 8px; background: rgba(239,68,68,0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;" title="Remove from comparison">✕</button>
+                  <button type="button" onclick="removeFromCompare('${p.id || `prop_${idx}`}')" style="position: absolute; top: 8px; right: 8px; background: rgba(239,68,68,0.9); color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Remove from comparison"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
                 </div>
                 <h4 style="margin: 0 0 4px; font-size: 14px; font-weight: 800; color: #0f172a;">${p.title}</h4>
                 <div style="font-size: 15px; font-weight: 800; color: #10b981;">${p.price || p.priceLabel || '₹ 45 Lakhs'}</div>
@@ -3558,43 +3617,43 @@ function openCompareDrawer() {
         </thead>
         <tbody style="font-size: 13px;">
           <tr>
-            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">📍 Location & Corridor</td>
+            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">${uiIcon("map-pin", { size: 14, style: "vertical-align:-2px; margin-right:4px; color:#10b981;" })} Location & Corridor</td>
             ${comparedProps.map(p => `<td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #0f172a;">${p.location}</td>`).join('')}
           </tr>
           <tr>
-            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">🏠 Category & BHK</td>
+            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">${uiIcon("home", { size: 14, style: "vertical-align:-2px; margin-right:4px; color:#3b82f6;" })} Category & BHK</td>
             ${comparedProps.map(p => `<td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; color: #475569;">${p.category || 'Apartment'} • <strong>${p.bhk || '3 BHK'}</strong></td>`).join('')}
           </tr>
           <tr>
-            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">📐 Super Built-up Area</td>
+            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">${uiIcon("ruler", { size: 14, style: "vertical-align:-2px; margin-right:4px; color:#f59e0b;" })} Super Built-up Area</td>
             ${comparedProps.map(p => `<td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #0f172a;">${p.area || p.metrics || '1,900 sq.ft'}</td>`).join('')}
           </tr>
           <tr>
-            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">🏛️ Approvals & Legal</td>
+            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">${uiIcon("shield-check", { size: 14, style: "vertical-align:-2px; margin-right:4px; color:#10b981;" })} Approvals & Legal</td>
             ${comparedProps.map(p => `<td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span style="background: #ecfdf5; color: #059669; font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 9999px; border: 1px solid #a7f3d0;">${p.approval || p.approvalType || 'DTCP & RERA Approved'}</span></td>`).join('')}
           </tr>
           <tr>
-            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">⭐ Livability Index</td>
+            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">${uiIcon("star-fill", { size: 14, style: "vertical-align:-2px; margin-right:4px; color:#f59e0b;" })} Livability Index</td>
             ${comparedProps.map(p => `<td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0;"><strong style="font-size: 16px; color: #10b981;">${p.livability ? p.livability.composite : '9.3'} / 10</strong><br/><small style="color: #64748b;">${p.livability ? p.livability.label : 'Excellent'}</small></td>`).join('')}
           </tr>
           <tr>
-            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">🛣️ Road Access Width</td>
+            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">${uiIcon("car", { size: 14, style: "vertical-align:-2px; margin-right:4px; color:#64748b;" })} Road Access Width</td>
             ${comparedProps.map(p => `<td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; color: #334155;">${p.roadAccess || '18m Dual Carriageway'}</td>`).join('')}
           </tr>
           <tr>
-            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">💧 Groundwater & Water</td>
+            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">${uiIcon("droplet", { size: 14, style: "vertical-align:-2px; margin-right:4px; color:#0284c7;" })} Groundwater & Water</td>
             ${comparedProps.map(p => `<td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; color: #334155;">${p.waterSource || 'Siruvani Supply'}<br/><small style="color: #64748b;">Depth: ${p.groundwater || '120 Feet'}</small></td>`).join('')}
           </tr>
           <tr>
-            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">⚡ Power & Grid</td>
+            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">${uiIcon("bolt", { size: 14, style: "vertical-align:-2px; margin-right:4px; color:#eab308;" })} Power & Grid</td>
             ${comparedProps.map(p => `<td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0; color: #334155;">${p.powerGrid || '3-Phase TNEB + DG'}</td>`).join('')}
           </tr>
           <tr>
-            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">📈 ROI & Price Assessment</td>
+            <td style="padding: 12px 14px; font-weight: 700; color: #334155; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">${uiIcon("tag", { size: 14, style: "vertical-align:-2px; margin-right:4px; color:#8b5cf6;" })} ROI & Price Assessment</td>
             ${comparedProps.map(p => `<td style="padding: 12px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span style="font-weight: 700; color: #0f172a;">${p.assessment || 'Good Value'}</span><br/><small style="color: #64748b;">${p.assessmentNote || 'Strong rental yield'}</small></td>`).join('')}
           </tr>
           <tr>
-            <td style="padding: 14px; background: #f1f5f9; font-weight: 700; color: #334155; border-bottom-left-radius: 12px;">🚀 Actions</td>
+            <td style="padding: 14px; background: #f1f5f9; font-weight: 700; color: #334155; border-bottom-left-radius: 12px;">Actions</td>
             ${comparedProps.map(p => `
               <td style="padding: 14px; text-align: center; background: #ffffff;">
                 <button type="button" onclick="window.closeAllModals(); openSiteVisitModal('${p.title.replace(/'/g, "\\'")}')" style="width: 100%; padding: 10px; background: #10b981; color: #fff; border: none; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer;">Book Site Visit</button>
@@ -3605,7 +3664,7 @@ function openCompareDrawer() {
       </table>
 
       <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 16px;">
-        <button type="button" onclick="clearAllCompare()" style="padding: 9px 18px; border: 1px solid #cbd5e1; background: #ffffff; color: #dc2626; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer;">🗑️ Clear All Comparison</button>
+        <button type="button" onclick="clearAllCompare()" style="padding: 9px 18px; border: 1px solid #cbd5e1; background: #ffffff; color: #dc2626; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer;">${uiIcon("trash", { size: 14, style: "margin-right:4px; vertical-align:-2px;" })} Clear All Comparison</button>
         <button type="button" onclick="window.closeAllModals()" style="padding: 9px 24px; border: none; background: #0f172a; color: #ffffff; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer;">Done &amp; Close</button>
       </div>
     `;
@@ -3646,7 +3705,7 @@ function downloadBrochurePDF(title, location, price) {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  showToast(`📄 Downloaded specification brochure for "${title}"`);
+  showToast(`Downloaded specification brochure for "${title}"`);
 }
 window.downloadBrochurePDF = downloadBrochurePDF;
 
@@ -3662,8 +3721,8 @@ function openMasterLayoutLightbox(title, imgUrl) {
 
   modal.innerHTML = `
     <div style="background: #fff; border-radius: 20px; padding: 24px; max-width: 760px; width: 100%; position: relative; text-align: center;">
-      <button type="button" onclick="document.getElementById('masterLayoutModal').style.display='none'" style="position: absolute; top: 16px; right: 16px; border: none; background: #f1f5f9; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">✕</button>
-      <h3 style="margin: 0 0 12px; font-size: 1.15rem; font-weight: 700; color: #0f172a;">📐 Master Architectural Layout &amp; Blueprint</h3>
+      <button type="button" onclick="document.getElementById('masterLayoutModal').style.display='none'" style="position: absolute; top: 16px; right: 16px; border: none; background: #f1f5f9; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display:flex; align-items:center; justify-content:center; color:#64748b;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <h3 style="margin: 0 0 12px; font-size: 1.15rem; font-weight: 700; color: #0f172a;">${uiIcon("ruler", { size: 18, style: "vertical-align:-3px; margin-right:6px; color:#10b981;" })} Master Architectural Layout &amp; Blueprint</h3>
       <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">${title} — Sanctioned Site Layout &amp; Boundary Geometry</p>
       <img src="${imgUrl}" style="width: 100%; max-height: 440px; object-fit: contain; border-radius: 12px; border: 1px solid #e2e8f0;" />
     </div>
@@ -3681,7 +3740,7 @@ function shareProperty(title, propId) {
     }).catch(() => {});
   } else {
     navigator.clipboard?.writeText(window.location.href);
-    showToast('🔗 Property link copied to clipboard!');
+    showToast('Property link copied to clipboard!');
   }
 }
 window.shareProperty = shareProperty;
@@ -3715,7 +3774,7 @@ function verifyApprovalStatus(searchTerm) {
     const item = matchedApproval || matchedProp;
     resultBox.innerHTML = `
       <div style="padding: 16px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; color: #065f46; font-size: 13.5px; line-height: 1.5;">
-        <div style="font-weight: 800; font-size: 15px; color: #047857; margin-bottom: 4px;">🟢 100% Legal Clearance Verified</div>
+        <div style="font-weight: 800; font-size: 15px; color: #047857; margin-bottom: 4px; display:flex; align-items:center; gap:6px;">${uiIcon("shield-check", { size: 18, style: "color:#059669;" })} 100% Legal Clearance Verified</div>
         <strong>Project:</strong> ${item.title || item.projectName}<br>
         <strong>Approval Reference:</strong> ${item.regNumber || item.legalNo || 'DTCP: 481/2026'}<br>
         <strong>Legal Title Status:</strong> Patta Verified &amp; Encumbrance-Free Title Deed
@@ -3724,7 +3783,7 @@ function verifyApprovalStatus(searchTerm) {
   } else {
     resultBox.innerHTML = `
       <div style="padding: 16px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px; color: #991b1b; font-size: 13.5px;">
-        <div style="font-weight: 800; margin-bottom: 4px;">⚠️ Verification Notice</div>
+        <div style="font-weight: 800; margin-bottom: 4px; display:flex; align-items:center; gap:6px;">${uiIcon("shield", { size: 18, style: "color:#dc2626;" })} Verification Notice</div>
         No matching record found for "<strong>${searchTerm}</strong>". Ensure the number matches the official TN RERA or DTCP sanction format.
       </div>
     `;
@@ -3868,8 +3927,8 @@ function handleInteriorSubmit(e) {
     }
   } catch(err) {}
 
-  showToast(`🎨 3D Consultation Booked! Thank you ${name}, our architect will contact you shortly.`);
-  alert(`✅ Free 3D Interior Consultation Booked Successfully!\n\nClient: ${name} (${formattedPhone})\nProperty: ${propType}\nStyle: ${style}\nBudget: ${budget}\n\nOur architectural team will contact you shortly.`);
+  showToast(`3D Consultation Booked! Thank you ${name}, our architect will contact you shortly.`);
+  alert(`Free 3D Interior Consultation Booked Successfully!\n\nClient: ${name} (${formattedPhone})\nProperty: ${propType}\nStyle: ${style}\nBudget: ${budget}\n\nOur architectural team will contact you shortly.`);
   const form = document.getElementById('interiorForm') || document.getElementById('interiorConsultForm');
   if (form) form.reset();
   window.closeAllModals();
@@ -3957,8 +4016,8 @@ function handlePoojaSubmit(e) {
   window.closeAllModals();
   const form = document.getElementById('poojaForm');
   if (form) form.reset();
-  showToast(`🪔 Vedic Griha Pravesh scheduled for ${name}${date ? ` on ${date}` : ''}!`);
-  alert(`✅ Griha Pravesh & Vedic Pooja Booked Successfully!\n\nHost: ${name} (${formattedPhone})\nPackage: ${pkgTier}\nAuspicious Date: ${date}\nTradition: ${tradition}\nAddress: ${address}\n\nOur Chief Pandit & Pooja coordination team has confirmed your schedule.`);
+  showToast(`Vedic Griha Pravesh scheduled for ${name}${date ? ` on ${date}` : ''}!`);
+  alert(`Griha Pravesh & Vedic Pooja Booked Successfully!\n\nHost: ${name} (${formattedPhone})\nPackage: ${pkgTier}\nAuspicious Date: ${date}\nTradition: ${tradition}\nAddress: ${address}\n\nOur Chief Pandit & Pooja coordination team has confirmed your schedule.`);
 }
 window.handlePoojaSubmit = handlePoojaSubmit;
 
@@ -4162,7 +4221,7 @@ function executeSmartPropertyMatch() {
     targetSection.scrollIntoView({ behavior: 'smooth' });
   }
 
-  showToast(`🎯 Smart Matcher found ${matched ? matched.length : 0} matching properties!`);
+  showToast(`Smart Matcher found ${matched ? matched.length : 0} matching properties!`);
 }
 window.executeSmartPropertyMatch = executeSmartPropertyMatch;
 
@@ -4209,7 +4268,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'saravanampatti': {
     id: 'area-saravanampatti',
     group: 'urban',
-    name: 'Coimbatore ➔ Saravanampatti (IT & Tech Corridor)',
+    name: 'Coimbatore → Saravanampatti (IT & Tech Corridor)',
     composite: 9.3,
     label: 'Excellent Livability',
     schools: 9.2,
@@ -4230,7 +4289,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'peelamedu': {
     id: 'area-peelamedu',
     group: 'urban',
-    name: 'Coimbatore ➔ Peelamedu (Avinashi Road & Healthcare Hub)',
+    name: 'Coimbatore → Peelamedu (Avinashi Road & Healthcare Hub)',
     composite: 9.5,
     label: 'Prime Urban Core',
     schools: 9.6,
@@ -4251,7 +4310,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'race-course': {
     id: 'area-racecourse',
     group: 'urban',
-    name: 'Coimbatore ➔ Race Course (Ultra-Luxury Heritage Precinct)',
+    name: 'Coimbatore → Race Course (Ultra-Luxury Heritage Precinct)',
     composite: 9.6,
     label: 'Ultra-Luxury Tier',
     schools: 9.5,
@@ -4272,7 +4331,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'rs-puram': {
     id: 'area-rspuram',
     group: 'urban',
-    name: 'Coimbatore ➔ RS Puram (Commercial & Lifestyle Hub)',
+    name: 'Coimbatore → RS Puram (Commercial & Lifestyle Hub)',
     composite: 9.7,
     label: 'Elite Livability',
     schools: 9.8,
@@ -4293,7 +4352,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'gandhipuram': {
     id: 'area-gandhipuram',
     group: 'urban',
-    name: 'Coimbatore ➔ Gandhipuram (Central Transit & Commercial Core)',
+    name: 'Coimbatore → Gandhipuram (Central Transit & Commercial Core)',
     composite: 9.1,
     label: 'City Center Hub',
     schools: 9.0,
@@ -4314,7 +4373,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'ukkadam': {
     id: 'area-ukkadam',
     group: 'urban',
-    name: 'Coimbatore ➔ Ukkadam (Central Bus Terminal & Lake Precinct)',
+    name: 'Coimbatore → Ukkadam (Central Bus Terminal & Lake Precinct)',
     composite: 8.9,
     label: 'City Transit & Lake Core',
     schools: 8.8,
@@ -4335,7 +4394,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'selvapuram': {
     id: 'area-selvapuram',
     group: 'urban',
-    name: 'Coimbatore ➔ Selvapuram (Perur Main Road Corridor)',
+    name: 'Coimbatore → Selvapuram (Perur Main Road Corridor)',
     composite: 8.8,
     label: 'Residential Suburban',
     schools: 8.9,
@@ -4356,7 +4415,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'saibaba-colony': {
     id: 'area-saibaba-colony',
     group: 'urban',
-    name: 'Coimbatore ➔ Saibaba Colony (NSR Road Residential Belt)',
+    name: 'Coimbatore → Saibaba Colony (NSR Road Residential Belt)',
     composite: 9.5,
     label: 'Prime Residential Core',
     schools: 9.4,
@@ -4377,7 +4436,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'townhall': {
     id: 'area-townhall',
     group: 'urban',
-    name: 'Coimbatore ➔ Town Hall (Heritage Commercial Center)',
+    name: 'Coimbatore → Town Hall (Heritage Commercial Center)',
     composite: 9.0,
     label: 'Heritage Commercial Core',
     schools: 8.9,
@@ -4398,7 +4457,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'kuniyamuthur': {
     id: 'area-kuniyamuthur',
     group: 'urban',
-    name: 'Coimbatore ➔ Kuniyamuthur (Palakkad Highway Educational Belt)',
+    name: 'Coimbatore → Kuniyamuthur (Palakkad Highway Educational Belt)',
     composite: 8.8,
     label: 'Educational Corridor',
     schools: 9.1,
@@ -4419,7 +4478,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'sundarapuram': {
     id: 'area-sundarapuram',
     group: 'urban',
-    name: 'Coimbatore ➔ Sundarapuram (Pollachi Highway Corridor)',
+    name: 'Coimbatore → Sundarapuram (Pollachi Highway Corridor)',
     composite: 8.7,
     label: 'Suburban Industrial & Residential',
     schools: 8.8,
@@ -4440,7 +4499,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'vadavalli': {
     id: 'area-vadavalli',
     group: 'urban',
-    name: 'Coimbatore ➔ Vadavalli (Marudhamalai Corridor & Residential Belt)',
+    name: 'Coimbatore → Vadavalli (Marudhamalai Corridor & Residential Belt)',
     composite: 9.0,
     label: 'High Quality Suburban',
     schools: 9.1,
@@ -4461,7 +4520,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'singanallur': {
     id: 'area-singanallur',
     group: 'urban',
-    name: 'Coimbatore ➔ Singanallur (Trichy Road & Industrial Hub)',
+    name: 'Coimbatore → Singanallur (Trichy Road & Industrial Hub)',
     composite: 8.8,
     label: 'Industrial & Transit Hub',
     schools: 8.7,
@@ -4482,7 +4541,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'ramanathapuram': {
     id: 'area-ramanathapuram',
     group: 'urban',
-    name: 'Coimbatore ➔ Ramanathapuram (Trichy Road Core)',
+    name: 'Coimbatore → Ramanathapuram (Trichy Road Core)',
     composite: 9.2,
     label: 'Prime Residential',
     schools: 9.2,
@@ -4503,7 +4562,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'hopes-college': {
     id: 'area-hopes-college',
     group: 'urban',
-    name: 'Coimbatore ➔ Hopes College & Tidel Park Zone',
+    name: 'Coimbatore → Hopes College & Tidel Park Zone',
     composite: 9.4,
     label: 'IT Hub Core',
     schools: 9.3,
@@ -4524,7 +4583,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'ganapathy': {
     id: 'area-ganapathy',
     group: 'urban',
-    name: 'Coimbatore ➔ Ganapathy (Sathy Road Commercial Sector)',
+    name: 'Coimbatore → Ganapathy (Sathy Road Commercial Sector)',
     composite: 9.0,
     label: 'High Density Urban',
     schools: 8.9,
@@ -4545,7 +4604,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'sowripalayam': {
     id: 'area-sowripalayam',
     group: 'urban',
-    name: 'Coimbatore ➔ Sowripalayam (Avinashi Link Road)',
+    name: 'Coimbatore → Sowripalayam (Avinashi Link Road)',
     composite: 9.1,
     label: 'Prime Suburban Core',
     schools: 9.2,
@@ -4566,7 +4625,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'ondipudur': {
     id: 'area-ondipudur',
     group: 'urban',
-    name: 'Coimbatore ➔ Ondipudur (Trichy Road Expansion Belt)',
+    name: 'Coimbatore → Ondipudur (Trichy Road Expansion Belt)',
     composite: 8.7,
     label: 'Suburban Residential',
     schools: 8.8,
@@ -4589,7 +4648,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'thudiyalur': {
     id: 'area-thudiyalur',
     group: 'suburbs',
-    name: 'Coimbatore ➔ Thudiyalur (North Mettupalayam Corridor)',
+    name: 'Coimbatore → Thudiyalur (North Mettupalayam Corridor)',
     composite: 8.7,
     label: 'North Coimbatore Growth Belt',
     schools: 8.9,
@@ -4610,7 +4669,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'kovaipudur': {
     id: 'area-kovaipudur',
     group: 'suburbs',
-    name: 'Coimbatore ➔ Kovaipudur (Western Ghats Foothill Gated Belt)',
+    name: 'Coimbatore → Kovaipudur (Western Ghats Foothill Gated Belt)',
     composite: 8.9,
     label: 'Serene Residential',
     schools: 8.8,
@@ -4631,7 +4690,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'annur': {
     id: 'area-annur',
     group: 'suburbs',
-    name: 'Coimbatore ➔ Annur (High-Growth Expansion Zone)',
+    name: 'Coimbatore → Annur (High-Growth Expansion Zone)',
     composite: 8.6,
     label: 'Growth Corridor',
     schools: 8.5,
@@ -4652,7 +4711,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'sulur': {
     id: 'area-sulur',
     group: 'suburbs',
-    name: 'Coimbatore ➔ Sulur (Logistics & Air Force Belt)',
+    name: 'Coimbatore → Sulur (Logistics & Air Force Belt)',
     composite: 8.4,
     label: 'Agro & Logistics Zone',
     schools: 7.9,
@@ -4673,7 +4732,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'eachanari': {
     id: 'area-eachanari',
     group: 'suburbs',
-    name: 'Coimbatore ➔ Eachanari & Malumichampatti (Pollachi Highway)',
+    name: 'Coimbatore → Eachanari & Malumichampatti (Pollachi Highway)',
     composite: 8.7,
     label: 'Educational & Tech Belt',
     schools: 9.0,
@@ -4696,7 +4755,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'pollachi-town': {
     id: 'area-pollachi-town',
     group: 'pollachi',
-    name: 'Pollachi Region ➔ Pollachi Town (Central Commercial Core)',
+    name: 'Pollachi Region → Pollachi Town (Central Commercial Core)',
     composite: 8.9,
     label: 'Regional Commercial Center',
     schools: 9.0,
@@ -4717,7 +4776,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'kinathukadavu': {
     id: 'area-kinathukadavu',
     group: 'pollachi',
-    name: 'Pollachi Region ➔ Kinathukadavu (Pollachi Highway Agro Belt)',
+    name: 'Pollachi Region → Kinathukadavu (Pollachi Highway Agro Belt)',
     composite: 8.7,
     label: 'Highway Agro Corridor',
     schools: 8.6,
@@ -4738,7 +4797,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'anaimalai': {
     id: 'area-anaimalai',
     group: 'pollachi',
-    name: 'Pollachi Region ➔ Anaimalai (Eco-Tourism & Farmland Belt)',
+    name: 'Pollachi Region → Anaimalai (Eco-Tourism & Farmland Belt)',
     composite: 8.6,
     label: 'Eco-Farmland Sanctuary',
     schools: 8.3,
@@ -4759,7 +4818,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'negamam': {
     id: 'area-negamam',
     group: 'pollachi',
-    name: 'Pollachi Region ➔ Negamam (Textile & Coconut Farming Corridor)',
+    name: 'Pollachi Region → Negamam (Textile & Coconut Farming Corridor)',
     composite: 8.5,
     label: 'Agro & Weaving Hub',
     schools: 8.2,
@@ -4780,7 +4839,7 @@ const COIMBATORE_MICRO_MARKETS = {
   'valparai-foothills': {
     id: 'area-valparai-foothills',
     group: 'pollachi',
-    name: 'Pollachi Region ➔ Valparai Foothills (Tea Estate & Resort Sanctuary)',
+    name: 'Pollachi Region → Valparai Foothills (Tea Estate & Resort Sanctuary)',
     composite: 8.8,
     label: 'Hill View Sanctuary',
     schools: 8.4,
@@ -4886,15 +4945,15 @@ function initLivabilityEngine() {
 
   // 1. Group 1: Urban Core
   const groupUrban = document.createElement('optgroup');
-  groupUrban.label = '🏙️ Coimbatore Urban Core & Micro-Markets';
+  groupUrban.label = 'Coimbatore Urban Core & Micro-Markets';
 
   // 2. Group 2: Suburbs & Expansion Belts
   const groupSuburbs = document.createElement('optgroup');
-  groupSuburbs.label = '🌳 Greater Coimbatore Suburbs & Expansion Belts';
+  groupSuburbs.label = 'Greater Coimbatore Suburbs & Expansion Belts';
 
   // 3. Group 3: Pollachi Region
   const groupPollachi = document.createElement('optgroup');
-  groupPollachi.label = '🌴 Pollachi Region & Agro-Corridors';
+  groupPollachi.label = 'Pollachi Region & Agro-Corridors';
 
   Object.keys(COIMBATORE_MICRO_MARKETS).forEach(key => {
     const market = COIMBATORE_MICRO_MARKETS[key];
@@ -5061,7 +5120,7 @@ function initEMICalculator() {
       
       const bankName = pill.getAttribute('data-bank') || 'Banking Partner';
       if (typeof showToast === 'function') {
-        showToast(`⚡ Selected ${bankName} Rate: ${rawRate} p.a.`, 'success');
+        showToast(`Selected ${bankName} Rate: ${rawRate} p.a.`, 'success');
       }
 
       calculateAndRenderEMI();
