@@ -6,10 +6,8 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-  res.setHeader('Surrogate-Control', 'no-store');
-  res.setHeader('Pragma', 'no-cache');
-  res.setHeader('Expires', '0');
+  // Allow 10s stale-while-revalidate for CDN edge caching on Vercel
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=60');
   if (req.method === 'OPTIONS') {
     res.writeHead(200).end();
     return;
@@ -26,7 +24,16 @@ module.exports = async (req, res) => {
     poojas: []
   };
 
-  // 1. Try reading local seed file / tmp fallback
+  // 1. Try /tmp cache first (fast path — Vercel ephemeral but warm)
+  try {
+    const tmpPath = path.join('/tmp', 'db.json');
+    if (fs.existsSync(tmpPath)) {
+      const cached = JSON.parse(fs.readFileSync(tmpPath, 'utf8'));
+      Object.assign(db, cached);
+    }
+  } catch(e) {}
+
+  // 2. Try reading seed file (local dev / VPS)
   try {
     const dbPath = path.join(process.cwd(), 'data', 'db.json');
     if (fs.existsSync(dbPath)) {
@@ -35,7 +42,8 @@ module.exports = async (req, res) => {
     }
   } catch(e) {}
 
-  // 2. Fetch fresh real-time data from Supabase Cloud (Master Source of Truth)
+  // 3. Fetch fresh real-time data from Supabase (master source of truth)
+  let supabaseOk = false;
   try {
     const sbData = await fetchFullSupabaseDB();
     if (sbData) {
@@ -45,9 +53,16 @@ module.exports = async (req, res) => {
       if (Array.isArray(sbData.siteTours) && sbData.siteTours.length > 0) db.siteTours = sbData.siteTours;
       if (Array.isArray(sbData.interiors) && sbData.interiors.length > 0) db.interiors = sbData.interiors;
       if (Array.isArray(sbData.poojas) && sbData.poojas.length > 0) db.poojas = sbData.poojas;
+      supabaseOk = true;
+
+      // Update /tmp cache with fresh Supabase data
+      try {
+        const tmpPath = path.join('/tmp', 'db.json');
+        fs.writeFileSync(tmpPath, JSON.stringify(db), 'utf8');
+      } catch(e) {}
     }
   } catch(err) {
-    console.warn('Vercel Supabase fetch notice:', err.message);
+    console.warn('Supabase fetch notice:', err.message);
   }
 
   // Dual-key symmetry for 100% frontend and client backward compatibility
@@ -59,6 +74,8 @@ module.exports = async (req, res) => {
   db.lb_griha_pravesh_bookings = db.poojas || [];
   db.lb_approvals_data = db.approvals || [];
   db.lb_admin_audit_logs = db.auditLogs || [];
+  db._supabaseOk = supabaseOk;
+  db._servedAt = new Date().toISOString();
 
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(db));

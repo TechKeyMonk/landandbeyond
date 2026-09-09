@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Land And Beyond — Executive Operations &amp; Intelligence Portal</title>
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/png" href="favicon.webp" />
   <link rel="shortcut icon" href="favicon.ico" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.webp" />
   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1204,10 +1204,10 @@
       <div class="sidebar-brand" style="height: 68px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between;">
         <a href="index.html" class="brand-logo-hd-link" title="Land &amp; Beyond Home" style="display: flex; align-items: center; gap: 8px; text-decoration: none; max-width: calc(100% - 20px);">
           <img 
-            src="/public/land-and-beyond-logo.png" 
+            src="/public/land-and-beyond-logo.webp" 
             alt="Land &amp; Beyond" 
             style="max-height: 44px; max-width: 170px; width: auto; height: auto; object-fit: contain; display: block;" 
-            onerror="this.onerror=null; this.src='/land-and-beyond-logo.png';" 
+            onerror="this.onerror=null; this.src='/land-and-beyond-logo.webp';" 
           />
         </a>
         <span class="db-status-dot" title="Database Connected" style="display: inline-block; width: 8px; height: 8px; min-width: 8px; min-height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 6px rgba(16, 185, 129, 0.4); flex-shrink: 0;"></span>
@@ -2409,16 +2409,19 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ key: key, data: data })
         });
-        if (apiRes.ok) {
-          const json = await apiRes.json();
-          if (json.supabaseSynced) {
-            console.log(`☁️ Synced ${key} → Supabase Cloud`);
-          }
-          // 4. Pull back the canonical server state to confirm and re-render all modules
-          await fetchServerDB();
+        const json = await apiRes.json();
+        if (apiRes.status === 200 && json.supabaseSynced) {
+          console.log(`☁️ Synced ${key} → Supabase Cloud`);
+        } else if (apiRes.status === 207 || !json.supabaseSynced) {
+          // 207 = partial success: data saved locally but Supabase sync failed
+          console.warn(`⚠️ Supabase sync failed for ${key}:`, json.warning || 'Unknown error');
+          showAdminToast('⚠️ Saved locally — Supabase sync failed. Check connection.');
         }
+        // 4. Pull back canonical server state to confirm and re-render
+        await fetchServerDB();
       } catch(e) {
         console.warn('setStoredData sync error:', e);
+        showAdminToast('⚠️ Network error — changes may not be saved to cloud.');
       }
     }
 
@@ -2502,9 +2505,21 @@
       return null;
     }
     window.fetchServerDB = fetchServerDB;
-    fetchServerDB();
-    // Real-time server sync polling every 2 seconds
-    // setInterval(fetchServerDB, 2000);
+    // Server-first init: always hydrate from Supabase before rendering any module
+    // This prevents stale localStorage data from being shown on page load
+    fetchServerDB().then(() => {
+      // After server data is loaded, render the active tab
+      const activeTab = document.querySelector('.nav-item-btn.active');
+      if (activeTab) {
+        const tabName = activeTab.getAttribute('data-tab');
+        if (tabName) switchAdminTab(tabName);
+      } else {
+        renderOverviewModule();
+      }
+    }).catch(() => {
+      // Fallback to localStorage if server unreachable
+      renderOverviewModule();
+    });
 
     // Status Dot Indicator & Pop Card Engine
     // Green: DB connected | Orange: Not connected but demo creds | Red: No demo creds & no db connection

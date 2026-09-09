@@ -447,6 +447,20 @@
   "approvals": [],
   "auditLogs": [
     {
+      "id": "log-1788938287228-221",
+      "actionType": "DELETE",
+      "target": "mayflower",
+      "details": "Removed upcoming project launch from database",
+      "timestamp": "2026-09-09T07:18:07.228Z"
+    },
+    {
+      "id": "log-1788938011406-504",
+      "actionType": "ADD",
+      "target": "mayflower",
+      "details": "Published new upcoming launch in saravampatti (Starting: 1.20 cr) by flower",
+      "timestamp": "2026-09-09T07:13:31.406Z"
+    },
+    {
       "id": "log-1788934078491-907",
       "actionType": "CONFIRM",
       "target": "gopal",
@@ -1584,6 +1598,20 @@
     }
   ],
   "lb_admin_audit_logs": [
+    {
+      "id": "log-1788938287228-221",
+      "actionType": "DELETE",
+      "target": "mayflower",
+      "details": "Removed upcoming project launch from database",
+      "timestamp": "2026-09-09T07:18:07.228Z"
+    },
+    {
+      "id": "log-1788938011406-504",
+      "actionType": "ADD",
+      "target": "mayflower",
+      "details": "Published new upcoming launch in saravampatti (Starting: 1.20 cr) by flower",
+      "timestamp": "2026-09-09T07:13:31.406Z"
+    },
     {
       "id": "log-1788934078491-907",
       "actionType": "CONFIRM",

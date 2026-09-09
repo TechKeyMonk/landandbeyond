@@ -54,7 +54,8 @@ module.exports = async (req, res) => {
       if (payload && payload.key && payload.data !== undefined) {
         const dbKey = mapKey[payload.key] || payload.key;
         let isSupabaseSynced = false;
-        
+        let syncWarning = null;
+
         // Auto-sync into Supabase Cloud
         try {
           const syncResult = await syncToSupabase(dbKey, payload.data);
@@ -70,10 +71,11 @@ module.exports = async (req, res) => {
             }
           }
         } catch(syncErr) {
+          syncWarning = syncErr.message;
           console.warn('Vercel Supabase sync notice:', syncErr.message);
         }
 
-        // Cache in /tmp/db.json if available
+        // Cache in /tmp/db.json if available (Vercel ephemeral cache)
         try {
           const tmpPath = path.join('/tmp', 'db.json');
           let currentTmp = {};
@@ -82,11 +84,19 @@ module.exports = async (req, res) => {
           }
           currentTmp[dbKey] = payload.data;
           currentTmp[payload.key] = payload.data;
-          fs.writeFileSync(tmpPath, JSON.stringify(currentTmp, null, 2), 'utf8');
+          currentTmp._lastUpdated = new Date().toISOString();
+          fs.writeFileSync(tmpPath, JSON.stringify(currentTmp), 'utf8');
         } catch(tmpErr) {}
 
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: true, supabaseSynced: isSupabaseSynced, key: payload.key }));
+        // Return 207 if sync failed so frontend knows data may not be persisted
+        const statusCode = isSupabaseSynced ? 200 : 207;
+        res.writeHead(statusCode, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          success: true,
+          supabaseSynced: isSupabaseSynced,
+          key: payload.key,
+          warning: isSupabaseSynced ? undefined : (syncWarning || 'Supabase sync failed — data saved to cache only. Retry or check connection.')
+        }));
         return;
       } else if (payload && typeof payload === 'object' && Object.keys(payload).length > 0) {
         for (const k of Object.keys(payload)) {
